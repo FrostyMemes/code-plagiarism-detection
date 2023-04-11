@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32002.261
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodePlagiarismDetection", "Code plagiarism detection\CodePlagiarismDetection.csproj", "{8D7B4E02-F959-4776-9312-A48A68E744A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModuleTests", "ModuleTests\ModuleTests.csproj", "{38D56899-1B7A-46DF-A65B-7AD3EBBE34C0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8D7B4E02-F959-4776-9312-A48A68E744A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D7B4E02-F959-4776-9312-A48A68E744A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D7B4E02-F959-4776-9312-A48A68E744A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D7B4E02-F959-4776-9312-A48A68E744A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38D56899-1B7A-46DF-A65B-7AD3EBBE34C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38D56899-1B7A-46DF-A65B-7AD3EBBE34C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38D56899-1B7A-46DF-A65B-7AD3EBBE34C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38D56899-1B7A-46DF-A65B-7AD3EBBE34C0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {76AA5AFF-966F-45E5-9B92-BB5062CE109C}
+	EndGlobalSection
+EndGlobal

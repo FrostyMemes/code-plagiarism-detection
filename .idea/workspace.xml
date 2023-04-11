@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="bf641b90-8e29-4c94-a782-099462d8fb11" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.CodePlagiarismDetection/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.CodePlagiarismDetection/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code plagiarism detection/App.config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code plagiarism detection/Forms/MainForm.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code plagiarism detection/Forms/MainForm.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code plagiarism detection/Interfaces/ISimilarity.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code plagiarism detection/Methods/Cosine.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code plagiarism detection/Options/FilePairOption.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code plagiarism detection/Program.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code plagiarism detection/Properties/AssemblyInfo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code plagiarism detection/Properties/Resources.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code plagiarism detection/Properties/Resources.resx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code plagiarism detection/Properties/Settings.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code plagiarism detection/Properties/Settings.settings" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code plagiarism detection/Services/ComparisonDataTableWorker.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code plagiarism detection/Services/ShingleProfiler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code plagiarism detection/Services/Tokenizer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code plagiarism detection/Store/ComparisonResult.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/CodeExamples/10_10.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/CodeExamples/10_8.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/CodeExamples/1_10.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/CodeExamples/1_8.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/CodeExamples/2_10.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/CodeExamples/2_8.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/CodeExamples/3_10.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/CodeExamples/3_8.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/CodeExamples/4_10.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/CodeExamples/4_8.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/CodeExamples/5_10.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/CodeExamples/5_8.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/CodeExamples/6_10.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/CodeExamples/6_8.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/CodeExamples/7_10.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/CodeExamples/7_8.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/CodeExamples/8_10.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/CodeExamples/8_8.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/CodeExamples/9_10.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/CodeExamples/9_8.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/ModuleTests.csproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/Properties/AssemblyInfo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/ServiceTests/FileLoaderTests.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/ServiceTests/ShingleProfilerTests.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/Tests.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModuleTests/packages.config" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2OHeycVWhBGrHSW9iEBggE4uH0b" />
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="Renaming" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\anato\AppData\Local\Programs\Python\Python310\python.exe" />
+      <option name="SDK_NAME" value="Python 3.10" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ModuleTests/CodeExamples" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ModuleTests/CodeExamples/Renaming.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bf641b90-8e29-4c94-a782-099462d8fb11" name="Changes" comment="" />
+      <created>1681222191081</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1681222191081</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/ModuleTests/CodeExamples/Renaming.py</url>
+          <line>4</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
