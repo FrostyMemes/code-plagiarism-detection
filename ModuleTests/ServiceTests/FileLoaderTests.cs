@@ -11,6 +11,14 @@ namespace ModuleTests.ServiceTests
     {
         private string codeExamplePath = @"D:\Projects\C Sharp Projects\CodePlagiarismDetection\ModuleTests\CodeExamples";
         
+        public static IEnumerable<object[]> FilterTestData => 
+            new List<object[]>
+            {
+                new object[] {new List<string>(){"*.c"}}, 
+                new object[] {new List<string>(){"*.py"}}, 
+                new object[] {new List<string>() {"*.c", "*.py"}},
+            };
+        
         [Theory]
         [InlineData(SearchOption.AllDirectories)]
         [InlineData(SearchOption.TopDirectoryOnly)]
@@ -43,13 +51,5 @@ namespace ModuleTests.ServiceTests
             
             Assert.Equal(factFilesCount, testFileLoaderFileCount);
         }
-        
-        public static IEnumerable<object[]> FilterTestData => 
-            new List<object[]>
-            {
-                new object[] {new List<string>(){"*.c"}}, 
-                new object[] {new List<string>(){"*.py"}}, 
-                new object[] {new List<string>() {"*.c", "*.py"}},
-            };
     }
 }
