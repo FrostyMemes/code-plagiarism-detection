@@ -61,6 +61,7 @@
     <Compile Include="Interfaces\ISimilarity.cs" />
     <Compile Include="Methods\Cosine.cs" />
     <Compile Include="Options\FilePairOption.cs" />
+    <Compile Include="Options\TableFillOption.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ComparisonDataTableWorker.cs" />
