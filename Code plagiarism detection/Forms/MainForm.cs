@@ -15,9 +15,11 @@ namespace CodePlagiarismDetection
 {
     public partial class MainForm : Form
     {
+        private DataTable _comparisionDataTable;
         private SearchOption _searchOption = SearchOption.TopDirectoryOnly;
         private FilePairOption _filePairOption = FilePairOption.CheckFileType;
-        private DataTable _comparisionDataTable;
+        private TableFillOption _tableFillOption = TableFillOption.ClearTable;
+        
         public MainForm()
         {
             InitializeComponent();
@@ -26,7 +28,7 @@ namespace CodePlagiarismDetection
         private void Main_Load(object sender, EventArgs e)
         {
             _comparisionDataTable = ComparisonDataTableWorker.CreateFileCoprasionDataTable();
-            dataGridComprasionResult.DataSource = _comparisionDataTable;
+            dataGridComparisionResult.DataSource = _comparisionDataTable;
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
@@ -52,7 +54,7 @@ namespace CodePlagiarismDetection
         {
             if (String.IsNullOrWhiteSpace(txtDirectoryPath.Text))
                 return;
-            
+
             var directory = new DirectoryInfo(txtDirectoryPath.Text);
             var files = FileLoader.LoadFiles(directory, _searchOption)
                 .Select(file => new FileContent(file))
@@ -60,14 +62,28 @@ namespace CodePlagiarismDetection
             var cosine = new Cosine();
             var comparisons = cosine.CompareFilePairwise(files, _filePairOption);
             _comparisionDataTable = ComparisonDataTableWorker
-                .FillComparisionDataTable(_comparisionDataTable, comparisons);
+                .FillComparisionDataTable(_comparisionDataTable, comparisons, _tableFillOption);
         }
 
+        private void dataGridComparisionResult_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dataGridComparisionResult.Columns[e.ColumnIndex].Name.Equals("RawSimilarityValue") &&
+                dataGridComparisionResult.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+            {
+                double criticalBorder;
+                if(Double.TryParse(txtCriticalValue.Text, out criticalBorder) &&
+                   ((double)e.Value > criticalBorder))
+                {
+                    dataGridComparisionResult.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Yellow;
+                }
+            }
+        }
+        
         private void cbOptionSubdirectories_CheckedChanged(object sender, EventArgs e)
         {
             _searchOption = (cbOptionSubdirectories.Checked)
-                ? SearchOption.TopDirectoryOnly
-                : SearchOption.AllDirectories;
+                ? SearchOption.AllDirectories
+                : SearchOption.TopDirectoryOnly;
         }
 
         private void cbOptionFileType_CheckedChanged(object sender, EventArgs e)
@@ -77,11 +93,16 @@ namespace CodePlagiarismDetection
                 : FilePairOption.IgnoreFileType;
         }
 
+        private void cbOptionFillTable_CheckedChanged(object sender, EventArgs e)
+        {
+            _tableFillOption = (cbOptionFillTable.Checked)
+                ? TableFillOption.AddToTable
+                : TableFillOption.ClearTable;
+        }
+        
         private void numUpDownCriticalValue_ValueChanged(object sender, EventArgs e)
         {
             ShingleProfiler.N = int.Parse(numUpDownCriticalValue.Text);
         }
-
-       
     }
 }

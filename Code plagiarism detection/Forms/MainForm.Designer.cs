@@ -42,15 +42,17 @@
             this.ProcessingStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.ProcessingStatusStrip = new System.Windows.Forms.StatusStrip();
             this.btnStartProcessing = new System.Windows.Forms.Button();
-            this.dataGridComprasionResult = new System.Windows.Forms.DataGridView();
+            this.dataGridComparisionResult = new System.Windows.Forms.DataGridView();
+            this.numUpDownCriticalValue = new System.Windows.Forms.NumericUpDown();
+            this.cbOptionFillTable = new System.Windows.Forms.CheckBox();
             this.FirstFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SecondFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Similarity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.numUpDownCriticalValue = new System.Windows.Forms.NumericUpDown();
+            this.RawSimilarityValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.menu.SuspendLayout();
             this.ProcessingStatusStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.dataGridComprasionResult)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.dataGridComparisionResult)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.numUpDownCriticalValue)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,6 +64,7 @@
             this.txtDirectoryPath.ReadOnly = true;
             this.txtDirectoryPath.Size = new System.Drawing.Size(636, 20);
             this.txtDirectoryPath.TabIndex = 0;
+            this.txtDirectoryPath.Text = "D:\\Projects\\C Sharp Projects\\CodePlagiarismDetection\\ModuleTests\\CodeExamples";
             // 
             // btnBrowse
             // 
@@ -121,11 +124,11 @@
             // 
             // txtCriticalValue
             // 
-            this.txtCriticalValue.Location = new System.Drawing.Point(12, 157);
+            this.txtCriticalValue.Location = new System.Drawing.Point(11, 157);
             this.txtCriticalValue.Name = "txtCriticalValue";
             this.txtCriticalValue.Size = new System.Drawing.Size(142, 20);
             this.txtCriticalValue.TabIndex = 6;
-            this.txtCriticalValue.Text = "Порог заимствования";
+            this.txtCriticalValue.Text = "70";
             // 
             // cbOptionSubdirectories
             // 
@@ -141,6 +144,8 @@
             // cbOptionFileType
             // 
             this.cbOptionFileType.AutoSize = true;
+            this.cbOptionFileType.Checked = true;
+            this.cbOptionFileType.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbOptionFileType.Location = new System.Drawing.Point(12, 134);
             this.cbOptionFileType.Name = "cbOptionFileType";
             this.cbOptionFileType.Size = new System.Drawing.Size(278, 17);
@@ -175,15 +180,38 @@
             this.btnStartProcessing.UseVisualStyleBackColor = true;
             this.btnStartProcessing.Click += new System.EventHandler(this.btnStartProcessing_Click);
             // 
-            // dataGridComprasionResult
+            // dataGridComparisionResult
             // 
-            this.dataGridComprasionResult.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridComprasionResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridComprasionResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {this.FirstFile, this.SecondFile, this.Similarity});
-            this.dataGridComprasionResult.Location = new System.Drawing.Point(11, 267);
-            this.dataGridComprasionResult.Name = "dataGridComprasionResult";
-            this.dataGridComprasionResult.Size = new System.Drawing.Size(755, 243);
-            this.dataGridComprasionResult.TabIndex = 12;
+            this.dataGridComparisionResult.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridComparisionResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridComparisionResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {this.FirstFile, this.SecondFile, this.Similarity, this.RawSimilarityValue});
+            this.dataGridComparisionResult.Location = new System.Drawing.Point(11, 267);
+            this.dataGridComparisionResult.Name = "dataGridComparisionResult";
+            this.dataGridComparisionResult.Size = new System.Drawing.Size(755, 243);
+            this.dataGridComparisionResult.TabIndex = 12;
+            this.dataGridComparisionResult.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridComparisionResult_CellFormatting);
+            // 
+            // numUpDownCriticalValue
+            // 
+            this.numUpDownCriticalValue.Location = new System.Drawing.Point(12, 183);
+            this.numUpDownCriticalValue.Minimum = new decimal(new int[] {1, 0, 0, 0});
+            this.numUpDownCriticalValue.Name = "numUpDownCriticalValue";
+            this.numUpDownCriticalValue.ReadOnly = true;
+            this.numUpDownCriticalValue.Size = new System.Drawing.Size(142, 20);
+            this.numUpDownCriticalValue.TabIndex = 13;
+            this.numUpDownCriticalValue.Value = new decimal(new int[] {2, 0, 0, 0});
+            this.numUpDownCriticalValue.ValueChanged += new System.EventHandler(this.numUpDownCriticalValue_ValueChanged);
+            // 
+            // cbOptionFillTable
+            // 
+            this.cbOptionFillTable.AutoSize = true;
+            this.cbOptionFillTable.Location = new System.Drawing.Point(307, 111);
+            this.cbOptionFillTable.Name = "cbOptionFillTable";
+            this.cbOptionFillTable.Size = new System.Drawing.Size(125, 17);
+            this.cbOptionFillTable.TabIndex = 14;
+            this.cbOptionFillTable.Text = "Дополнять таблицу";
+            this.cbOptionFillTable.UseVisualStyleBackColor = true;
+            this.cbOptionFillTable.CheckedChanged += new System.EventHandler(this.cbOptionFillTable_CheckedChanged);
             // 
             // FirstFile
             // 
@@ -199,28 +227,24 @@
             // 
             // Similarity
             // 
-            this.Similarity.DataPropertyName = "Similarity";
+            this.Similarity.DataPropertyName = "SimilarityPercent";
             this.Similarity.HeaderText = "Схожесть";
             this.Similarity.Name = "Similarity";
             // 
-            // numUpDownCriticalValue
+            // RawSimilarityValue
             // 
-            this.numUpDownCriticalValue.Location = new System.Drawing.Point(12, 183);
-            this.numUpDownCriticalValue.Minimum = new decimal(new int[] {1, 0, 0, 0});
-            this.numUpDownCriticalValue.Name = "numUpDownCriticalValue";
-            this.numUpDownCriticalValue.ReadOnly = true;
-            this.numUpDownCriticalValue.Size = new System.Drawing.Size(142, 20);
-            this.numUpDownCriticalValue.TabIndex = 13;
-            this.numUpDownCriticalValue.Value = new decimal(new int[] {2, 0, 0, 0});
-            this.numUpDownCriticalValue.ValueChanged += new System.EventHandler(this.numUpDownCriticalValue_ValueChanged);
+            this.RawSimilarityValue.DataPropertyName = "RawSimilarityValue";
+            this.RawSimilarityValue.HeaderText = "RawSimilarityValue";
+            this.RawSimilarityValue.Name = "RawSimilarityValue";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(778, 558);
+            this.Controls.Add(this.cbOptionFillTable);
             this.Controls.Add(this.numUpDownCriticalValue);
-            this.Controls.Add(this.dataGridComprasionResult);
+            this.Controls.Add(this.dataGridComparisionResult);
             this.Controls.Add(this.btnStartProcessing);
             this.Controls.Add(this.ProcessingStatusStrip);
             this.Controls.Add(this.cbOptionFileType);
@@ -240,11 +264,15 @@
             this.menu.PerformLayout();
             this.ProcessingStatusStrip.ResumeLayout(false);
             this.ProcessingStatusStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.dataGridComprasionResult)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.dataGridComparisionResult)).EndInit();
             ((System.ComponentModel.ISupportInitialize) (this.numUpDownCriticalValue)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.CheckBox cbOptionFillTable;
+
+        private System.Windows.Forms.DataGridViewTextBoxColumn RawSimilarityValue;
 
         private System.Windows.Forms.NumericUpDown numUpDownCriticalValue;
 
@@ -252,7 +280,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn SecondFile;
         private System.Windows.Forms.DataGridViewTextBoxColumn Similarity;
 
-        private System.Windows.Forms.DataGridView dataGridComprasionResult;
+        private System.Windows.Forms.DataGridView dataGridComparisionResult;
 
         private System.Windows.Forms.Button btnStartProcessing;
 
