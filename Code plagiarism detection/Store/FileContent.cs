@@ -21,7 +21,7 @@ namespace CodePlagiarismDetection
         public FileContent(string file)
         {
             FileName = Path.GetFileName(file);
-            DirectoryName = Path.GetDirectoryName(file);
+            DirectoryName = Path.GetFileName(Path.GetDirectoryName(file));
             Extension = Path.GetExtension(file);
             Text = File.ReadAllText(file);
             NormalizedText = TextNormalizer.NormalizeText(Text);
