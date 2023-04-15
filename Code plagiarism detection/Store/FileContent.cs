@@ -25,6 +25,9 @@ namespace CodePlagiarismDetection
             Extension = Path.GetExtension(file);
             Text = File.ReadAllText(file);
             NormalizedText = TextNormalizer.NormalizeText(Text);
+            Tokens = Tokenizer.Tokenize(Text)
+                .Where(token => token.All(c => !char.IsWhiteSpace(c)))
+                .ToList();
         }
     }
 }
