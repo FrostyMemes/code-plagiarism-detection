@@ -16,6 +16,7 @@ namespace CodePlagiarismDetection
     public partial class MainForm : Form
     {
         private DataTable _comparisionDataTable;
+        private MethodOption _methodOption = MethodOption.Cosine;
         private SearchOption _searchOption = SearchOption.TopDirectoryOnly;
         private FilePairOption _filePairOption = FilePairOption.CheckFileType;
         private TableFillOption _tableFillOption = TableFillOption.ClearTable;
@@ -59,8 +60,8 @@ namespace CodePlagiarismDetection
             var files = FileLoader.LoadFiles(directory, _searchOption)
                 .Select(file => new FileContent(file))
                 .ToList();
-            var cosine = new Cosine();
-            var comparisons = cosine.CompareFilePairwise(files, _filePairOption);
+            var method = MethodChanger.ChangeMethod(_methodOption);
+            var comparisons = method.CompareFilePairwise(files, _filePairOption);
             _comparisionDataTable = ComparisonDataTableWorker
                 .FillComparisionDataTable(_comparisionDataTable, comparisons, _tableFillOption);
         }
@@ -77,6 +78,11 @@ namespace CodePlagiarismDetection
                     dataGridComparisionResult.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Yellow;
                 }
             }
+        }
+        
+        private void lbComparisionMethods_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _methodOption = (MethodOption)lbComparisionMethods.SelectedIndex;
         }
         
         private void cbOptionSubdirectories_CheckedChanged(object sender, EventArgs e)

@@ -43,12 +43,13 @@
             this.ProcessingStatusStrip = new System.Windows.Forms.StatusStrip();
             this.btnStartProcessing = new System.Windows.Forms.Button();
             this.dataGridComparisionResult = new System.Windows.Forms.DataGridView();
-            this.numUpDownCriticalValue = new System.Windows.Forms.NumericUpDown();
-            this.cbOptionFillTable = new System.Windows.Forms.CheckBox();
             this.FirstFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SecondFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Similarity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RawSimilarityValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.numUpDownCriticalValue = new System.Windows.Forms.NumericUpDown();
+            this.cbOptionFillTable = new System.Windows.Forms.CheckBox();
+            this.lbComparisionMethods = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             this.menu.SuspendLayout();
             this.ProcessingStatusStrip.SuspendLayout();
@@ -64,7 +65,7 @@
             this.txtDirectoryPath.ReadOnly = true;
             this.txtDirectoryPath.Size = new System.Drawing.Size(636, 20);
             this.txtDirectoryPath.TabIndex = 0;
-            this.txtDirectoryPath.Text = "D:\\Projects\\C Sharp Projects\\CodePlagiarismDetection\\ModuleTests\\CodeExamples";
+            this.txtDirectoryPath.Text = "D:\\Projects\\C Sharp Projects\\CodePlagiarismDetection\\ModuleTests\\CodeExamples\\CSh" + "arp";
             // 
             // btnBrowse
             // 
@@ -191,28 +192,6 @@
             this.dataGridComparisionResult.TabIndex = 12;
             this.dataGridComparisionResult.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridComparisionResult_CellFormatting);
             // 
-            // numUpDownCriticalValue
-            // 
-            this.numUpDownCriticalValue.Location = new System.Drawing.Point(12, 183);
-            this.numUpDownCriticalValue.Minimum = new decimal(new int[] {1, 0, 0, 0});
-            this.numUpDownCriticalValue.Name = "numUpDownCriticalValue";
-            this.numUpDownCriticalValue.ReadOnly = true;
-            this.numUpDownCriticalValue.Size = new System.Drawing.Size(142, 20);
-            this.numUpDownCriticalValue.TabIndex = 13;
-            this.numUpDownCriticalValue.Value = new decimal(new int[] {2, 0, 0, 0});
-            this.numUpDownCriticalValue.ValueChanged += new System.EventHandler(this.numUpDownCriticalValue_ValueChanged);
-            // 
-            // cbOptionFillTable
-            // 
-            this.cbOptionFillTable.AutoSize = true;
-            this.cbOptionFillTable.Location = new System.Drawing.Point(307, 111);
-            this.cbOptionFillTable.Name = "cbOptionFillTable";
-            this.cbOptionFillTable.Size = new System.Drawing.Size(125, 17);
-            this.cbOptionFillTable.TabIndex = 14;
-            this.cbOptionFillTable.Text = "Дополнять таблицу";
-            this.cbOptionFillTable.UseVisualStyleBackColor = true;
-            this.cbOptionFillTable.CheckedChanged += new System.EventHandler(this.cbOptionFillTable_CheckedChanged);
-            // 
             // FirstFile
             // 
             this.FirstFile.DataPropertyName = "FirstFile";
@@ -237,11 +216,44 @@
             this.RawSimilarityValue.HeaderText = "RawSimilarityValue";
             this.RawSimilarityValue.Name = "RawSimilarityValue";
             // 
+            // numUpDownCriticalValue
+            // 
+            this.numUpDownCriticalValue.Location = new System.Drawing.Point(12, 183);
+            this.numUpDownCriticalValue.Minimum = new decimal(new int[] {1, 0, 0, 0});
+            this.numUpDownCriticalValue.Name = "numUpDownCriticalValue";
+            this.numUpDownCriticalValue.ReadOnly = true;
+            this.numUpDownCriticalValue.Size = new System.Drawing.Size(142, 20);
+            this.numUpDownCriticalValue.TabIndex = 13;
+            this.numUpDownCriticalValue.Value = new decimal(new int[] {2, 0, 0, 0});
+            this.numUpDownCriticalValue.ValueChanged += new System.EventHandler(this.numUpDownCriticalValue_ValueChanged);
+            // 
+            // cbOptionFillTable
+            // 
+            this.cbOptionFillTable.AutoSize = true;
+            this.cbOptionFillTable.Location = new System.Drawing.Point(307, 111);
+            this.cbOptionFillTable.Name = "cbOptionFillTable";
+            this.cbOptionFillTable.Size = new System.Drawing.Size(125, 17);
+            this.cbOptionFillTable.TabIndex = 14;
+            this.cbOptionFillTable.Text = "Дополнять таблицу";
+            this.cbOptionFillTable.UseVisualStyleBackColor = true;
+            this.cbOptionFillTable.CheckedChanged += new System.EventHandler(this.cbOptionFillTable_CheckedChanged);
+            // 
+            // lbComparisionMethods
+            // 
+            this.lbComparisionMethods.FormattingEnabled = true;
+            this.lbComparisionMethods.Items.AddRange(new object[] {"Метод косинуса", "Метод Левинштейна+", "Коэффициент Жаккара "});
+            this.lbComparisionMethods.Location = new System.Drawing.Point(611, 111);
+            this.lbComparisionMethods.Name = "lbComparisionMethods";
+            this.lbComparisionMethods.Size = new System.Drawing.Size(153, 95);
+            this.lbComparisionMethods.TabIndex = 15;
+            this.lbComparisionMethods.SelectedIndexChanged += new System.EventHandler(this.lbComparisionMethods_SelectedIndexChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(778, 558);
+            this.Controls.Add(this.lbComparisionMethods);
             this.Controls.Add(this.cbOptionFillTable);
             this.Controls.Add(this.numUpDownCriticalValue);
             this.Controls.Add(this.dataGridComparisionResult);
@@ -269,6 +281,8 @@
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.ListBox lbComparisionMethods;
 
         private System.Windows.Forms.CheckBox cbOptionFillTable;
 
