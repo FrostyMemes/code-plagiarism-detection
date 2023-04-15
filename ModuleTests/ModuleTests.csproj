@@ -52,6 +52,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="ServiceTests\FileLoaderTests.cs" />
+        <Compile Include="ServiceTests\NormalizerTests.cs" />
         <Compile Include="ServiceTests\ShingleProfilerTests.cs" />
         <Compile Include="Tests.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
@@ -67,6 +68,17 @@
         <Project>{8d7b4e02-f959-4776-9312-a48a68e744a8}</Project>
         <Name>CodePlagiarismDetection</Name>
       </ProjectReference>
+    </ItemGroup>
+    <ItemGroup>
+      <ClCompile Include="CodeExamples\CSharp\1.c" />
+      <ClCompile Include="CodeExamples\CSharp\2.c" />
+      <ClCompile Include="CodeExamples\CSharp\3.c" />
+      <ClCompile Include="CodeExamples\CSharp\4.c" />
+      <ClCompile Include="CodeExamples\CSharp\5.c" />
+      <ClCompile Include="CodeExamples\CSharp\6.c" />
+      <ClCompile Include="CodeExamples\CSharp\7.c" />
+      <ClCompile Include="CodeExamples\CSharp\8.c" />
+      <ClCompile Include="ServiceTests\FilesForNormalizing\TestRegexForDeletingCommentsAndStringLiterals.c" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

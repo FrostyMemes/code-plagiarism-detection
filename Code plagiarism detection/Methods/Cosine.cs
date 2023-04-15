@@ -1,39 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using CodePlagiarismDetection.Services;
 
 namespace CodePlagiarismDetection.Methods
 {
-    public class Cosine
+    public class Cosine: SimilairyMethod
     {
-
-        public List<ComparisonResult> CompareFilePairwise(IEnumerable<FileContent> files, FilePairOption option)
+        protected override ComparisonResult CompareFiles(FileContent file1, FileContent file2)
         {
-            var fileList = files.ToList();
-            var result = new List<ComparisonResult>();
-            for (int i = 0; i < fileList.Count; i++)
-                for (int j = i + 1; j < fileList.Count; j++)
-                {
-                    if (option == FilePairOption.CheckFileType && !fileList[i].Extension.Equals(fileList[j].Extension))
-                        continue;
-                    
-                    result.Add(CompareFiles(fileList[i], fileList[j]));
-                }
-            return result;
-        }
-        
-        private ComparisonResult CompareFiles(FileContent file1, FileContent file2)
-        {
-            var s1 = file1.NormalizedText;
-            var s2 = file2.NormalizedText;
-            if (s1 == null || s2 == null)
-            {
+            
+            if (file1.NormalizedText == null || file2.NormalizedText == null)
                 throw new ArgumentNullException("String must not be null");
-            }
 
             var similarity = 0.0;
+            var s1 = file1.NormalizedText;
+            var s2 = file2.NormalizedText;
+            
             if (s1.Equals(s2))
                 similarity = 1.0;
         

@@ -1,6 +1,12 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=aebeec41_002D28a1_002D440f_002Dacfe_002Dc36520f114f7/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetFilesFromDirectoryWithFilter" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=95b91e2c_002Dcb1e_002D4c77_002D9122_002D0a75c7812a4b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="TestRegexForDeletingCommentsAndStringLiterals" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::38D56899-1B7A-46DF-A65B-7AD3EBBE34C0::.NETFramework,Version=v4.8::ModuleTests.ServiceTests.NormalizerTests.TestRegexForDeletingCommentsAndStringLiterals&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=aebeec41_002D28a1_002D440f_002Dacfe_002Dc36520f114f7/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetFilesFromDirectoryWithFilter" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::38D56899-1B7A-46DF-A65B-7AD3EBBE34C0::.NETFramework,Version=v4.8::ModuleTests.ServiceTests.FileLoaderTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::38D56899-1B7A-46DF-A65B-7AD3EBBE34C0::.NETFramework,Version=v4.8::ModuleTests.ServiceTests.NormalizerTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
