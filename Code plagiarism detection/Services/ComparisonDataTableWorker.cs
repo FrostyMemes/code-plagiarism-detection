@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
@@ -14,6 +15,15 @@ namespace CodePlagiarismDetection.Services
             
             DataColumn column;
 
+            column = new DataColumn()
+            {
+                DataType = Types.GetType("System.String"),
+                ColumnName = "FirstDirectory",
+                Caption = "Папка1",
+                ReadOnly = true
+            };
+            table.Columns.Add(column);
+            
             column = new DataColumn()
             {
                 DataType = Types.GetType("System.String"),
@@ -35,8 +45,26 @@ namespace CodePlagiarismDetection.Services
             column = new DataColumn()
             {
                 DataType = Types.GetType("System.String"),
+                ColumnName = "SecondDirectory",
+                Caption = "Папка2",
+                ReadOnly = true
+            };
+            table.Columns.Add(column);
+            
+            column = new DataColumn()
+            {
+                DataType = Types.GetType("System.String"),
                 ColumnName = "SimilarityPercent",
                 Caption = "Схожесть",
+                ReadOnly = true
+            };
+            table.Columns.Add(column);
+            
+            column = new DataColumn()
+            {
+                DataType = Types.GetType("System.String"),
+                ColumnName = "Method",
+                Caption = "Метод",
                 ReadOnly = true
             };
             table.Columns.Add(column);
@@ -54,7 +82,7 @@ namespace CodePlagiarismDetection.Services
         }
 
         public static DataTable FillComparisionDataTable(DataTable table, IEnumerable<ComparisonResult> comparisions,
-            TableFillOption option)
+            string methodName, TableFillOption option)
         {
             DataRow row;
             var comprassionList = comparisions.ToList();
@@ -65,10 +93,13 @@ namespace CodePlagiarismDetection.Services
             foreach (var compressionResult in comprassionList)
             {
                 row = table.NewRow();
+                row["FirstDirectory"] = compressionResult.File1.DirectoryName;
                 row["FirstFile"] = compressionResult.File1.FileName;
+                row["SecondDirectory"] = compressionResult.File2.DirectoryName;
                 row["SecondFile"] = compressionResult.File2.FileName;
                 row["SimilarityPercent"] = string.Format("{0:0.00%}", compressionResult.Similarity);
-                row["RawSimilarityValue"] = (compressionResult.Similarity * 100).ToString();
+                row["Method"] = methodName;
+                row["RawSimilarityValue"] = Math.Round((compressionResult.Similarity * 100), 2);
                 
                 table.Rows.Add(row);
             }
