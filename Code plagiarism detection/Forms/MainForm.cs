@@ -28,6 +28,7 @@ namespace CodePlagiarismDetection
 
         private void Main_Load(object sender, EventArgs e)
         {
+            lbComparisionMethods.SelectedIndex = 0;
             _comparisionDataTable = ComparisonDataTableWorker.CreateFileCoprasionDataTable();
             dataGridComparisionResult.DataSource = _comparisionDataTable;
         }
@@ -63,7 +64,7 @@ namespace CodePlagiarismDetection
             var method = MethodChanger.ChangeMethod(_methodOption);
             var comparisons = method.CompareFilePairwise(files, _filePairOption);
             _comparisionDataTable = ComparisonDataTableWorker
-                .FillComparisionDataTable(_comparisionDataTable, comparisons, _tableFillOption);
+                .FillComparisionDataTable(_comparisionDataTable, comparisons, lbComparisionMethods.Text, _tableFillOption);
         }
 
         private void dataGridComparisionResult_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)

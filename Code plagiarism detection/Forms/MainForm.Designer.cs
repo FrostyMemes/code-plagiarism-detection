@@ -43,13 +43,18 @@
             this.ProcessingStatusStrip = new System.Windows.Forms.StatusStrip();
             this.btnStartProcessing = new System.Windows.Forms.Button();
             this.dataGridComparisionResult = new System.Windows.Forms.DataGridView();
+            this.FirstDirectory = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FirstFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SecondDirectory = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SecondFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Similarity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Method = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RawSimilarityValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.numUpDownCriticalValue = new System.Windows.Forms.NumericUpDown();
             this.cbOptionFillTable = new System.Windows.Forms.CheckBox();
             this.lbComparisionMethods = new System.Windows.Forms.ListBox();
+            this.lblSimilarityBorder = new System.Windows.Forms.Label();
+            this.lblTokenDividing = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.menu.SuspendLayout();
             this.ProcessingStatusStrip.SuspendLayout();
@@ -185,18 +190,32 @@
             // 
             this.dataGridComparisionResult.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridComparisionResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridComparisionResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {this.FirstFile, this.SecondFile, this.Similarity, this.RawSimilarityValue});
+            this.dataGridComparisionResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {this.FirstDirectory, this.FirstFile, this.SecondDirectory, this.SecondFile, this.Similarity, this.Method, this.RawSimilarityValue});
             this.dataGridComparisionResult.Location = new System.Drawing.Point(11, 267);
             this.dataGridComparisionResult.Name = "dataGridComparisionResult";
             this.dataGridComparisionResult.Size = new System.Drawing.Size(755, 243);
             this.dataGridComparisionResult.TabIndex = 12;
             this.dataGridComparisionResult.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridComparisionResult_CellFormatting);
             // 
+            // FirstDirectory
+            // 
+            this.FirstDirectory.DataPropertyName = "FirstDirectory";
+            this.FirstDirectory.HeaderText = "Папка1";
+            this.FirstDirectory.Name = "FirstDirectory";
+            this.FirstDirectory.ReadOnly = true;
+            // 
             // FirstFile
             // 
             this.FirstFile.DataPropertyName = "FirstFile";
             this.FirstFile.HeaderText = "Файл1";
             this.FirstFile.Name = "FirstFile";
+            // 
+            // SecondDirectory
+            // 
+            this.SecondDirectory.DataPropertyName = "SecondDirectory";
+            this.SecondDirectory.HeaderText = "Папка2";
+            this.SecondDirectory.Name = "SecondDirectory";
+            this.SecondDirectory.ReadOnly = true;
             // 
             // SecondFile
             // 
@@ -209,6 +228,12 @@
             this.Similarity.DataPropertyName = "SimilarityPercent";
             this.Similarity.HeaderText = "Схожесть";
             this.Similarity.Name = "Similarity";
+            // 
+            // Method
+            // 
+            this.Method.DataPropertyName = "Method";
+            this.Method.HeaderText = "Метод";
+            this.Method.Name = "Method";
             // 
             // RawSimilarityValue
             // 
@@ -241,18 +266,36 @@
             // lbComparisionMethods
             // 
             this.lbComparisionMethods.FormattingEnabled = true;
-            this.lbComparisionMethods.Items.AddRange(new object[] {"Метод косинуса", "Метод Левинштейна+", "Коэффициент Жаккара "});
+            this.lbComparisionMethods.Items.AddRange(new object[] {"Метод косинуса", "Метод Левенштейна+", "Коэффициент Жаккара "});
             this.lbComparisionMethods.Location = new System.Drawing.Point(611, 111);
             this.lbComparisionMethods.Name = "lbComparisionMethods";
             this.lbComparisionMethods.Size = new System.Drawing.Size(153, 95);
             this.lbComparisionMethods.TabIndex = 15;
             this.lbComparisionMethods.SelectedIndexChanged += new System.EventHandler(this.lbComparisionMethods_SelectedIndexChanged);
             // 
+            // lblSimilarityBorder
+            // 
+            this.lblSimilarityBorder.Location = new System.Drawing.Point(160, 160);
+            this.lblSimilarityBorder.Name = "lblSimilarityBorder";
+            this.lblSimilarityBorder.Size = new System.Drawing.Size(100, 17);
+            this.lblSimilarityBorder.TabIndex = 16;
+            this.lblSimilarityBorder.Text = "Граница схожести";
+            // 
+            // lblTokenDividing
+            // 
+            this.lblTokenDividing.Location = new System.Drawing.Point(160, 185);
+            this.lblTokenDividing.Name = "lblTokenDividing";
+            this.lblTokenDividing.Size = new System.Drawing.Size(100, 17);
+            this.lblTokenDividing.TabIndex = 17;
+            this.lblTokenDividing.Text = "Разбиение";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(778, 558);
+            this.Controls.Add(this.lblTokenDividing);
+            this.Controls.Add(this.lblSimilarityBorder);
             this.Controls.Add(this.lbComparisionMethods);
             this.Controls.Add(this.cbOptionFillTable);
             this.Controls.Add(this.numUpDownCriticalValue);
@@ -281,6 +324,14 @@
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.Label lblSimilarityBorder;
+        private System.Windows.Forms.Label lblTokenDividing;
+
+        private System.Windows.Forms.DataGridViewTextBoxColumn Method;
+
+        private System.Windows.Forms.DataGridViewTextBoxColumn FirstDirectory;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SecondDirectory;
 
         private System.Windows.Forms.ListBox lbComparisionMethods;
 
