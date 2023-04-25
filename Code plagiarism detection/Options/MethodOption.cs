@@ -2,8 +2,11 @@
 {
     public enum MethodOption
     {
-        Cosine,
-        LevinsteinModify,
+        Cosine = 0,
+        LevensteinModify,
         JaccardCoefficient,
+        NGramDistance,
+        LongestCommonSubsequence,
+        SorensenDice,
     }
 }
