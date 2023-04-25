@@ -9,7 +9,7 @@ namespace CodePlagiarismDetection.Services
             = new Dictionary<MethodOption, SimilairyMethod>()
             {
                 {MethodOption.Cosine, new Cosine()},
-                {MethodOption.LevinsteinModify, new LevenshteinModify()},
+                {MethodOption.LevensteinModify, new LevenshteinModify()},
                 {MethodOption.JaccardCoefficient, new JaccardCoefficient()}
             };
 
