@@ -78,6 +78,24 @@ namespace CodePlagiarismDetection.Services
             };
             table.Columns.Add(column);
             
+            column = new DataColumn()
+            {
+                DataType = Types.GetType("System.String"),
+                ColumnName = "PathToFirstFile",
+                Caption = "PathToFirstFile",
+                ReadOnly = true
+            };
+            table.Columns.Add(column);
+            
+            column = new DataColumn()
+            {
+                DataType = Types.GetType("System.String"),
+                ColumnName = "PathToSecondFile",
+                Caption = "PathToSecondFile",
+                ReadOnly = true
+            };
+            table.Columns.Add(column);
+            
             return table;
         }
 
@@ -100,6 +118,8 @@ namespace CodePlagiarismDetection.Services
                 row["SimilarityPercent"] = string.Format("{0:0.00%}", compressionResult.Similarity);
                 row["Method"] = methodName;
                 row["RawSimilarityValue"] = Math.Round((compressionResult.Similarity * 100), 2);
+                row["PathToFirstFile"] = compressionResult.File1.FullPath;
+                row["PathToSecondFile"] = compressionResult.File2.FullPath;
                 
                 table.Rows.Add(row);
             }
