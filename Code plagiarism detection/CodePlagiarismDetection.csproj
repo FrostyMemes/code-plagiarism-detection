@@ -71,9 +71,11 @@
     <Compile Include="Services\FileLoader.cs" />
     <Compile Include="Services\MethodChanger.cs" />
     <Compile Include="Services\ShingleProfiler.cs" />
+    <Compile Include="Services\ReportGenerator.cs" />
     <Compile Include="Services\TextNormalizer.cs" />
     <Compile Include="Services\TokenDistance.cs" />
     <Compile Include="Services\Tokenizer.cs" />
+    <Compile Include="Services\ValidationChecker.cs" />
     <Compile Include="Store\ComparisonResult.cs" />
     <Compile Include="Store\FileContent.cs" />
     <EmbeddedResource Include="Forms\FilterForm.resx">
