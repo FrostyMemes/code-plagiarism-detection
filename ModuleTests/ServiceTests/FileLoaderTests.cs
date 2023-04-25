@@ -47,8 +47,6 @@ namespace ModuleTests.ServiceTests
                 factFilesCount += directory.GetFiles(pattern, SearchOption.AllDirectories)
                     .ToList().Count;
             }
-            
-            
             Assert.Equal(factFilesCount, testFileLoaderFileCount);
         }
     }
