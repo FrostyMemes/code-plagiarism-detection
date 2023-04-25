@@ -1,4 +1,4 @@
-﻿namespace CodePlagiarismDetection
+﻿namespace CodePlagiarismDetection.Forms
 {
     partial class MainForm
     {
@@ -36,7 +36,6 @@
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnFilterForm = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.txtCriticalValue = new System.Windows.Forms.TextBox();
             this.cbOptionSubdirectories = new System.Windows.Forms.CheckBox();
             this.cbOptionFileType = new System.Windows.Forms.CheckBox();
             this.ProcessingStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -50,16 +49,20 @@
             this.Similarity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Method = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RawSimilarityValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.numUpDownCriticalValue = new System.Windows.Forms.NumericUpDown();
+            this.PathToFirstFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PathToSecondFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.numUpDownTokenLenghtValue = new System.Windows.Forms.NumericUpDown();
             this.cbOptionFillTable = new System.Windows.Forms.CheckBox();
             this.lbComparisionMethods = new System.Windows.Forms.ListBox();
             this.lblSimilarityBorder = new System.Windows.Forms.Label();
             this.lblTokenDividing = new System.Windows.Forms.Label();
+            this.numUpDownCriticalBorderValue = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             this.menu.SuspendLayout();
             this.ProcessingStatusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize) (this.dataGridComparisionResult)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.numUpDownCriticalValue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.numUpDownTokenLenghtValue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.numUpDownCriticalBorderValue)).BeginInit();
             this.SuspendLayout();
             // 
             // txtDirectoryPath
@@ -68,14 +71,14 @@
             this.txtDirectoryPath.Location = new System.Drawing.Point(6, 20);
             this.txtDirectoryPath.Name = "txtDirectoryPath";
             this.txtDirectoryPath.ReadOnly = true;
-            this.txtDirectoryPath.Size = new System.Drawing.Size(636, 20);
+            this.txtDirectoryPath.Size = new System.Drawing.Size(657, 20);
             this.txtDirectoryPath.TabIndex = 0;
             this.txtDirectoryPath.Text = "D:\\Projects\\C Sharp Projects\\CodePlagiarismDetection\\ModuleTests\\CodeExamples\\CSh" + "arp";
             // 
             // btnBrowse
             // 
             this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnBrowse.Location = new System.Drawing.Point(658, 17);
+            this.btnBrowse.Location = new System.Drawing.Point(679, 17);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(85, 23);
             this.btnBrowse.TabIndex = 1;
@@ -90,7 +93,7 @@
             this.groupBox1.Controls.Add(this.btnBrowse);
             this.groupBox1.Location = new System.Drawing.Point(12, 36);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(752, 53);
+            this.groupBox1.Size = new System.Drawing.Size(773, 53);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Путь до директории";
@@ -100,7 +103,7 @@
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.справкаToolStripMenuItem});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
-            this.menu.Size = new System.Drawing.Size(778, 24);
+            this.menu.Size = new System.Drawing.Size(799, 24);
             this.menu.TabIndex = 3;
             this.menu.Text = "menuStrip1";
             // 
@@ -125,16 +128,8 @@
             this.progressBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.progressBar1.Location = new System.Drawing.Point(0, 535);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(778, 23);
+            this.progressBar1.Size = new System.Drawing.Size(799, 23);
             this.progressBar1.TabIndex = 5;
-            // 
-            // txtCriticalValue
-            // 
-            this.txtCriticalValue.Location = new System.Drawing.Point(11, 157);
-            this.txtCriticalValue.Name = "txtCriticalValue";
-            this.txtCriticalValue.Size = new System.Drawing.Size(142, 20);
-            this.txtCriticalValue.TabIndex = 6;
-            this.txtCriticalValue.Text = "70";
             // 
             // cbOptionSubdirectories
             // 
@@ -171,7 +166,7 @@
             this.ProcessingStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.ProcessingStatusLabel});
             this.ProcessingStatusStrip.Location = new System.Drawing.Point(0, 513);
             this.ProcessingStatusStrip.Name = "ProcessingStatusStrip";
-            this.ProcessingStatusStrip.Size = new System.Drawing.Size(778, 22);
+            this.ProcessingStatusStrip.Size = new System.Drawing.Size(799, 22);
             this.ProcessingStatusStrip.SizingGrip = false;
             this.ProcessingStatusStrip.TabIndex = 10;
             this.ProcessingStatusStrip.Text = "statusStrip1";
@@ -188,12 +183,16 @@
             // 
             // dataGridComparisionResult
             // 
+            this.dataGridComparisionResult.AllowUserToAddRows = false;
+            this.dataGridComparisionResult.AllowUserToDeleteRows = false;
             this.dataGridComparisionResult.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridComparisionResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridComparisionResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {this.FirstDirectory, this.FirstFile, this.SecondDirectory, this.SecondFile, this.Similarity, this.Method, this.RawSimilarityValue});
+            this.dataGridComparisionResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {this.FirstDirectory, this.FirstFile, this.SecondDirectory, this.SecondFile, this.Similarity, this.Method, this.RawSimilarityValue, this.PathToFirstFile, this.PathToSecondFile});
             this.dataGridComparisionResult.Location = new System.Drawing.Point(11, 267);
             this.dataGridComparisionResult.Name = "dataGridComparisionResult";
-            this.dataGridComparisionResult.Size = new System.Drawing.Size(755, 243);
+            this.dataGridComparisionResult.RowHeadersVisible = false;
+            this.dataGridComparisionResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridComparisionResult.Size = new System.Drawing.Size(776, 243);
             this.dataGridComparisionResult.TabIndex = 12;
             this.dataGridComparisionResult.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridComparisionResult_CellFormatting);
             // 
@@ -241,21 +240,35 @@
             this.RawSimilarityValue.HeaderText = "RawSimilarityValue";
             this.RawSimilarityValue.Name = "RawSimilarityValue";
             // 
-            // numUpDownCriticalValue
+            // PathToFirstFile
             // 
-            this.numUpDownCriticalValue.Location = new System.Drawing.Point(12, 183);
-            this.numUpDownCriticalValue.Minimum = new decimal(new int[] {1, 0, 0, 0});
-            this.numUpDownCriticalValue.Name = "numUpDownCriticalValue";
-            this.numUpDownCriticalValue.ReadOnly = true;
-            this.numUpDownCriticalValue.Size = new System.Drawing.Size(142, 20);
-            this.numUpDownCriticalValue.TabIndex = 13;
-            this.numUpDownCriticalValue.Value = new decimal(new int[] {2, 0, 0, 0});
-            this.numUpDownCriticalValue.ValueChanged += new System.EventHandler(this.numUpDownCriticalValue_ValueChanged);
+            this.PathToFirstFile.DataPropertyName = "PathToFirstFile";
+            this.PathToFirstFile.HeaderText = "PathToFirstFile";
+            this.PathToFirstFile.Name = "PathToFirstFile";
+            this.PathToFirstFile.Visible = false;
+            // 
+            // PathToSecondFile
+            // 
+            this.PathToSecondFile.DataPropertyName = "PathToSecondFile";
+            this.PathToSecondFile.HeaderText = "PathToSecondFile";
+            this.PathToSecondFile.Name = "PathToSecondFile";
+            this.PathToSecondFile.Visible = false;
+            // 
+            // numUpDownTokenLenghtValue
+            // 
+            this.numUpDownTokenLenghtValue.Location = new System.Drawing.Point(12, 183);
+            this.numUpDownTokenLenghtValue.Minimum = new decimal(new int[] {1, 0, 0, 0});
+            this.numUpDownTokenLenghtValue.Name = "numUpDownTokenLenghtValue";
+            this.numUpDownTokenLenghtValue.ReadOnly = true;
+            this.numUpDownTokenLenghtValue.Size = new System.Drawing.Size(142, 20);
+            this.numUpDownTokenLenghtValue.TabIndex = 13;
+            this.numUpDownTokenLenghtValue.Value = new decimal(new int[] {2, 0, 0, 0});
+            this.numUpDownTokenLenghtValue.ValueChanged += new System.EventHandler(this.numUpDownCriticalValue_ValueChanged);
             // 
             // cbOptionFillTable
             // 
             this.cbOptionFillTable.AutoSize = true;
-            this.cbOptionFillTable.Location = new System.Drawing.Point(307, 111);
+            this.cbOptionFillTable.Location = new System.Drawing.Point(317, 111);
             this.cbOptionFillTable.Name = "cbOptionFillTable";
             this.cbOptionFillTable.Size = new System.Drawing.Size(125, 17);
             this.cbOptionFillTable.TabIndex = 14;
@@ -265,9 +278,10 @@
             // 
             // lbComparisionMethods
             // 
+            this.lbComparisionMethods.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lbComparisionMethods.FormattingEnabled = true;
             this.lbComparisionMethods.Items.AddRange(new object[] {"Метод косинуса", "Метод Левенштейна+", "Коэффициент Жаккара "});
-            this.lbComparisionMethods.Location = new System.Drawing.Point(611, 111);
+            this.lbComparisionMethods.Location = new System.Drawing.Point(632, 111);
             this.lbComparisionMethods.Name = "lbComparisionMethods";
             this.lbComparisionMethods.Size = new System.Drawing.Size(153, 95);
             this.lbComparisionMethods.TabIndex = 15;
@@ -289,22 +303,31 @@
             this.lblTokenDividing.TabIndex = 17;
             this.lblTokenDividing.Text = "Разбиение";
             // 
+            // numUpDownCriticalBorderValue
+            // 
+            this.numUpDownCriticalBorderValue.Location = new System.Drawing.Point(12, 157);
+            this.numUpDownCriticalBorderValue.Minimum = new decimal(new int[] {1, 0, 0, 0});
+            this.numUpDownCriticalBorderValue.Name = "numUpDownCriticalBorderValue";
+            this.numUpDownCriticalBorderValue.Size = new System.Drawing.Size(142, 20);
+            this.numUpDownCriticalBorderValue.TabIndex = 18;
+            this.numUpDownCriticalBorderValue.Value = new decimal(new int[] {70, 0, 0, 0});
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(778, 558);
+            this.ClientSize = new System.Drawing.Size(799, 558);
+            this.Controls.Add(this.numUpDownCriticalBorderValue);
             this.Controls.Add(this.lblTokenDividing);
             this.Controls.Add(this.lblSimilarityBorder);
             this.Controls.Add(this.lbComparisionMethods);
             this.Controls.Add(this.cbOptionFillTable);
-            this.Controls.Add(this.numUpDownCriticalValue);
+            this.Controls.Add(this.numUpDownTokenLenghtValue);
             this.Controls.Add(this.dataGridComparisionResult);
             this.Controls.Add(this.btnStartProcessing);
             this.Controls.Add(this.ProcessingStatusStrip);
             this.Controls.Add(this.cbOptionFileType);
             this.Controls.Add(this.cbOptionSubdirectories);
-            this.Controls.Add(this.txtCriticalValue);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.btnFilterForm);
             this.Controls.Add(this.groupBox1);
@@ -320,10 +343,16 @@
             this.ProcessingStatusStrip.ResumeLayout(false);
             this.ProcessingStatusStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize) (this.dataGridComparisionResult)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.numUpDownCriticalValue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.numUpDownTokenLenghtValue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.numUpDownCriticalBorderValue)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.NumericUpDown numUpDownCriticalBorderValue;
+
+        private System.Windows.Forms.DataGridViewTextBoxColumn PathToFirstFile;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PathToSecondFile;
 
         private System.Windows.Forms.Label lblSimilarityBorder;
         private System.Windows.Forms.Label lblTokenDividing;
@@ -339,7 +368,7 @@
 
         private System.Windows.Forms.DataGridViewTextBoxColumn RawSimilarityValue;
 
-        private System.Windows.Forms.NumericUpDown numUpDownCriticalValue;
+        private System.Windows.Forms.NumericUpDown numUpDownTokenLenghtValue;
 
         private System.Windows.Forms.DataGridViewTextBoxColumn FirstFile;
         private System.Windows.Forms.DataGridViewTextBoxColumn SecondFile;
@@ -359,7 +388,6 @@
 
         private System.Windows.Forms.Button btnFilterForm;
         private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.TextBox txtCriticalValue;
         private System.Windows.Forms.CheckBox cbOptionSubdirectories;
         private System.Windows.Forms.CheckBox cbOptionFileType;
         private System.Windows.Forms.ToolStripStatusLabel ProcessingStatusLabel;

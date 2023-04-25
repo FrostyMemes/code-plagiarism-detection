@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using CodePlagiarismDetection.Methods;
 using CodePlagiarismDetection.Services;
 
-namespace CodePlagiarismDetection
+namespace CodePlagiarismDetection.Forms
 {
     public partial class MainForm : Form
     {
@@ -29,16 +24,15 @@ namespace CodePlagiarismDetection
         private void Main_Load(object sender, EventArgs e)
         {
             lbComparisionMethods.SelectedIndex = 0;
-            _comparisionDataTable = ComparisonDataTableWorker.CreateFileCoprasionDataTable();
             dataGridComparisionResult.DataSource = _comparisionDataTable;
+            _comparisionDataTable = ComparisonDataTableWorker.CreateFileCoprasionDataTable();
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             var folderBrowserDialog = new FolderBrowserDialog();
-            if (folderBrowserDialog.ShowDialog() == DialogResult.OK) {
-                txtDirectoryPath.Text = folderBrowserDialog.SelectedPath ;
-            }
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+                txtDirectoryPath.Text = folderBrowserDialog.SelectedPath;
         }
         
         private void btnFilterForm_Click(object sender, EventArgs e)
@@ -54,7 +48,7 @@ namespace CodePlagiarismDetection
 
         private void btnStartProcessing_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrWhiteSpace(txtDirectoryPath.Text))
+            if (!ValidationChecker.CheckCurrentDirectory(txtDirectoryPath.Text))
                 return;
 
             var directory = new DirectoryInfo(txtDirectoryPath.Text);
@@ -72,12 +66,15 @@ namespace CodePlagiarismDetection
             if (dataGridComparisionResult.Columns[e.ColumnIndex].Name.Equals("RawSimilarityValue") &&
                 dataGridComparisionResult.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             {
-                double criticalBorder;
-                if(Double.TryParse(txtCriticalValue.Text, out criticalBorder) &&
+                var criticalBorder = (double)numUpDownCriticalBorderValue.Value;
+                if ((double)e.Value > criticalBorder)
+                    dataGridComparisionResult.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Yellow;
+                /*double criticalBorder;
+                if(Double.TryParse(numUpDownCriticalBorderValue.Value, out criticalBorder) &&
                    ((double)e.Value > criticalBorder))
                 {
                     dataGridComparisionResult.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Yellow;
-                }
+                }*/
             }
         }
         
@@ -109,7 +106,7 @@ namespace CodePlagiarismDetection
         
         private void numUpDownCriticalValue_ValueChanged(object sender, EventArgs e)
         {
-            ShingleProfiler.N = int.Parse(numUpDownCriticalValue.Text);
+            ShingleProfiler.N = int.Parse(numUpDownTokenLenghtValue.Text);
         }
     }
 }
