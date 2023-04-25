@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Text;
 using System.IO;
-using System.Threading.Tasks;
 using CodePlagiarismDetection.Services;
 
 namespace CodePlagiarismDetection
@@ -13,6 +9,7 @@ namespace CodePlagiarismDetection
     {
         public readonly string FileName;
         public readonly string DirectoryName;
+        public readonly string FullPath;
         public readonly string Extension;
         public readonly string Text;
         public readonly string NormalizedText;
@@ -22,6 +19,7 @@ namespace CodePlagiarismDetection
         {
             FileName = Path.GetFileName(file);
             DirectoryName = Path.GetFileName(Path.GetDirectoryName(file));
+            FullPath = file;
             Extension = Path.GetExtension(file);
             Text = File.ReadAllText(file);
             NormalizedText = TextNormalizer.NormalizeText(Text);

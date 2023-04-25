@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using CodePlagiarismDetection.Services;
 
 namespace CodePlagiarismDetection.Methods
@@ -36,10 +35,5 @@ namespace CodePlagiarismDetection.Methods
             
             return new ComparisonResult(file1, file2, normalizedDistance);
         }
-
-        /*private double[] GetLevinsteinMatrix(List<s>)
-        {
-            
-        }*/
     }
 }

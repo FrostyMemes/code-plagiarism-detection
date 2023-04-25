@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CodePlagiarismDetection
+﻿namespace CodePlagiarismDetection
 {
     public class ComparisonResult
     {

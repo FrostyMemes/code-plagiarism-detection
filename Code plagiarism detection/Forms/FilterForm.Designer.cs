@@ -1,5 +1,5 @@
 ﻿
-namespace CodePlagiarismDetection
+namespace CodePlagiarismDetection.Forms
 {
     partial class FilterForm
     {
@@ -56,6 +56,7 @@ namespace CodePlagiarismDetection
             this.ClientSize = new System.Drawing.Size(287, 345);
             this.Controls.Add(this.txtFilter);
             this.Name = "FilterForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Фильтр";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FilterForm_FormClosing);
             this.Load += new System.EventHandler(this.Filter_Load);
