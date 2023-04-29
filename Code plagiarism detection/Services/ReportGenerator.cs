@@ -1,16 +1,117 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Web.UI;
 
 namespace CodePlagiarismDetection.Services
 {
     public static class ReportGenerator
     {
-        public static void GenerateReport(string file1, string file2)
+        public enum TokenType
         {
-            
+            Common,
+            Original
+        }
+        public static string GenerateHTMLReport(string originalFile, string comparedFile)
+        {
+            var stringWriter = new StringWriter();
+            stringWriter.WriteLine(HtmlBegin);
+            using (var htmlWriter = new HtmlTextWriter(stringWriter))
+            {
+                var originalFileContent = new FileContent(originalFile);
+                var comparedFileContent = new FileContent(comparedFile);
+                var commonSubsequence = CalculateLiteralLCS(originalFileContent.Literals, comparedFileContent.Literals);
+                GenerateMarkup(originalFileContent, comparedFileContent, commonSubsequence, htmlWriter);
+            }
+
+            return stringWriter.ToString();
         }
         
-        public static List<string> Calculate(List<string> first, List<string> second)
+        private static void GenerateMarkup(FileContent originalFile, FileContent comparedFile, 
+            List<string> commonSequence, HtmlTextWriter writer)
+        {
+            WriteDocumentsNames(originalFile.FileName, comparedFile.FileName, writer);
+            writer.RenderBeginTag(HtmlTextWriterTag.Tr);
+            WriteDocumentInHtml(originalFile, commonSequence, writer);
+            WriteDocumentInHtml(comparedFile, commonSequence, writer);
+            writer.RenderEndTag();
+            writer.WriteLine(HtmlEnd);
+        }
+
+        private static void WriteDocumentsNames(string firstDocumentName, string secondDocumentName, HtmlTextWriter writer)
+        {
+            writer.RenderBeginTag(HtmlTextWriterTag.Tr);
+            writer.RenderBeginTag(HtmlTextWriterTag.Th);
+            writer.WriteEncodedText(firstDocumentName);
+            writer.RenderEndTag();
+            writer.RenderBeginTag(HtmlTextWriterTag.Th);
+            writer.WriteEncodedText(secondDocumentName);
+            writer.RenderEndTag();
+            writer.RenderEndTag();
+        }
+        
+        private static void WriteDocumentInHtml(FileContent file, List<string> commonSequence, HtmlTextWriter writer)
+        {
+            writer.RenderBeginTag(HtmlTextWriterTag.Td);
+            var wasCommon = false;
+            var whiteSpacesTokens = new StringBuilder();
+            var rawTextTokens = LiteralTokenizer.Tokenize(file.Text).ToList();
+            foreach (var tokenAndType in GetTokensType(rawTextTokens, commonSequence))
+            {
+                var token = tokenAndType.Item1;
+                var tag = tokenAndType.Item2;
+                if (token.Any(char.IsWhiteSpace))
+                {
+                    whiteSpacesTokens.Append(token);
+                    continue;
+                }
+                if (wasCommon && tag == TokenType.Common)
+                {
+                    WriteWithTag(writer, whiteSpacesTokens.ToString(), TokenType.Common);
+                }
+                else
+                {
+                    WriteWithTag(writer, whiteSpacesTokens.ToString(), TokenType.Original);
+                }
+                WriteWithTag(writer, token, tag);
+                whiteSpacesTokens.Clear();
+                wasCommon = tag == TokenType.Common;
+            }
+            WriteWithTag(writer, whiteSpacesTokens.ToString(), TokenType.Original);
+            writer.RenderEndTag();
+        }
+
+        private static void WriteWithTag(HtmlTextWriter writer, string text, TokenType tag)
+        {
+            if (text.Length == 0) 
+                return;
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, tag.ToString());
+            writer.RenderBeginTag(HtmlTextWriterTag.Span);
+            writer.WriteEncodedText(text);
+            writer.RenderEndTag();
+        }
+        
+        public static IEnumerable<Tuple<string, TokenType>> GetTokensType(List<string> rawTextTokens,  
+            List<string> commonTokens)
+        {
+            int i = 0;
+            foreach (var token in rawTextTokens)
+            {
+                if (i != commonTokens.Count && token == commonTokens[i])
+                {
+                    yield return Tuple.Create(token, TokenType.Common);
+                    ++i;
+                }
+                else
+                {
+                    yield return Tuple.Create(token, TokenType.Original);
+                }
+            }
+        }
+        
+        public static List<string> CalculateLiteralLCS(List<string> first, List<string> second)
         {
             int[,] opt = new int[first.Count + 1, second.Count + 1];
             for (int i = 0; i < first.Count; i++)
@@ -43,19 +144,24 @@ namespace CodePlagiarismDetection.Services
         }
         
         private const string HtmlBegin =
-            @"<!DOCTYPE html><html><head><meta charset=""utf-8""/><title>Подозрительные части</title>
-                    <style type=""text/css"">
-                    * {
-                        padding-top:0;
-                        margin-top:0;
-                        border-top:0;
-                    }
-                    .Common {background-color: #ff9999;}
-                    tr, td {vertical-align: top; border-left: 1px solid #ddd;border-bottom: 1px solid #ddd;}
-                    th {background-color: #ddd} 
-                    </style>
-                </head><body><pre><table valign=""top"">";
-        
+            @"<!DOCTYPE html>
+<html>
+<head>
+<meta charset=""utf-8""/>
+<title>Похожие решения</title>
+<style type=""text/css"">
+* {padding-top:0;margin-top:0;border-top:0;}
+.Common {background-color: #ff9999;}
+tr, td {vertical-align: top; border-left: 1px solid #ddd;border-bottom: 1px solid #ddd;}
+th {background-color: #ddd} 
+</style>
+</head>
+<body>
+<pre>
+<table valign=""top"">";
+
         private const string HtmlEnd = @"</table></pre></body></html>";
+        
+        
     }
 }
