@@ -1,20 +1,31 @@
 ﻿using System;
+using System.Linq;
 using CodePlagiarismDetection.Services;
 
 namespace CodePlagiarismDetection.Methods
 {
     public class LevenshteinModify: SimilairyMethod
     {
-        protected override ComparisonResult CompareFiles(FileContent file1, FileContent file2)
+        protected override ComparisonResult CompareFiles(FileContent originalFile, FileContent comparedFile)
         {
-            if (file1.Tokens == null || file2.Tokens == null)
-                throw new ArgumentNullException("String must not be null");
+            if (originalFile.Literals == null) 
+                throw new ArgumentNullException($"{originalFile.FileName} text must not be null");
+            
+            if (comparedFile.Literals == null)
+                throw new ArgumentNullException($"{comparedFile.FileName} text must not be null");
 
-            var s1 = file1.Tokens;
-            var s2 = file2.Tokens;
+            var s1 = originalFile.Literals;
+            var s2 = comparedFile.Literals;
+
+            if (s1.Count == 0 || s2.Count == 0)
+                return new ComparisonResult(originalFile, comparedFile, 0.0);
+            
             var diff = 0.0;
             var m = new double[s1.Count + 1, s2.Count + 1];
 
+            s1.Sort();
+            s2.Sort();
+            
             for (int i = 0; i <= s1.Count; i++) { m[i, 0] = i; }
             for (int j = 0; j <= s2.Count; j++) { m[0, j] = j; }
 
@@ -31,9 +42,9 @@ namespace CodePlagiarismDetection.Methods
                 }
             
             var normalizedDistance = 1 - (m[s1.Count, s2.Count] / 
-                                          Math.Max(file1.Tokens.Count, file2.Tokens.Count));
+                                          Math.Max(originalFile.Literals.Count, comparedFile.Literals.Count));
             
-            return new ComparisonResult(file1, file2, normalizedDistance);
+            return new ComparisonResult(originalFile, comparedFile, normalizedDistance);
         }
     }
 }
