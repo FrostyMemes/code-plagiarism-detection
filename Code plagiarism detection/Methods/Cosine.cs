@@ -1,64 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CodePlagiarismDetection.Services;
 
 namespace CodePlagiarismDetection.Methods
 {
     public class Cosine: SimilairyMethod
     {
-        protected override ComparisonResult CompareFiles(FileContent file1, FileContent file2)
+        protected override ComparisonResult CompareFiles(FileContent originalFile, FileContent comparedFile)
         {
             
-            if (file1.NormalizedText == null || file2.NormalizedText == null)
-                throw new ArgumentNullException("String must not be null");
-
+            if (originalFile.NormalizedText == null) 
+                throw new ArgumentNullException($"{originalFile.FileName} text must not be null");
+            
+            if (comparedFile.NormalizedText == null)
+                throw new ArgumentNullException($"{comparedFile.FileName} text must not be null");
+            
+            var s1 = originalFile.NormalizedText;
+            var s2 = comparedFile.NormalizedText;
             var similarity = 0.0;
-            var s1 = file1.NormalizedText;
-            var s2 = file2.NormalizedText;
             
             if (s1.Equals(s2))
-                similarity = 1.0;
+                return new ComparisonResult(originalFile, comparedFile, 1.0);
         
             if (s1.Length < ShingleProfiler.N || s2.Length < ShingleProfiler.N )
-                similarity = 0.0;
+                return new ComparisonResult(originalFile, comparedFile, 0.0);
 
             var profile1 = ShingleProfiler.GetProfile(s1);
             var profile2 = ShingleProfiler.GetProfile(s2);
 
+            var dot = DotProduct(profile1, profile2);
+            var norm1 = Norm(profile1);
+            var norm2 = Norm(profile2);
             similarity = DotProduct(profile1, profile2) / (Norm(profile1) * Norm(profile2));
-            return new ComparisonResult(file1, file2, similarity);
+            return new ComparisonResult(originalFile, comparedFile, similarity);
         }
         
         private static double DotProduct(Dictionary<string, int> profile1, Dictionary<string, int> profile2)
         {
-            Dictionary<string, int> small_profile = profile2;
-            Dictionary<string, int> large_profile = profile1;
+            var dot = 0.0;
+            var intersection = profile1.Keys.Intersect(profile2.Keys);
 
-            if (profile1.Count < profile2.Count)
-            {
-                small_profile = profile1;
-                large_profile = profile2;
-            }
+            foreach (var shingle in intersection)
+                dot += 1.0 * profile1[shingle] * profile2[shingle];
 
-            double agg = 0;
-            int i = 0;
-
-            foreach (var pair in small_profile)
-            {
-                if (large_profile.ContainsKey(pair.Key))
-                    agg += 1.0 * pair.Value * large_profile[pair.Key];
-            }
-
-            return agg;
+            return dot;
         }
         
         private static double Norm(Dictionary<string, int> profile)
         {
-            double agg = 0;
+            var agg = 0.0;
 
             foreach (var pair in profile)
             {
-                agg += 1.0 * pair.Value * pair.Value;
+                agg += 1.0 * Math.Pow(pair.Value, 2);
             }
 
             return Math.Sqrt(agg);
