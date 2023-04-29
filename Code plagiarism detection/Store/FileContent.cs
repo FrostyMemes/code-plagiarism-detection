@@ -13,7 +13,7 @@ namespace CodePlagiarismDetection
         public readonly string Extension;
         public readonly string Text;
         public readonly string NormalizedText;
-        public readonly List<string> Tokens;
+        public readonly List<string> Literals;
 
         public FileContent(string file)
         {
@@ -23,7 +23,7 @@ namespace CodePlagiarismDetection
             Extension = Path.GetExtension(file);
             Text = File.ReadAllText(file);
             NormalizedText = TextNormalizer.NormalizeText(Text);
-            Tokens = Tokenizer.Tokenize(Text)
+            Literals = LiteralTokenizer.Tokenize(Text)
                 .Where(token => token.All(c => !char.IsWhiteSpace(c)))
                 .ToList();
         }
