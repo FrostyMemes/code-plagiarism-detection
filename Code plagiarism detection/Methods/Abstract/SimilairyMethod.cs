@@ -19,6 +19,7 @@ namespace CodePlagiarismDetection.Methods
             }
             return result;
         }
-        protected abstract ComparisonResult CompareFiles(FileContent file1, FileContent file2);
+        
+        protected abstract ComparisonResult CompareFiles(FileContent originalFile, FileContent comparedFile);
     }
 }
