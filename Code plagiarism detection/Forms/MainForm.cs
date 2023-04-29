@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using CodePlagiarismDetection.Methods;
 using CodePlagiarismDetection.Services;
 
 namespace CodePlagiarismDetection.Forms
@@ -16,6 +18,31 @@ namespace CodePlagiarismDetection.Forms
         private FilePairOption _filePairOption = FilePairOption.CheckFileType;
         private TableFillOption _tableFillOption = TableFillOption.ClearTable;
         
+        private enum MethodOption
+        {
+            Cosine = 0,
+            LevensteinModify,
+            SorensenDiceСoefficient,
+            JaccardCoefficient,
+            NGramDistance,
+            LongestCommonSubsequence,
+            JaroWickler,
+            ShingleCoefficient
+        }
+        
+        private readonly Dictionary<MethodOption, SimilairyMethod> _methods 
+            = new Dictionary<MethodOption, SimilairyMethod>()
+            {
+                {MethodOption.Cosine, new Cosine()},
+                {MethodOption.LevensteinModify, new LevenshteinModify()},
+                {MethodOption.SorensenDiceСoefficient, new SorensenDiceCoefficient()},
+                {MethodOption.JaccardCoefficient, new JaccardCoefficient()},
+                {MethodOption.NGramDistance, new NGramDistance()},
+                {MethodOption.LongestCommonSubsequence, new LongestCommonSubsequence()},
+                {MethodOption.JaroWickler, new JaroWickler()},
+                {MethodOption.ShingleCoefficient, new ShingleCoefficient()}
+            };
+        
         public MainForm()
         {
             InitializeComponent();
@@ -24,8 +51,9 @@ namespace CodePlagiarismDetection.Forms
         private void Main_Load(object sender, EventArgs e)
         {
             lbComparisionMethods.SelectedIndex = 0;
-            dataGridComparisionResult.DataSource = _comparisionDataTable;
             _comparisionDataTable = ComparisonDataTableWorker.CreateFileCoprasionDataTable();
+            dataGridComparisionResult.DataSource = _comparisionDataTable;
+            ShingleProfiler.N = int.Parse(numUpDownTokenLenghtValue.Text);
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
@@ -51,14 +79,18 @@ namespace CodePlagiarismDetection.Forms
             if (!ValidationChecker.CheckCurrentDirectory(txtDirectoryPath.Text))
                 return;
 
+            ShingleProfiler.N = int.Parse(numUpDownTokenLenghtValue.Text);
             var directory = new DirectoryInfo(txtDirectoryPath.Text);
             var files = FileLoader.LoadFiles(directory, _searchOption)
                 .Select(file => new FileContent(file))
                 .ToList();
-            var method = MethodChanger.ChangeMethod(_methodOption);
+            var method = _methods[_methodOption];
             var comparisons = method.CompareFilePairwise(files, _filePairOption);
             _comparisionDataTable = ComparisonDataTableWorker
                 .FillComparisionDataTable(_comparisionDataTable, comparisons, lbComparisionMethods.Text, _tableFillOption);
+            /*var report = ReportGenerator.GenerateHTMLReport(files[0].FullPath, files[1].FullPath);
+            var filePath = Path.Combine(txtDirectoryPath.Text, "report.html");
+            File.WriteAllText(filePath, report);*/
         }
 
         private void dataGridComparisionResult_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -103,10 +135,6 @@ namespace CodePlagiarismDetection.Forms
                 ? TableFillOption.AddToTable
                 : TableFillOption.ClearTable;
         }
-        
-        private void numUpDownCriticalValue_ValueChanged(object sender, EventArgs e)
-        {
-            ShingleProfiler.N = int.Parse(numUpDownTokenLenghtValue.Text);
-        }
+
     }
 }
