@@ -78,6 +78,8 @@
       <ClCompile Include="CodeExamples\CSharp\6.c" />
       <ClCompile Include="CodeExamples\CSharp\7.c" />
       <ClCompile Include="CodeExamples\CSharp\8.c" />
+      <ClCompile Include="CodeExamples\Kek\test1.c" />
+      <ClCompile Include="CodeExamples\Kek\test2.c" />
       <ClCompile Include="ServiceTests\FilesForNormalizing\TestProcessingToOneLineText.c" />
       <ClCompile Include="ServiceTests\FilesForNormalizing\TestRegexForDeletingCommentsAndStringLiterals.c" />
     </ItemGroup>
