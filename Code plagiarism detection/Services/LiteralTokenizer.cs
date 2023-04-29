@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace CodePlagiarismDetection.Services
 {
-    public static class Tokenizer
+    public static class LiteralTokenizer
     {
         private static readonly Regex regex = new Regex(@"(\w+)|(\r?\n)|(.)", 
             RegexOptions.IgnorePatternWhitespace);
