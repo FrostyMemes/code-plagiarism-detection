@@ -7,7 +7,7 @@ using System.Web.UI;
 
 namespace CodePlagiarismDetection.Services
 {
-    public static class ReportGenerator
+    public static class ReportGeneratorExample
     {
         public enum TokenType
         {
@@ -23,12 +23,6 @@ namespace CodePlagiarismDetection.Services
                 var originalFileContent = new FileContent(originalFile);
                 var comparedFileContent = new FileContent(comparedFile);
                 var commonSubsequence = CalculateLiteralLCS(originalFileContent.Literals, comparedFileContent.Literals);
-                var profile1 = ShingleProfiler.GetProfile(originalFileContent.NormalizedText);
-                var profile2 = ShingleProfiler.GetProfile(comparedFileContent.NormalizedText);
-                var intersection = profile1.Keys.Intersect(profile2.Keys);
-                var intersectionProfile = intersection.Select(shingle
-                    => new KeyValuePair<string, int>())
-                    .ToDictionary(x => x.Key, x => x.Value);
                 GenerateMarkup(originalFileContent, comparedFileContent, commonSubsequence, htmlWriter);
             }
 
