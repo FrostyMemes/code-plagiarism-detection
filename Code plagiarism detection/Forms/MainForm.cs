@@ -15,12 +15,13 @@ namespace CodePlagiarismDetection.Forms
 {
     public partial class MainForm : Form
     {
-        private DataTable _comparisionDataTable;
-        private MethodOption _methodOption = MethodOption.Cosine;
-        private SearchOption _searchOption = SearchOption.TopDirectoryOnly;
-        private FilePairOption _filePairOption = FilePairOption.CheckFileType;
-        private TableFillOption _tableFillOption = TableFillOption.ClearTable;
+        private static DataTable _comparisionDataTable;
         private static CancellationTokenSource _cancellationTokenSource = default;
+        private static MethodOption _methodOption = MethodOption.Cosine;
+        private static SearchOption _searchOption = SearchOption.TopDirectoryOnly;
+        private static FilePairOption _filePairOption = FilePairOption.CheckFileType;
+        private static TableFillOption _tableFillOption = TableFillOption.ClearTable;
+        private static bool _isProcessing = false;
         
         private enum MethodOption
         {
@@ -34,7 +35,7 @@ namespace CodePlagiarismDetection.Forms
             ShingleCoefficient
         }
         
-        private readonly Dictionary<MethodOption, SimilairyMethod> _methods 
+        private static readonly Dictionary<MethodOption, SimilairyMethod> _methods 
             = new Dictionary<MethodOption, SimilairyMethod>()
             {
                 {MethodOption.Cosine, new Cosine()},
@@ -44,7 +45,7 @@ namespace CodePlagiarismDetection.Forms
                 {MethodOption.NGramDistance, new NGramDistance()},
                 {MethodOption.LongestCommonSubsequence, new LongestCommonSubsequence()},
                 {MethodOption.JaroWickler, new JaroWickler()},
-                {MethodOption.ShingleCoefficient, new ShingleCoefficient()}
+                {MethodOption.ShingleCoefficient, new ShingleCoefficient()},
             };
 
         private static IProgress<int> _progressBarValueUpProgress = null;
@@ -84,9 +85,19 @@ namespace CodePlagiarismDetection.Forms
 
         private async void btnStartProcessing_Click(object sender, EventArgs e)
         {
-            if (!ValidationChecker.CheckCurrentDirectory(txtDirectoryPath.Text))
-                return;
             
+            if (_isProcessing)
+            {
+                _cancellationTokenSource.Cancel();
+                _isProcessing = false;
+                return;
+            }
+            
+            if (!ValidationChecker.CheckValidationOfCurrentDirectory(txtDirectoryPath.Text))
+                return;
+
+            _isProcessing = true;
+            _cancellationTokenSource = new CancellationTokenSource();
             ShingleProfiler.N = int.Parse(numUpDownTokenLenghtValue.Text);
             
             var directory = new DirectoryInfo(txtDirectoryPath.Text);
@@ -98,10 +109,12 @@ namespace CodePlagiarismDetection.Forms
             progressProcessingBar.Value = 0;
             progressProcessingBar.Maximum = GetFilePairCount(files);
 
-            var comparisons = await Task.Run(
-                () => method.CompareFilePairwise(files, _filePairOption, _progressBarValueUpProgress));
+            var comparisons = await Task.Run(() => 
+                method.CompareFilePairwiseAsync(files, _filePairOption, _progressBarValueUpProgress, _cancellationTokenSource.Token));
             _comparisionDataTable = ComparisonDataTableWorker
                 .FillComparisionDataTable(_comparisionDataTable, comparisons, lbComparisionMethods.Text, _tableFillOption);
+            _cancellationTokenSource.Dispose();
+            _isProcessing = false;
         }
 
         private void dataGridComparisionResult_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
