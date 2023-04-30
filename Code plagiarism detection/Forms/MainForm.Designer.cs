@@ -33,7 +33,7 @@
             this.txtDirectoryPath = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnFilterForm = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.progressProcessingBar = new System.Windows.Forms.ProgressBar();
             this.cbOptionSubdirectories = new System.Windows.Forms.CheckBox();
             this.cbOptionFileType = new System.Windows.Forms.CheckBox();
             this.ProcessingStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -54,7 +54,6 @@
             this.lblSimilarityBorder = new System.Windows.Forms.Label();
             this.lblTokenDividing = new System.Windows.Forms.Label();
             this.numUpDownCriticalBorderValue = new System.Windows.Forms.NumericUpDown();
-            this.ProcessingStatusStrip = new System.Windows.Forms.StatusStrip();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize) (this.dataGridComparisionResult)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.numUpDownTokenLenghtValue)).BeginInit();
@@ -77,17 +76,16 @@
             this.txtDirectoryPath.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDirectoryPath.Location = new System.Drawing.Point(6, 20);
             this.txtDirectoryPath.Name = "txtDirectoryPath";
-            this.txtDirectoryPath.ReadOnly = true;
             this.txtDirectoryPath.Size = new System.Drawing.Size(657, 20);
             this.txtDirectoryPath.TabIndex = 0;
-            this.txtDirectoryPath.Text = "D:\\Projects\\C Sharp Projects\\CodePlagiarismDetection\\ModuleTests\\CodeExamples\\CSh" + "arp\r\n";
+            this.txtDirectoryPath.Text = "D:\\Projects\\C Sharp Projects\\CodePlagiarismDetection\\ModuleTests\\CodeExamples\\CSh" + "arp";
             // 
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.txtDirectoryPath);
             this.groupBox1.Controls.Add(this.btnBrowse);
-            this.groupBox1.Location = new System.Drawing.Point(12, 36);
+            this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(773, 53);
             this.groupBox1.TabIndex = 2;
@@ -96,26 +94,26 @@
             // 
             // btnFilterForm
             // 
-            this.btnFilterForm.Location = new System.Drawing.Point(12, 209);
+            this.btnFilterForm.Location = new System.Drawing.Point(12, 185);
             this.btnFilterForm.Name = "btnFilterForm";
             this.btnFilterForm.Size = new System.Drawing.Size(142, 23);
             this.btnFilterForm.TabIndex = 4;
-            this.btnFilterForm.Text = "Фильтр";
+            this.btnFilterForm.Text = "Фильтр файлов";
             this.btnFilterForm.UseVisualStyleBackColor = true;
             this.btnFilterForm.Click += new System.EventHandler(this.btnFilterForm_Click);
             // 
-            // progressBar1
+            // progressProcessingBar
             // 
-            this.progressBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.progressBar1.Location = new System.Drawing.Point(0, 535);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(799, 23);
-            this.progressBar1.TabIndex = 5;
+            this.progressProcessingBar.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.progressProcessingBar.Location = new System.Drawing.Point(0, 535);
+            this.progressProcessingBar.Name = "progressProcessingBar";
+            this.progressProcessingBar.Size = new System.Drawing.Size(799, 23);
+            this.progressProcessingBar.TabIndex = 5;
             // 
             // cbOptionSubdirectories
             // 
             this.cbOptionSubdirectories.AutoSize = true;
-            this.cbOptionSubdirectories.Location = new System.Drawing.Point(12, 111);
+            this.cbOptionSubdirectories.Location = new System.Drawing.Point(12, 87);
             this.cbOptionSubdirectories.Name = "cbOptionSubdirectories";
             this.cbOptionSubdirectories.Size = new System.Drawing.Size(172, 17);
             this.cbOptionSubdirectories.TabIndex = 7;
@@ -128,7 +126,7 @@
             this.cbOptionFileType.AutoSize = true;
             this.cbOptionFileType.Checked = true;
             this.cbOptionFileType.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbOptionFileType.Location = new System.Drawing.Point(12, 134);
+            this.cbOptionFileType.Location = new System.Drawing.Point(12, 110);
             this.cbOptionFileType.Name = "cbOptionFileType";
             this.cbOptionFileType.Size = new System.Drawing.Size(278, 17);
             this.cbOptionFileType.TabIndex = 8;
@@ -144,11 +142,11 @@
             // 
             // btnStartProcessing
             // 
-            this.btnStartProcessing.Location = new System.Drawing.Point(12, 238);
+            this.btnStartProcessing.Location = new System.Drawing.Point(595, 214);
             this.btnStartProcessing.Name = "btnStartProcessing";
-            this.btnStartProcessing.Size = new System.Drawing.Size(142, 23);
+            this.btnStartProcessing.Size = new System.Drawing.Size(190, 23);
             this.btnStartProcessing.TabIndex = 11;
-            this.btnStartProcessing.Text = "Начать";
+            this.btnStartProcessing.Text = "Начать проверку";
             this.btnStartProcessing.UseVisualStyleBackColor = true;
             this.btnStartProcessing.Click += new System.EventHandler(this.btnStartProcessing_Click);
             // 
@@ -217,17 +215,17 @@
             this.dataGridComparisionResult.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridComparisionResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridComparisionResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {this.FirstDirectory, this.FirstFile, this.SecondDirectory, this.SecondFile, this.Similarity, this.Method, this.RawSimilarityValue, this.PathToFirstFile, this.PathToSecondFile});
-            this.dataGridComparisionResult.Location = new System.Drawing.Point(11, 267);
+            this.dataGridComparisionResult.Location = new System.Drawing.Point(11, 243);
             this.dataGridComparisionResult.Name = "dataGridComparisionResult";
             this.dataGridComparisionResult.RowHeadersVisible = false;
             this.dataGridComparisionResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridComparisionResult.Size = new System.Drawing.Size(776, 243);
+            this.dataGridComparisionResult.Size = new System.Drawing.Size(776, 286);
             this.dataGridComparisionResult.TabIndex = 12;
             this.dataGridComparisionResult.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridComparisionResult_CellFormatting);
             // 
             // numUpDownTokenLenghtValue
             // 
-            this.numUpDownTokenLenghtValue.Location = new System.Drawing.Point(12, 183);
+            this.numUpDownTokenLenghtValue.Location = new System.Drawing.Point(12, 159);
             this.numUpDownTokenLenghtValue.Minimum = new decimal(new int[] {1, 0, 0, 0});
             this.numUpDownTokenLenghtValue.Name = "numUpDownTokenLenghtValue";
             this.numUpDownTokenLenghtValue.ReadOnly = true;
@@ -238,7 +236,7 @@
             // cbOptionFillTable
             // 
             this.cbOptionFillTable.AutoSize = true;
-            this.cbOptionFillTable.Location = new System.Drawing.Point(317, 111);
+            this.cbOptionFillTable.Location = new System.Drawing.Point(317, 87);
             this.cbOptionFillTable.Name = "cbOptionFillTable";
             this.cbOptionFillTable.Size = new System.Drawing.Size(125, 17);
             this.cbOptionFillTable.TabIndex = 14;
@@ -251,15 +249,15 @@
             this.lbComparisionMethods.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lbComparisionMethods.FormattingEnabled = true;
             this.lbComparisionMethods.Items.AddRange(new object[] {"Метод косинуса", "Метод Левенштейна+", "Коэффициент Сёренсена", "Коэффициент Жаккара", "N-расстояние", "Метод НОП", "Метод Яро-Виклера", "Метод шинглов"});
-            this.lbComparisionMethods.Location = new System.Drawing.Point(595, 111);
+            this.lbComparisionMethods.Location = new System.Drawing.Point(597, 87);
             this.lbComparisionMethods.Name = "lbComparisionMethods";
-            this.lbComparisionMethods.Size = new System.Drawing.Size(190, 147);
+            this.lbComparisionMethods.Size = new System.Drawing.Size(190, 121);
             this.lbComparisionMethods.TabIndex = 15;
             this.lbComparisionMethods.SelectedIndexChanged += new System.EventHandler(this.lbComparisionMethods_SelectedIndexChanged);
             // 
             // lblSimilarityBorder
             // 
-            this.lblSimilarityBorder.Location = new System.Drawing.Point(160, 160);
+            this.lblSimilarityBorder.Location = new System.Drawing.Point(160, 136);
             this.lblSimilarityBorder.Name = "lblSimilarityBorder";
             this.lblSimilarityBorder.Size = new System.Drawing.Size(100, 17);
             this.lblSimilarityBorder.TabIndex = 16;
@@ -267,7 +265,7 @@
             // 
             // lblTokenDividing
             // 
-            this.lblTokenDividing.Location = new System.Drawing.Point(160, 185);
+            this.lblTokenDividing.Location = new System.Drawing.Point(160, 161);
             this.lblTokenDividing.Name = "lblTokenDividing";
             this.lblTokenDividing.Size = new System.Drawing.Size(100, 17);
             this.lblTokenDividing.TabIndex = 17;
@@ -275,25 +273,12 @@
             // 
             // numUpDownCriticalBorderValue
             // 
-            this.numUpDownCriticalBorderValue.Location = new System.Drawing.Point(12, 157);
+            this.numUpDownCriticalBorderValue.Location = new System.Drawing.Point(12, 133);
             this.numUpDownCriticalBorderValue.Minimum = new decimal(new int[] {1, 0, 0, 0});
             this.numUpDownCriticalBorderValue.Name = "numUpDownCriticalBorderValue";
             this.numUpDownCriticalBorderValue.Size = new System.Drawing.Size(142, 20);
             this.numUpDownCriticalBorderValue.TabIndex = 18;
             this.numUpDownCriticalBorderValue.Value = new decimal(new int[] {70, 0, 0, 0});
-            // 
-            // ProcessingStatusStrip
-            // 
-            this.ProcessingStatusStrip.AutoSize = false;
-            this.ProcessingStatusStrip.Dock = System.Windows.Forms.DockStyle.None;
-            this.ProcessingStatusStrip.Location = new System.Drawing.Point(154, 1);
-            this.ProcessingStatusStrip.Name = "ProcessingStatusStrip";
-            this.ProcessingStatusStrip.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.ProcessingStatusStrip.Size = new System.Drawing.Size(31, 19);
-            this.ProcessingStatusStrip.SizingGrip = false;
-            this.ProcessingStatusStrip.TabIndex = 0;
-            this.ProcessingStatusStrip.TabStop = true;
-            this.ProcessingStatusStrip.Visible = false;
             // 
             // MainForm
             // 
@@ -311,7 +296,7 @@
             this.Controls.Add(this.btnStartProcessing);
             this.Controls.Add(this.cbOptionFileType);
             this.Controls.Add(this.cbOptionSubdirectories);
-            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.progressProcessingBar);
             this.Controls.Add(this.btnFilterForm);
             this.Controls.Add(this.groupBox1);
             this.Location = new System.Drawing.Point(15, 15);
@@ -331,11 +316,10 @@
         private System.Windows.Forms.TextBox txtDirectoryPath;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnFilterForm;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar progressProcessingBar;
         private System.Windows.Forms.CheckBox cbOptionSubdirectories;
         private System.Windows.Forms.CheckBox cbOptionFileType;
         private System.Windows.Forms.ToolStripStatusLabel ProcessingStatusLabel;
-        private System.Windows.Forms.StatusStrip ProcessingStatusStrip;
         private System.Windows.Forms.Button btnStartProcessing;
         private System.Windows.Forms.DataGridViewTextBoxColumn PathToSecondFile;
         private System.Windows.Forms.DataGridViewTextBoxColumn PathToFirstFile;
