@@ -32,12 +32,13 @@ namespace CodePlagiarismDetection.Forms
             this.components = new System.ComponentModel.Container();
             this.txtFilter = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtFilter
             // 
             this.txtFilter.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.txtFilter.Location = new System.Drawing.Point(0, 25);
+            this.txtFilter.Location = new System.Drawing.Point(0, 68);
             this.txtFilter.Multiline = true;
             this.txtFilter.Name = "txtFilter";
             this.txtFilter.Size = new System.Drawing.Size(287, 320);
@@ -49,11 +50,20 @@ namespace CodePlagiarismDetection.Forms
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(0, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(92, 28);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "label1";
+            // 
             // FilterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(287, 345);
+            this.ClientSize = new System.Drawing.Size(287, 388);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.txtFilter);
             this.Name = "FilterForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -63,6 +73,8 @@ namespace CodePlagiarismDetection.Forms
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.Label label1;
 
         #endregion
 
