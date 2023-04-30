@@ -6,7 +6,7 @@ namespace CodePlagiarismDetection.Services
 {
     public static class ValidationChecker
     {
-        public static bool CheckCurrentDirectory(string path)
+        public static bool CheckValidationOfCurrentDirectory(string path)
         {
             if (String.IsNullOrWhiteSpace(path)) 
                 return false;
