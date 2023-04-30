@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CodePlagiarismDetection.Methods;
+using CodePlagiarismDetection.Methods.Abstract;
 using CodePlagiarismDetection.Services;
 
 namespace CodePlagiarismDetection.Forms

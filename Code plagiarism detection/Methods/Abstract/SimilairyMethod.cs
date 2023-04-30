@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CodePlagiarismDetection.Methods
+namespace CodePlagiarismDetection.Methods.Abstract
 {
     public abstract class SimilairyMethod
     {
