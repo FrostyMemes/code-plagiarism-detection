@@ -53,7 +53,7 @@ namespace CodePlagiarismDetection.Services
             
             column = new DataColumn()
             {
-                DataType = Types.GetType("System.String"),
+                DataType = Types.GetType("System.Double"),
                 ColumnName = "SimilarityPercent",
                 Caption = "Схожесть",
                 ReadOnly = true
@@ -115,7 +115,7 @@ namespace CodePlagiarismDetection.Services
                 row["FirstFile"] = compressionResult.File1.FileName;
                 row["SecondDirectory"] = compressionResult.File2.DirectoryName;
                 row["SecondFile"] = compressionResult.File2.FileName;
-                row["SimilarityPercent"] = string.Format("{0:0.00%}", compressionResult.Similarity);
+                row["SimilarityPercent"] = Math.Round((compressionResult.Similarity * 100), 2);
                 row["Method"] = methodName;
                 row["RawSimilarityValue"] = Math.Round((compressionResult.Similarity * 100), 2);
                 row["PathToFirstFile"] = compressionResult.File1.FullPath;
