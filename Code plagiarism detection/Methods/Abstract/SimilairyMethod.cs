@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
-namespace CodePlagiarismDetection.Methods
+namespace CodePlagiarismDetection.Methods.Abstract
 {
     public abstract class SimilairyMethod
     {
-        public List<ComparisonResult> CompareFilePairwise(IEnumerable<FileContent> files, FilePairOption option)
+        public List<ComparisonResult> CompareFilePairwise(IEnumerable<FileContent> files, FilePairOption option,
+            IProgress<int> progress)
         {
             var fileList = files.ToList();
             var result = new List<ComparisonResult>();
@@ -14,8 +17,9 @@ namespace CodePlagiarismDetection.Methods
             {
                 if (option == FilePairOption.CheckFileType && !fileList[i].Extension.Equals(fileList[j].Extension))
                     continue;
-                    
+
                 result.Add(CompareFiles(fileList[i], fileList[j]));
+                progress.Report(0);
             }
             return result;
         }

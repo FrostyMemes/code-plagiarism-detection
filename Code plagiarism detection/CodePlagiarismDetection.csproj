@@ -74,8 +74,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ComparisonDataTableWorker.cs" />
     <Compile Include="Services\FileLoader.cs" />
-    <Compile Include="Services\ShingleProfiler.cs" />
     <Compile Include="Services\ReportGenerator.cs" />
+    <Compile Include="Services\ShingleProfiler.cs" />
+    <Compile Include="Services\ReportGeneratorExample.cs" />
     <Compile Include="Services\TextNormalizer.cs" />
     <Compile Include="Services\TokenDistance.cs" />
     <Compile Include="Services\LiteralTokenizer.cs" />

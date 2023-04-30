@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using CodePlagiarismDetection.Methods.Abstract;
 
 namespace CodePlagiarismDetection.Methods
 {

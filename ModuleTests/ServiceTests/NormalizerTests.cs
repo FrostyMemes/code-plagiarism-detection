@@ -20,16 +20,5 @@ namespace ModuleTests.ServiceTests
             fileText = Regex.Replace(fileText, TextNormalizer.commentAndStringLiterallsPattern, String.Empty);
             Assert.True(String.IsNullOrWhiteSpace(fileText));
         }
-        
-        /*[Theory]
-        [InlineData("TestProcessingToOneLineText.c")]
-        public void TestProcessingToOneLineText(string file)
-        {
-            var fileText = File.ReadAllText($@"{direcotryToFileForNormalizing}\{file}");
-            var factLineCount = TextNormalizer.NormalizeText(fileText)
-                .Split(Convert.ToChar(Environment.NewLine)).Count(); 
-            
-            Assert.Equal(String.IsNullOrWhiteSpace(fileText));
-        }*/
     }
 }
