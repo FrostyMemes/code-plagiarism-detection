@@ -15,7 +15,8 @@ namespace CodePlagiarismDetection.Forms
 {
     public partial class MainForm : Form
     {
-        private static DataTable _comparisionDataTable;
+        private static DataTable _comparisionDataTable = null;
+        private static IProgress<int> _progressBarValueUpProgress = null;
         private static CancellationTokenSource _cancellationTokenSource = default;
         private static MethodOption _methodOption = MethodOption.Cosine;
         private static SearchOption _searchOption = SearchOption.TopDirectoryOnly;
@@ -48,7 +49,7 @@ namespace CodePlagiarismDetection.Forms
                 {MethodOption.ShingleCoefficient, new ShingleCoefficient()},
             };
 
-        private static IProgress<int> _progressBarValueUpProgress = null;
+        
         
         public MainForm()
         {
