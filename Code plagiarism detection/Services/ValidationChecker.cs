@@ -13,7 +13,8 @@ namespace CodePlagiarismDetection.Services
 
             if (!Directory.Exists(path))
             {
-                MessageBox.Show("Указанная папка не существует", "Внимание", MessageBoxButtons.OK,
+                MessageBox.Show("Указанная папка не существует", "Внимание", 
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
                 return false;
             }
