@@ -12,89 +12,15 @@ namespace CodePlagiarismDetection.Services
         public static DataTable CreateFileCoprasionDataTable()
         {
             var table = new DataTable("FileComrassionResult");
-            
-            DataColumn column;
-
-            column = new DataColumn()
-            {
-                DataType = Types.GetType("System.String"),
-                ColumnName = "FirstDirectory",
-                Caption = "Папка1",
-                ReadOnly = true
-            };
-            table.Columns.Add(column);
-            
-            column = new DataColumn()
-            {
-                DataType = Types.GetType("System.String"),
-                ColumnName = "FirstFile",
-                Caption = "Файл1",
-                ReadOnly = true
-            };
-            table.Columns.Add(column);
-            
-            column = new DataColumn()
-            {
-                DataType = Types.GetType("System.String"),
-                ColumnName = "SecondFile",
-                Caption = "Файл2",
-                ReadOnly = true
-            };
-            table.Columns.Add(column);
-            
-            column = new DataColumn()
-            {
-                DataType = Types.GetType("System.String"),
-                ColumnName = "SecondDirectory",
-                Caption = "Папка2",
-                ReadOnly = true
-            };
-            table.Columns.Add(column);
-            
-            column = new DataColumn()
-            {
-                DataType = Types.GetType("System.Double"),
-                ColumnName = "SimilarityPercent",
-                Caption = "Схожесть",
-                ReadOnly = true
-            };
-            table.Columns.Add(column);
-            
-            column = new DataColumn()
-            {
-                DataType = Types.GetType("System.String"),
-                ColumnName = "Method",
-                Caption = "Метод",
-                ReadOnly = true
-            };
-            table.Columns.Add(column);
-            
-            column = new DataColumn()
-            {
-                DataType = Types.GetType("System.Double"),
-                ColumnName = "RawSimilarityValue",
-                Caption = "Схожесть",
-                ReadOnly = true
-            };
-            table.Columns.Add(column);
-            
-            column = new DataColumn()
-            {
-                DataType = Types.GetType("System.String"),
-                ColumnName = "PathToFirstFile",
-                Caption = "PathToFirstFile",
-                ReadOnly = true
-            };
-            table.Columns.Add(column);
-            
-            column = new DataColumn()
-            {
-                DataType = Types.GetType("System.String"),
-                ColumnName = "PathToSecondFile",
-                Caption = "PathToSecondFile",
-                ReadOnly = true
-            };
-            table.Columns.Add(column);
+            table.Columns.Add(AddColumn("FirstFile", "System.String", "Файл1", true));
+            table.Columns.Add(AddColumn("FirstDirectory", "System.String",  "Папка1", true));
+            table.Columns.Add(AddColumn("SecondFile", "System.String",  "Файл2", true));
+            table.Columns.Add(AddColumn("SecondDirectory", "System.String", "Папка", true));
+            table.Columns.Add(AddColumn("SimilarityPercent", "System.Double",  "Схожесть %", true));
+            table.Columns.Add(AddColumn("Method", "System.String", "Метод", true));
+            table.Columns.Add(AddColumn("RawSimilarityValue", "System.Double",  "Схожесть %", true));
+            table.Columns.Add(AddColumn("PathToFirstFile", "System.String",  "PathToFirstFile", true));
+            table.Columns.Add(AddColumn("PathToSecondFile", "System.String",  "PathToSecondFile", true));
             
             return table;
         }
@@ -124,6 +50,16 @@ namespace CodePlagiarismDetection.Services
                 table.Rows.Add(row);
             }
             return table;
+        }
+
+        private static DataColumn AddColumn(string columnName, string type,  string caption, bool readonlyMode)
+        {
+            return new DataColumn(){
+                DataType = Types.GetType(type),
+                ColumnName = columnName,
+                Caption = caption,
+                ReadOnly = readonlyMode
+            };
         }
     }
 }
