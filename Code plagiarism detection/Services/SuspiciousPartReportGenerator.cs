@@ -7,14 +7,14 @@ using System.Web.UI;
 
 namespace CodePlagiarismDetection.Services
 {
-    public static class ReportGenerator
+    public static class SuspiciousPartReportGenerator
     {
         public enum TokenType
         {
             Common,
             Original
         }
-        public static string GenerateHTMLReport(string originalFile, string comparedFile)
+        public static string GenerateHtmlReport(string originalFile, string comparedFile)
         {
             var stringWriter = new StringWriter();
             stringWriter.WriteLine(HtmlBegin);
