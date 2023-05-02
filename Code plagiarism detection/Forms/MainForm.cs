@@ -83,6 +83,11 @@ namespace CodePlagiarismDetection.Forms
             Program.filterForm = new FilterForm();    
             Program.filterForm.Show();
         }
+        
+        private void btnGenerateExcelReport_Click(object sender, EventArgs e)
+        {
+            ExcelReportGenerator.GenerateExcelReport(_comparisionDataTable, (double)numUpDownCriticalBorderValue.Value);
+        }
 
         private async void btnStartProcessing_Click(object sender, EventArgs e)
         {

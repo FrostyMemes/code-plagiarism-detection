@@ -39,12 +39,6 @@
             this.ProcessingStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.btnStartProcessing = new System.Windows.Forms.Button();
             this.dataGridComparisionResult = new System.Windows.Forms.DataGridView();
-            this.numUpDownTokenLenghtValue = new System.Windows.Forms.NumericUpDown();
-            this.cbOptionFillTable = new System.Windows.Forms.CheckBox();
-            this.lbComparisionMethods = new System.Windows.Forms.ListBox();
-            this.lblSimilarityBorder = new System.Windows.Forms.Label();
-            this.lblTokenDividing = new System.Windows.Forms.Label();
-            this.numUpDownCriticalBorderValue = new System.Windows.Forms.NumericUpDown();
             this.FirstDirectory = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FirstFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SecondDirectory = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,6 +48,13 @@
             this.RawSimilarityValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PathToFirstFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PathToSecondFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.numUpDownTokenLenghtValue = new System.Windows.Forms.NumericUpDown();
+            this.cbOptionFillTable = new System.Windows.Forms.CheckBox();
+            this.lbComparisionMethods = new System.Windows.Forms.ListBox();
+            this.lblSimilarityBorder = new System.Windows.Forms.Label();
+            this.lblTokenDividing = new System.Windows.Forms.Label();
+            this.numUpDownCriticalBorderValue = new System.Windows.Forms.NumericUpDown();
+            this.btnGenerateExcelReport = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize) (this.dataGridComparisionResult)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.numUpDownTokenLenghtValue)).BeginInit();
@@ -165,63 +166,6 @@
             this.dataGridComparisionResult.TabIndex = 12;
             this.dataGridComparisionResult.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridComparisionResult_CellFormatting);
             // 
-            // numUpDownTokenLenghtValue
-            // 
-            this.numUpDownTokenLenghtValue.Location = new System.Drawing.Point(12, 159);
-            this.numUpDownTokenLenghtValue.Minimum = new decimal(new int[] {1, 0, 0, 0});
-            this.numUpDownTokenLenghtValue.Name = "numUpDownTokenLenghtValue";
-            this.numUpDownTokenLenghtValue.ReadOnly = true;
-            this.numUpDownTokenLenghtValue.Size = new System.Drawing.Size(142, 20);
-            this.numUpDownTokenLenghtValue.TabIndex = 13;
-            this.numUpDownTokenLenghtValue.Value = new decimal(new int[] {3, 0, 0, 0});
-            // 
-            // cbOptionFillTable
-            // 
-            this.cbOptionFillTable.AutoSize = true;
-            this.cbOptionFillTable.Location = new System.Drawing.Point(317, 87);
-            this.cbOptionFillTable.Name = "cbOptionFillTable";
-            this.cbOptionFillTable.Size = new System.Drawing.Size(125, 17);
-            this.cbOptionFillTable.TabIndex = 14;
-            this.cbOptionFillTable.Text = "Дополнять таблицу";
-            this.cbOptionFillTable.UseVisualStyleBackColor = true;
-            this.cbOptionFillTable.CheckedChanged += new System.EventHandler(this.cbOptionFillTable_CheckedChanged);
-            // 
-            // lbComparisionMethods
-            // 
-            this.lbComparisionMethods.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbComparisionMethods.FormattingEnabled = true;
-            this.lbComparisionMethods.Items.AddRange(new object[] {"Метод косинуса", "Метод Левенштейна+", "Коэффициент Сёренсена", "Коэффициент Жаккара", "N-расстояние", "Метод НОП", "Метод Яро-Виклера", "Метод шинглов"});
-            this.lbComparisionMethods.Location = new System.Drawing.Point(597, 87);
-            this.lbComparisionMethods.Name = "lbComparisionMethods";
-            this.lbComparisionMethods.Size = new System.Drawing.Size(190, 121);
-            this.lbComparisionMethods.TabIndex = 15;
-            this.lbComparisionMethods.SelectedIndexChanged += new System.EventHandler(this.lbComparisionMethods_SelectedIndexChanged);
-            // 
-            // lblSimilarityBorder
-            // 
-            this.lblSimilarityBorder.Location = new System.Drawing.Point(160, 136);
-            this.lblSimilarityBorder.Name = "lblSimilarityBorder";
-            this.lblSimilarityBorder.Size = new System.Drawing.Size(100, 17);
-            this.lblSimilarityBorder.TabIndex = 16;
-            this.lblSimilarityBorder.Text = "Граница схожести";
-            // 
-            // lblTokenDividing
-            // 
-            this.lblTokenDividing.Location = new System.Drawing.Point(160, 161);
-            this.lblTokenDividing.Name = "lblTokenDividing";
-            this.lblTokenDividing.Size = new System.Drawing.Size(100, 17);
-            this.lblTokenDividing.TabIndex = 17;
-            this.lblTokenDividing.Text = "Разбиение";
-            // 
-            // numUpDownCriticalBorderValue
-            // 
-            this.numUpDownCriticalBorderValue.Location = new System.Drawing.Point(12, 133);
-            this.numUpDownCriticalBorderValue.Minimum = new decimal(new int[] {1, 0, 0, 0});
-            this.numUpDownCriticalBorderValue.Name = "numUpDownCriticalBorderValue";
-            this.numUpDownCriticalBorderValue.Size = new System.Drawing.Size(142, 20);
-            this.numUpDownCriticalBorderValue.TabIndex = 18;
-            this.numUpDownCriticalBorderValue.Value = new decimal(new int[] {70, 0, 0, 0});
-            // 
             // FirstDirectory
             // 
             this.FirstDirectory.DataPropertyName = "FirstDirectory";
@@ -280,12 +224,80 @@
             this.PathToSecondFile.Name = "PathToSecondFile";
             this.PathToSecondFile.Visible = false;
             // 
+            // numUpDownTokenLenghtValue
+            // 
+            this.numUpDownTokenLenghtValue.Location = new System.Drawing.Point(12, 159);
+            this.numUpDownTokenLenghtValue.Minimum = new decimal(new int[] {1, 0, 0, 0});
+            this.numUpDownTokenLenghtValue.Name = "numUpDownTokenLenghtValue";
+            this.numUpDownTokenLenghtValue.ReadOnly = true;
+            this.numUpDownTokenLenghtValue.Size = new System.Drawing.Size(142, 20);
+            this.numUpDownTokenLenghtValue.TabIndex = 13;
+            this.numUpDownTokenLenghtValue.Value = new decimal(new int[] {3, 0, 0, 0});
+            // 
+            // cbOptionFillTable
+            // 
+            this.cbOptionFillTable.AutoSize = true;
+            this.cbOptionFillTable.Location = new System.Drawing.Point(317, 87);
+            this.cbOptionFillTable.Name = "cbOptionFillTable";
+            this.cbOptionFillTable.Size = new System.Drawing.Size(125, 17);
+            this.cbOptionFillTable.TabIndex = 14;
+            this.cbOptionFillTable.Text = "Дополнять таблицу";
+            this.cbOptionFillTable.UseVisualStyleBackColor = true;
+            this.cbOptionFillTable.CheckedChanged += new System.EventHandler(this.cbOptionFillTable_CheckedChanged);
+            // 
+            // lbComparisionMethods
+            // 
+            this.lbComparisionMethods.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbComparisionMethods.FormattingEnabled = true;
+            this.lbComparisionMethods.Items.AddRange(new object[] {"Метод косинуса", "Метод Левенштейна+", "Коэффициент Сёренсена", "Коэффициент Жаккара", "N-расстояние", "Метод НОП", "Метод Яро-Виклера", "Метод шинглов"});
+            this.lbComparisionMethods.Location = new System.Drawing.Point(597, 87);
+            this.lbComparisionMethods.Name = "lbComparisionMethods";
+            this.lbComparisionMethods.Size = new System.Drawing.Size(190, 121);
+            this.lbComparisionMethods.TabIndex = 15;
+            this.lbComparisionMethods.SelectedIndexChanged += new System.EventHandler(this.lbComparisionMethods_SelectedIndexChanged);
+            // 
+            // lblSimilarityBorder
+            // 
+            this.lblSimilarityBorder.Location = new System.Drawing.Point(160, 136);
+            this.lblSimilarityBorder.Name = "lblSimilarityBorder";
+            this.lblSimilarityBorder.Size = new System.Drawing.Size(100, 17);
+            this.lblSimilarityBorder.TabIndex = 16;
+            this.lblSimilarityBorder.Text = "Граница схожести";
+            // 
+            // lblTokenDividing
+            // 
+            this.lblTokenDividing.Location = new System.Drawing.Point(160, 161);
+            this.lblTokenDividing.Name = "lblTokenDividing";
+            this.lblTokenDividing.Size = new System.Drawing.Size(100, 17);
+            this.lblTokenDividing.TabIndex = 17;
+            this.lblTokenDividing.Text = "Разбиение";
+            // 
+            // numUpDownCriticalBorderValue
+            // 
+            this.numUpDownCriticalBorderValue.Location = new System.Drawing.Point(12, 133);
+            this.numUpDownCriticalBorderValue.Minimum = new decimal(new int[] {1, 0, 0, 0});
+            this.numUpDownCriticalBorderValue.Name = "numUpDownCriticalBorderValue";
+            this.numUpDownCriticalBorderValue.Size = new System.Drawing.Size(142, 20);
+            this.numUpDownCriticalBorderValue.TabIndex = 18;
+            this.numUpDownCriticalBorderValue.Value = new decimal(new int[] {70, 0, 0, 0});
+            // 
+            // btnGenerateExcelReport
+            // 
+            this.btnGenerateExcelReport.Location = new System.Drawing.Point(434, 214);
+            this.btnGenerateExcelReport.Name = "btnGenerateExcelReport";
+            this.btnGenerateExcelReport.Size = new System.Drawing.Size(75, 23);
+            this.btnGenerateExcelReport.TabIndex = 19;
+            this.btnGenerateExcelReport.Text = "Excel";
+            this.btnGenerateExcelReport.UseVisualStyleBackColor = true;
+            this.btnGenerateExcelReport.Click += new System.EventHandler(this.btnGenerateExcelReport_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(799, 558);
+            this.Controls.Add(this.btnGenerateExcelReport);
             this.Controls.Add(this.numUpDownCriticalBorderValue);
             this.Controls.Add(this.lblTokenDividing);
             this.Controls.Add(this.lblSimilarityBorder);
@@ -311,6 +323,8 @@
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.Button btnGenerateExcelReport;
 
         private System.Windows.Forms.Button btnBrowse;
         private System.Windows.Forms.TextBox txtDirectoryPath;
