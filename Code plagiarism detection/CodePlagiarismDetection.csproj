@@ -59,7 +59,6 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Methods\Abstract\SimilairyMethod.cs" />
     <Compile Include="Methods\Cosine.cs" />
     <Compile Include="Methods\JaccardCoefficient.cs" />
     <Compile Include="Methods\JaroWickler.cs" />
@@ -67,6 +66,7 @@
     <Compile Include="Methods\LongestCommonSubsequence.cs" />
     <Compile Include="Methods\NGramDistance.cs" />
     <Compile Include="Methods\ShingleCoefficient.cs" />
+    <Compile Include="Methods\SimilairyMethod.cs" />
     <Compile Include="Methods\SorensenDiceCoefficient.cs" />
     <Compile Include="Options\FilePairOption.cs" />
     <Compile Include="Options\TableFillOption.cs" />
@@ -75,7 +75,7 @@
     <Compile Include="Services\ComparisonDataTableWorker.cs" />
     <Compile Include="Services\ExcelReportGenerator.cs" />
     <Compile Include="Services\FileLoader.cs" />
-    <Compile Include="Services\SuspiciousPartReportGenerator.cs" />
+    <Compile Include="Services\SuspiciousPartTracer.cs" />
     <Compile Include="Services\ShingleProfiler.cs" />
     <Compile Include="Services\ReportGeneratorExample.cs" />
     <Compile Include="Services\TextNormalizer.cs" />
