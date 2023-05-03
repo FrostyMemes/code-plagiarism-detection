@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CodePlagiarismDetection.Methods;
-using CodePlagiarismDetection.Methods.Abstract;
 using CodePlagiarismDetection.Services;
 
 namespace CodePlagiarismDetection.Forms
@@ -121,6 +120,9 @@ namespace CodePlagiarismDetection.Forms
                 .FillComparisionDataTable(_comparisionDataTable, comparisons, lbComparisionMethods.Text, _tableFillOption);
             _cancellationTokenSource.Dispose();
             _isProcessing = false;
+            var report = Path.Combine(txtDirectoryPath.Text, "report.html");
+            File.WriteAllText(report, SuspiciousPartTracer.GenerateHtmlReport(
+                _comparisionDataTable.Rows[0]["PathToFirstFile"].ToString(), _comparisionDataTable.Rows[0]["PathToSecondFile"].ToString()));
         }
 
         private void dataGridComparisionResult_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
