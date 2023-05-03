@@ -1,5 +1,4 @@
 ﻿using System;
-using CodePlagiarismDetection.Methods.Abstract;
 using CodePlagiarismDetection.Services;
 
 namespace CodePlagiarismDetection.Methods
