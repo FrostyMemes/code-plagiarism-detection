@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CodePlagiarismDetection.Methods.Abstract
+namespace CodePlagiarismDetection.Methods
 {
     public abstract class SimilairyMethod
     {
