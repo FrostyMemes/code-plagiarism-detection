@@ -13,7 +13,7 @@ namespace CodePlagiarismDetection.Services
             "PathToFirstFile",
             "PathToSecondFile"
         };
-        public static void GenerateExcelReport(DataTable comparisionDataTable, double borderSuspicious)
+        public static void GenerateExcelReport(DataTable comparisionDataTable)
         {
             const int START_ROW = 2;
             const int START_COLUMN = 2;
@@ -23,7 +23,7 @@ namespace CodePlagiarismDetection.Services
             var sheet = (Excel.Worksheet)excelApp.Worksheets.Item[1];
             
             var suspiciousFiles = comparisionDataTable.Select()
-                .Where(row => double.Parse(row["SimilarityPercent"].ToString()) >= borderSuspicious)
+                .Where(row => (double)row["SimilarityPercent"] >= (double)row["CriticalBorderValue"])
                 .ToList();
 
             var columnNameColumIndex = START_COLUMN - 1;
@@ -58,6 +58,7 @@ namespace CodePlagiarismDetection.Services
             range = sheet.Range[sheet.Cells[START_ROW, START_COLUMN],
                 sheet.Cells[fileInfoRowIndex, columnNameColumIndex]];
             range.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+            range.Columns.AutoFit();
             excelApp.Visible = true;
         }
     }
