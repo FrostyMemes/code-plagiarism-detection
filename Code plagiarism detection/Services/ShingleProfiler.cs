@@ -10,12 +10,12 @@ namespace CodePlagiarismDetection.Services
         public static Dictionary<string, int> GetProfile(string text)
         {
             var shingle = String.Empty;
-            var stringWitoutSpaces = Regex.Replace(text,@"\s+"," ");
+            var stringWithoutSpaces = Regex.Replace(text,@"\s+"," ");
             var shingles = new Dictionary<string, int>();
             
-            for (int i = 0; i < (stringWitoutSpaces.Length-N+1); i++)
+            for (int i = 0; i < (stringWithoutSpaces.Length-N+1); i++)
             {
-                shingle = stringWitoutSpaces.Substring(i, N);
+                shingle = stringWithoutSpaces.Substring(i, N);
                 if (shingles.ContainsKey(shingle))
                 {
                     var old = shingles[shingle];
@@ -30,12 +30,12 @@ namespace CodePlagiarismDetection.Services
         public static Dictionary<string, int> GetProfile(string text, int n)
         {
             var shingle = String.Empty;
-            var stringWitoutSpaces = Regex.Replace(text,@"\s+"," ");
+            var stringWithoutSpaces = Regex.Replace(text,@"\s+"," ");
             var shingles = new Dictionary<string, int>();
             
-            for (int i = 0; i < (stringWitoutSpaces.Length-n+1); i++)
+            for (int i = 0; i < (stringWithoutSpaces.Length-n+1); i++)
             {
-                shingle = stringWitoutSpaces.Substring(i, n);
+                shingle = stringWithoutSpaces.Substring(i, n);
                 if (shingles.ContainsKey(shingle))
                 {
                     var old = shingles[shingle];
