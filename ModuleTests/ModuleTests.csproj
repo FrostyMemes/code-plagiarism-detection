@@ -54,6 +54,7 @@
         <Compile Include="ServiceTests\FileLoaderTests.cs" />
         <Compile Include="ServiceTests\NormalizerTests.cs" />
         <Compile Include="ServiceTests\ShingleProfilerTests.cs" />
+        <Compile Include="ServiceTests\TokenDistanceTests.cs" />
         <Compile Include="Tests.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
