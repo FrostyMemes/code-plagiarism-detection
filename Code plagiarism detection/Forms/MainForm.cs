@@ -17,7 +17,7 @@ namespace CodePlagiarismDetection.Forms
         private static DataTable _comparisionDataTable = null;
         private static IProgress<int> _progressBarValueUpProgress = null;
         private static CancellationTokenSource _cancellationTokenSource = default;
-        private static MethodOption _methodOption = MethodOption.Cosine;
+        private static MethodOption _methodOption = MethodOption.ShingleCoefficient;
         private static SearchOption _searchOption = SearchOption.TopDirectoryOnly;
         private static FilePairOption _filePairOption = FilePairOption.CheckFileType;
         private static TableFillOption _tableFillOption = TableFillOption.ClearTable;
@@ -48,8 +48,9 @@ namespace CodePlagiarismDetection.Forms
                 {MethodOption.ShingleCoefficient, new ShingleCoefficient()},
             };
 
-        
-        
+        private static Dictionary<MethodOption, RadioButton> _radioButtonsMethodAccordance = null;
+
+
         public MainForm()
         {
             InitializeComponent();
@@ -57,11 +58,22 @@ namespace CodePlagiarismDetection.Forms
 
         private void Main_Load(object sender, EventArgs e)
         {
-            lbComparisionMethods.SelectedIndex = 0;
+            ShingleProfiler.N = int.Parse(numUpDownTokenLenghtValue.Text);
             _progressBarValueUpProgress = new Progress<int>(_ => progressProcessingBar.Value++);
             _comparisionDataTable = ComparisonDataTableWorker.CreateFileCoprasionDataTable();
             dataGridComparisionResult.DataSource = _comparisionDataTable;
-            ShingleProfiler.N = int.Parse(numUpDownTokenLenghtValue.Text);
+            _radioButtonsMethodAccordance = new Dictionary<MethodOption, RadioButton>()
+            {
+                {MethodOption.Cosine, rbCosineMethod},
+                {MethodOption.LevensteinModify, rbLevensteinModifyMethod},
+                {MethodOption.SorensenDiceСoefficient, rbSorensenDiceMethod},
+                {MethodOption.JaccardCoefficient, rbJaccardMethod},
+                {MethodOption.NGramDistance, rbNGrammDistanceMethod},
+                {MethodOption.LongestCommonSubsequence, rbLongestCommonSubsequenceMethod},
+                {MethodOption.JaroWickler, rbJaroWicklerMethod},
+                {MethodOption.ShingleCoefficient, rbShingleCoefficientMethod},
+            };
+            
             
         }
 
@@ -83,11 +95,6 @@ namespace CodePlagiarismDetection.Forms
             Program.filterForm.Show();
         }
         
-        private void btnGenerateExcelReport_Click(object sender, EventArgs e)
-        {
-            ExcelReportGenerator.GenerateExcelReport(_comparisionDataTable, (double)numUpDownCriticalBorderValue.Value);
-        }
-
         private async void btnStartProcessing_Click(object sender, EventArgs e)
         {
             
@@ -109,7 +116,8 @@ namespace CodePlagiarismDetection.Forms
             var files = FileLoader.LoadFiles(directory, _searchOption)
                 .Select(file => new FileContent(file))
                 .ToList();
-            var method = _methods[_methodOption];
+            var selectedMethod = _radioButtonsMethodAccordance.First(pair => pair.Value.Checked);
+            var method = _methods[selectedMethod.Key];
             
             progressProcessingBar.Value = 0;
             progressProcessingBar.Maximum = GetFilePairCount(files);
@@ -117,34 +125,40 @@ namespace CodePlagiarismDetection.Forms
             var comparisons = await Task.Run(() => 
                 method.CompareFilePairwiseAsync(files, _filePairOption, _progressBarValueUpProgress, _cancellationTokenSource.Token));
             _comparisionDataTable = ComparisonDataTableWorker
-                .FillComparisionDataTable(_comparisionDataTable, comparisons, lbComparisionMethods.Text, _tableFillOption);
+                .FillComparisionDataTable(_comparisionDataTable, comparisons, selectedMethod.Value.Text, 
+                    (int)numUpDownCriticalBorderValue.Value, _tableFillOption);
             _cancellationTokenSource.Dispose();
             _isProcessing = false;
-            var report = Path.Combine(txtDirectoryPath.Text, "report.html");
-            File.WriteAllText(report, SuspiciousPartTracer.GenerateHtmlReport(
-                _comparisionDataTable.Rows[0]["PathToFirstFile"].ToString(), _comparisionDataTable.Rows[0]["PathToSecondFile"].ToString()));
         }
 
         private void dataGridComparisionResult_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (dataGridComparisionResult.Columns[e.ColumnIndex].Name.Equals("RawSimilarityValue") &&
+            if (dataGridComparisionResult.Columns[e.ColumnIndex].DataPropertyName.Equals("SimilarityPercent") &&
                 dataGridComparisionResult.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             {
-                var criticalBorder = (double)numUpDownCriticalBorderValue.Value;
-                if ((double)e.Value > criticalBorder)
+                var criticalSimilarityBorder = (double)dataGridComparisionResult.Rows[e.RowIndex].Cells["CriticalBorderValue"].Value;
+                if ((double)e.Value >= criticalSimilarityBorder)
                     dataGridComparisionResult.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Yellow;
-                /*double criticalBorder;
-                if(Double.TryParse(numUpDownCriticalBorderValue.Value, out criticalBorder) &&
-                   ((double)e.Value > criticalBorder))
-                {
-                    dataGridComparisionResult.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Yellow;
-                }*/
             }
         }
-        
-        private void lbComparisionMethods_SelectedIndexChanged(object sender, EventArgs e)
+
+        private void btnGenerateExcelReport_Click(object sender, EventArgs e)
         {
-            _methodOption = (MethodOption)lbComparisionMethods.SelectedIndex;
+            ExcelReportGenerator.GenerateExcelReport(_comparisionDataTable);
+        }
+        
+        private void btnTraceSuspectParts_Click(object sender, EventArgs e)
+        {
+            if (dataGridComparisionResult.SelectedRows.Count == 0)
+                return;
+            
+            var selectedRow = dataGridComparisionResult.SelectedRows[0];
+            var originalFile = (string)selectedRow.Cells["PathToFirstFile"].Value;
+            var comparedFilePath = (string)selectedRow.Cells["PathToSecondFile"].Value;
+            var reportFileName =
+                $"{(string) selectedRow.Cells["FirstFile"].Value}_{(string) selectedRow.Cells["SecondFile"].Value}.html";
+            var report = Path.Combine(txtDirectoryPath.Text, reportFileName);
+            File.WriteAllText(report, SuspiciousPartTracer.GenerateHtmlReport(originalFile, comparedFilePath));
         }
         
         private void cbOptionSubdirectories_CheckedChanged(object sender, EventArgs e)
@@ -167,7 +181,7 @@ namespace CodePlagiarismDetection.Forms
                 ? TableFillOption.AddToTable
                 : TableFillOption.ClearTable;
         }
-
+        
         private int GetFilePairCount(List<FileContent> fileList)
         {
             var count = 0;
