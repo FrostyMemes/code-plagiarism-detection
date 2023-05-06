@@ -17,8 +17,8 @@ namespace CodePlagiarismDetection.Services
             table.Columns.Add(AddColumn("SecondFile", "System.String",  "Файл2", true));
             table.Columns.Add(AddColumn("SecondDirectory", "System.String", "Папка", true));
             table.Columns.Add(AddColumn("SimilarityPercent", "System.Double",  "Схожесть %", true));
+            table.Columns.Add(AddColumn("CriticalBorderValue", "System.Double",  "Порог схожести", true));
             table.Columns.Add(AddColumn("Method", "System.String", "Метод", true));
-            table.Columns.Add(AddColumn("RawSimilarityValue", "System.Double",  "Схожесть %", true));
             table.Columns.Add(AddColumn("PathToFirstFile", "System.String",  "PathToFirstFile", true));
             table.Columns.Add(AddColumn("PathToSecondFile", "System.String",  "PathToSecondFile", true));
             
@@ -26,7 +26,7 @@ namespace CodePlagiarismDetection.Services
         }
 
         public static DataTable FillComparisionDataTable(DataTable table, IEnumerable<ComparisonResult> comparisions,
-            string methodName, TableFillOption option)
+            string methodName, int criticalBorderValue, TableFillOption option)
         {
             DataRow row;
             var comprassionList = comparisions.ToList();
@@ -42,8 +42,8 @@ namespace CodePlagiarismDetection.Services
                 row["SecondDirectory"] = compressionResult.File2.DirectoryName;
                 row["SecondFile"] = compressionResult.File2.FileName;
                 row["SimilarityPercent"] = Math.Round((compressionResult.Similarity * 100), 2);
+                row["CriticalBorderValue"] = criticalBorderValue;
                 row["Method"] = methodName;
-                row["RawSimilarityValue"] = Math.Round((compressionResult.Similarity * 100), 2);
                 row["PathToFirstFile"] = compressionResult.File1.FullPath;
                 row["PathToSecondFile"] = compressionResult.File2.FullPath;
                 
