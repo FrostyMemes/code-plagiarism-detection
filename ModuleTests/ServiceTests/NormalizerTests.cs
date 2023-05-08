@@ -10,7 +10,7 @@ namespace ModuleTests.ServiceTests
     {
         private string direcotryToFileForNormalizing = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, 
             "..", 
-            "..", @"ServiceTests\FilesForNormalizing");
+            "..", @"ServiceTests\TestFiles");
 
         [Theory]
         [InlineData("TestRegexForDeletingCommentsAndStringLiterals.c")]
