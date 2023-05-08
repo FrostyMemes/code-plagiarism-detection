@@ -55,6 +55,7 @@
         <Compile Include="ServiceTests\NormalizerTests.cs" />
         <Compile Include="ServiceTests\ShingleProfilerTests.cs" />
         <Compile Include="ServiceTests\TokenDistanceTests.cs" />
+        <Compile Include="ServiceTests\ValidationCheckerTest.cs" />
         <Compile Include="Tests.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
@@ -62,7 +63,6 @@
       <Folder Include="CodeExamples\C\" />
       <Folder Include="CodeExamples\Java\" />
       <Folder Include="CodeExamples\Python\" />
-      <Folder Include="MethodsTest\" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Code plagiarism detection\CodePlagiarismDetection.csproj">
@@ -83,8 +83,13 @@
       <ClCompile Include="CodeExamples\Kek\2.c" />
       <ClCompile Include="CodeExamples\Kek\test1.c" />
       <ClCompile Include="CodeExamples\Kek\test2.c" />
-      <ClCompile Include="ServiceTests\FilesForNormalizing\TestProcessingToOneLineText.c" />
-      <ClCompile Include="ServiceTests\FilesForNormalizing\TestRegexForDeletingCommentsAndStringLiterals.c" />
+      <ClCompile Include="CodeExamples\Test\1.c" />
+      <ClCompile Include="CodeExamples\Test\2.c" />
+      <ClCompile Include="MethodsTest\TestFiles\IdenticalFiles\IndeticalFile1.c" />
+      <ClCompile Include="MethodsTest\TestFiles\IdenticalFiles\IndeticalFile2.c" />
+      <ClCompile Include="ServiceTests\TestFiles\TestExtractLiteralsFromText.c" />
+      <ClCompile Include="ServiceTests\TestFiles\TestProcessingToOneLineText.c" />
+      <ClCompile Include="ServiceTests\TestFiles\TestRegexForDeletingCommentsAndStringLiterals.c" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
