@@ -7,7 +7,7 @@ namespace CodePlagiarismDetection.Services
     public static class ShingleProfiler
     {
         public static int N = 2;
-        public static Dictionary<string, int> GetProfile(string text)
+        public static Dictionary<string, int> GetShingleProfile(string text)
         {
             var shingle = String.Empty;
             var stringWithoutSpaces = Regex.Replace(text,@"\s+"," ");
@@ -27,7 +27,7 @@ namespace CodePlagiarismDetection.Services
             return shingles;
         }
         
-        public static Dictionary<string, int> GetProfile(string text, int n)
+        public static Dictionary<string, int> GetShingleProfile(string text, int n)
         {
             var shingle = String.Empty;
             var stringWithoutSpaces = Regex.Replace(text,@"\s+"," ");
@@ -45,6 +45,15 @@ namespace CodePlagiarismDetection.Services
                     shingles[shingle] = 1;
             }
             return shingles;
+        }
+
+        public static IEnumerable<string> GetShingles(string text, int n)
+        {
+            if (text.Length < n)
+                yield return text;
+            
+            for (int i = 0; i < text.Length - n + 1; i++)
+                yield return text.Substring(i, n);
         }
     }
 }

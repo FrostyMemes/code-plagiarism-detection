@@ -31,8 +31,8 @@ namespace CodePlagiarismDetection.Services
             {
                 var originalFileContent = new FileContent(originalFile);
                 var comparedFileContent = new FileContent(comparedFile);
-                var originalFileProfile = ShingleProfiler.GetProfile(originalFileContent.NormalizedText, NShingleLenght);
-                var comparedFileProfile = ShingleProfiler.GetProfile(comparedFileContent.NormalizedText, NShingleLenght);
+                var originalFileProfile = ShingleProfiler.GetShingleProfile(originalFileContent.NormalizedText, NShingleLenght);
+                var comparedFileProfile = ShingleProfiler.GetShingleProfile(comparedFileContent.NormalizedText, NShingleLenght);
                 var intersectionShingles = originalFileProfile.Keys.Intersect(comparedFileProfile.Keys).ToArray();
                 var intersectionShinglesProfile = intersectionShingles.Select(
                         shingle => new KeyValuePair<string, int>(shingle, 
@@ -90,7 +90,7 @@ namespace CodePlagiarismDetection.Services
                         if (copyIntersectionProfile.ContainsKey(shingle) && copyIntersectionProfile[shingle] != 0)
                         {
                            startTokenType = TokenType.Common;
-                           copyIntersectionProfile[shingle]--;
+                           copyIntersectionProfile[shingle]-=1;
                         }
                         else
                             startTokenType = TokenType.Original;
@@ -109,7 +109,7 @@ namespace CodePlagiarismDetection.Services
 
                         tokensAndTypes.Add(new TokenAndType(shingle[NShingleLenght - 1].ToString(),
                             TokenType.Common));
-                        copyIntersectionProfile[shingle]--;
+                        copyIntersectionProfile[shingle]-=1;
                     }
                     else
                     {

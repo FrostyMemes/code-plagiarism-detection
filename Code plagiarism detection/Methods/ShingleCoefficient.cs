@@ -25,8 +25,8 @@ namespace CodePlagiarismDetection.Methods
             if (s1.Length < ShingleProfiler.N || s2.Length < ShingleProfiler.N )
                 return new ComparisonResult(originalFile, comparedFile, 0.0);
 
-            var profile1 = ShingleProfiler.GetProfile(s1);
-            var profile2 = ShingleProfiler.GetProfile(s2);
+            var profile1 = ShingleProfiler.GetShingleProfile(s1);
+            var profile2 = ShingleProfiler.GetShingleProfile(s2);
             var intersection = profile1.Keys.Intersect(profile2.Keys);
             var intersectionShingleCount = intersection.Sum(shingle => Math.Min(profile1[shingle], profile2[shingle]));
             var profile1ShingleCount = profile1.Sum(shingle => shingle.Value);
