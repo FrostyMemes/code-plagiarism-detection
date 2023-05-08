@@ -24,8 +24,8 @@ namespace CodePlagiarismDetection.Methods
             if (s1.Length < ShingleProfiler.N || s2.Length < ShingleProfiler.N )
                 return new ComparisonResult(originalFile, comparedFile, 0.0);
 
-            var profile1 = ShingleProfiler.GetProfile(s1);
-            var profile2 = ShingleProfiler.GetProfile(s2);
+            var profile1 = ShingleProfiler.GetShingleProfile(s1);
+            var profile2 = ShingleProfiler.GetShingleProfile(s2);
 
             var union = new HashSet<string>();
             union.UnionWith(profile1.Keys);
