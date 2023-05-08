@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using CodePlagiarismDetection.Services;
@@ -10,7 +11,9 @@ namespace ModuleTests.ServiceTests
     public class FileLoaderTests
     {
         private string codeExamplePath = @"D:\Projects\C Sharp Projects\CodePlagiarismDetection\ModuleTests\CodeExamples";
-        
+        private string codeExamplePath1 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                "..", 
+                "..", "CodeExamples");
         public static IEnumerable<object[]> FilterTestData => 
             new List<object[]>
             {
