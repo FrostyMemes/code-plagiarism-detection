@@ -159,6 +159,7 @@ namespace CodePlagiarismDetection.Forms
                 $"{(string) selectedRow.Cells["FirstFile"].Value}_{(string) selectedRow.Cells["SecondFile"].Value}.html";
             var report = Path.Combine(txtDirectoryPath.Text, reportFileName);
             File.WriteAllText(report, SuspiciousPartTracer.GenerateHtmlReport(originalFile, comparedFilePath));
+            System.Diagnostics.Process.Start(report);
         }
         
         private void cbOptionSubdirectories_CheckedChanged(object sender, EventArgs e)
