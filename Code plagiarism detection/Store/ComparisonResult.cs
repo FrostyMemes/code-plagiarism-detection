@@ -3,13 +3,13 @@
     public class ComparisonResult
     {
         public readonly double Similarity;
-        public readonly FileContent File1;
-        public readonly FileContent File2;
+        public readonly FileContent OriginalFile;
+        public readonly FileContent ComparedFile;
 
-        public ComparisonResult(FileContent file1, FileContent file2, double similarity)
+        public ComparisonResult(FileContent originalFile, FileContent comparedFile, double similarity)
         {
-            File1 = file1;
-            File2 = file2;
+            OriginalFile = originalFile;
+            ComparedFile = comparedFile;
             Similarity = similarity;
         }
     }
