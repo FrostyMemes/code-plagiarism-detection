@@ -75,9 +75,9 @@
     <Compile Include="Services\ComparisonDataTableWorker.cs" />
     <Compile Include="Services\ExcelReportGenerator.cs" />
     <Compile Include="Services\FileLoader.cs" />
+    <Compile Include="Services\LocalFontsCollection.cs" />
     <Compile Include="Services\SuspiciousPartTracer.cs" />
     <Compile Include="Services\ShingleProfiler.cs" />
-    <Compile Include="Services\ReportGeneratorExample.cs" />
     <Compile Include="Services\TextNormalizer.cs" />
     <Compile Include="Services\TokenDistance.cs" />
     <Compile Include="Services\LiteralTokenizer.cs" />
@@ -123,6 +123,23 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Fonts\Dinpro.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\Montserrat-Medium.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\Montserrat-Regular.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\Montserrat-Thin.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\PT-Serif-Regular.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
