@@ -29,6 +29,7 @@ namespace CodePlagiarismDetection.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FilterForm));
             this.txtFilter = new System.Windows.Forms.TextBox();
             this.lblDescription = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -36,29 +37,34 @@ namespace CodePlagiarismDetection.Forms
             // txtFilter
             // 
             this.txtFilter.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtFilter.Location = new System.Drawing.Point(6, 84);
+            this.txtFilter.Location = new System.Drawing.Point(8, 103);
+            this.txtFilter.Margin = new System.Windows.Forms.Padding(4);
             this.txtFilter.Multiline = true;
             this.txtFilter.Name = "txtFilter";
-            this.txtFilter.Size = new System.Drawing.Size(341, 329);
+            this.txtFilter.Size = new System.Drawing.Size(453, 404);
             this.txtFilter.TabIndex = 0;
             this.txtFilter.Leave += new System.EventHandler(this.txtFilter_Leave);
             // 
             // lblDescription
             // 
             this.lblDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
-            this.lblDescription.Location = new System.Drawing.Point(4, 9);
+            this.lblDescription.Location = new System.Drawing.Point(5, 11);
+            this.lblDescription.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDescription.Name = "lblDescription";
-            this.lblDescription.Size = new System.Drawing.Size(337, 72);
+            this.lblDescription.Size = new System.Drawing.Size(449, 89);
             this.lblDescription.TabIndex = 1;
             this.lblDescription.Text = "На разных строка разместите маски названий файлов, которые хотите обработать.\r\nЧт" + "обы обработать все файлы в выбранной папке - оставтье поле пустым.\r\n";
             // 
             // FilterForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(352, 419);
+            this.ClientSize = new System.Drawing.Size(469, 516);
             this.Controls.Add(this.lblDescription);
             this.Controls.Add(this.txtFilter);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
+            this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FilterForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Фильтр файлов";
