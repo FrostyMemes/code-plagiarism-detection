@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -14,10 +15,11 @@ namespace CodePlagiarismDetection.Forms
 {
     public partial class MainForm : Form
     {
-        private static DataTable _comparisionDataTable = null;
-        private static IProgress<int> _progressBarValueUpProgress = null;
+        private static DataTable _comparisionDataTable = default;
+        private static IProgress<int> _progressBarValueUpProgress = default;
         private static CancellationTokenSource _cancellationTokenSource = default;
-        private static MethodOption _methodOption = MethodOption.ShingleCoefficient;
+        private static PrivateFontCollection _privateFontCollection = default;
+        private static Dictionary<MethodOption, RadioButton> _radioButtonsMethodAccordance = default;
         private static SearchOption _searchOption = SearchOption.TopDirectoryOnly;
         private static FilePairOption _filePairOption = FilePairOption.CheckFileType;
         private static TableFillOption _tableFillOption = TableFillOption.ClearTable;
@@ -44,16 +46,13 @@ namespace CodePlagiarismDetection.Forms
                 {MethodOption.JaccardCoefficient, new JaccardCoefficient()},
                 {MethodOption.NGramDistance, new NGramDistance()},
                 {MethodOption.LongestCommonSubsequence, new LongestCommonSubsequence()},
-                {MethodOption.JaroWickler, new JaroWickler()},
                 {MethodOption.ShingleCoefficient, new ShingleCoefficient()},
             };
-
-        private static Dictionary<MethodOption, RadioButton> _radioButtonsMethodAccordance = null;
-
-
+        
         public MainForm()
         {
             InitializeComponent();
+            InitializeComponentCustomStyles();
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -70,11 +69,8 @@ namespace CodePlagiarismDetection.Forms
                 {MethodOption.JaccardCoefficient, rbJaccardMethod},
                 {MethodOption.NGramDistance, rbNGrammDistanceMethod},
                 {MethodOption.LongestCommonSubsequence, rbLongestCommonSubsequenceMethod},
-                {MethodOption.JaroWickler, rbJaroWicklerMethod},
                 {MethodOption.ShingleCoefficient, rbShingleCoefficientMethod},
             };
-            
-            
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
@@ -102,6 +98,7 @@ namespace CodePlagiarismDetection.Forms
             {
                 _cancellationTokenSource.Cancel();
                 _isProcessing = false;
+                btnStartProcessing.Text = "Начать обработку";
                 return;
             }
             
@@ -121,14 +118,18 @@ namespace CodePlagiarismDetection.Forms
             
             progressProcessingBar.Value = 0;
             progressProcessingBar.Maximum = GetFilePairCount(files);
+            btnStartProcessing.Text = "Прервать";
 
             var comparisons = await Task.Run(() => 
-                method.CompareFilePairwiseAsync(files, _filePairOption, _progressBarValueUpProgress, _cancellationTokenSource.Token));
+                method.CompareFilePairwise(files, _filePairOption, _progressBarValueUpProgress, _cancellationTokenSource.Token));
             _comparisionDataTable = ComparisonDataTableWorker
                 .FillComparisionDataTable(_comparisionDataTable, comparisons, selectedMethod.Value.Text, 
                     (int)numUpDownCriticalBorderValue.Value, _tableFillOption);
+            
             _cancellationTokenSource.Dispose();
             _isProcessing = false;
+            progressProcessingBar.Value = 0;
+            btnStartProcessing.Text = "Начать обработку";
         }
 
         private void dataGridComparisionResult_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -141,13 +142,24 @@ namespace CodePlagiarismDetection.Forms
                     dataGridComparisionResult.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Yellow;
             }
         }
-
-        private void btnGenerateExcelReport_Click(object sender, EventArgs e)
+        
+        private void dataGridComparisionResult_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
-            ExcelReportGenerator.GenerateExcelReport(_comparisionDataTable);
+            if (e.RowIndex != -1 && e.ColumnIndex != -1)
+            {
+                if (e.Button == MouseButtons.Right)
+                {
+                    DataGridViewRow clickedRow = (sender as DataGridView)?.Rows[e.RowIndex]; 
+                    if (clickedRow != null && !clickedRow.Selected)
+                        dataGridComparisionResult.CurrentCell = clickedRow.Cells[e.ColumnIndex];
+                    
+                    var mousePosition = dataGridComparisionResult.PointToClient(Cursor.Position);
+                    contextMenuStripDataGridView.Show(dataGridComparisionResult, mousePosition);
+                }
+            }
         }
         
-        private void btnTraceSuspectParts_Click(object sender, EventArgs e)
+        private void найтиПодозрительныеЧастиToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dataGridComparisionResult.SelectedRows.Count == 0)
                 return;
@@ -160,6 +172,11 @@ namespace CodePlagiarismDetection.Forms
             var report = Path.Combine(txtDirectoryPath.Text, reportFileName);
             File.WriteAllText(report, SuspiciousPartTracer.GenerateHtmlReport(originalFile, comparedFilePath));
             System.Diagnostics.Process.Start(report);
+        }
+        
+        private void вывестиДанныеВExcelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExcelReportGenerator.GenerateExcelReport(_comparisionDataTable);
         }
         
         private void cbOptionSubdirectories_CheckedChanged(object sender, EventArgs e)
@@ -182,19 +199,26 @@ namespace CodePlagiarismDetection.Forms
                 ? TableFillOption.AddToTable
                 : TableFillOption.ClearTable;
         }
+
+        private void InitializeComponentCustomStyles()
+        {
+            _privateFontCollection = LocalFontsCollection.GetPrivateFontCollectionInstance();
+            foreach (Control control in this.Controls)
+                control.Font = new Font(_privateFontCollection.Families[(int)Fonts.MontserattThin], 10, FontStyle.Regular);
+        }
         
         private int GetFilePairCount(List<FileContent> fileList)
         {
             var count = 0;
             for (int i = 0; i < fileList.Count; i++)
-            for (int j = i + 1; j < fileList.Count; j++)
-            {
-                if (_filePairOption == FilePairOption.CheckFileType && !fileList[i].Extension.Equals(fileList[j].Extension))
-                    continue;
-                count++;
-            }
-
+                for (int j = i + 1; j < fileList.Count; j++)
+                {
+                    if (_filePairOption == FilePairOption.CheckFileType && !fileList[i].Extension.Equals(fileList[j].Extension))
+                        continue;
+                    count++;
+                }
             return count;
         }
+        
     }
 }
