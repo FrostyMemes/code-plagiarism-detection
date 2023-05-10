@@ -36,7 +36,7 @@ namespace CodePlagiarismDetection.Methods
             return new ComparisonResult(originalFile, comparedFile, similarity);
         }
         
-        private static double DotProduct(Dictionary<string, int> profile1, Dictionary<string, int> profile2)
+        private double DotProduct(Dictionary<string, int> profile1, Dictionary<string, int> profile2)
         {
             var dot = 0.0;
             var intersection = profile1.Keys.Intersect(profile2.Keys);
@@ -47,7 +47,7 @@ namespace CodePlagiarismDetection.Methods
             return dot;
         }
         
-        private static double Norm(Dictionary<string, int> profile)
+        private double Norm(Dictionary<string, int> profile)
         {
             var agg = 0.0;
 
