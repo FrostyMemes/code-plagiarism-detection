@@ -8,7 +8,7 @@ namespace CodePlagiarismDetection.Methods
 {
     public abstract class SimilairyMethod
     {
-        public List<ComparisonResult> CompareFilePairwiseAsync(IEnumerable<FileContent> files, FilePairOption option,
+        public List<ComparisonResult> CompareFilePairwise(IEnumerable<FileContent> files, FilePairOption option,
             IProgress<int> progress, CancellationToken cancellationToken)
         {
             var fileList = files.ToList();
