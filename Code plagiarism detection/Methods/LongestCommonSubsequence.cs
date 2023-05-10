@@ -18,7 +18,15 @@ namespace CodePlagiarismDetection.Methods
 
             if (s1.Equals(s2))
                 return new ComparisonResult(originalFile, comparedFile, 1.0);
+            
+            var normalizedDistance = 1.0 * GetLCSLength(s1, s2) 
+                                     / Math.Max(s1.Length, s2.Length);
+            
+            return new ComparisonResult(originalFile, comparedFile, normalizedDistance);
+        }
 
+        private int GetLCSLength(string s1, string s2)
+        {
             var m = s1.Length;
             var n = s2.Length;
             var lengths = new int[m + 1, n + 1];
@@ -34,9 +42,7 @@ namespace CodePlagiarismDetection.Methods
                 }
             }
 
-            var normalizedDistance = 1.0 * lengths[m, n] / Math.Max(m, n);
-            
-            return new ComparisonResult(originalFile, comparedFile, normalizedDistance);
+            return lengths[m, n];
         }
     }
 }

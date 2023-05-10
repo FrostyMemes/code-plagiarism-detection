@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CodePlagiarismDetection.Services;
 
@@ -19,8 +20,15 @@ namespace CodePlagiarismDetection.Methods
 
             if (s1.Count == 0 || s2.Count == 0)
                 return new ComparisonResult(originalFile, comparedFile, 0.0);
+
+            var normalizedDistance = 1 - (GetLevensteinModifyDistance(s1, s2) / 
+                                          Math.Max(originalFile.Literals.Count, comparedFile.Literals.Count));
             
-            var diff = 0.0;
+            return new ComparisonResult(originalFile, comparedFile, normalizedDistance);
+        }
+
+        private double GetLevensteinModifyDistance(List<string> s1, List<string> s2)
+        {
             var m = new double[s1.Count + 1, s2.Count + 1];
 
             s1.Sort();
@@ -32,7 +40,7 @@ namespace CodePlagiarismDetection.Methods
             for (int i = 1; i <= s1.Count; i++)
                 for (int j = 1; j <= s2.Count; j++)
                 {
-                    diff = (s1[i - 1] == s2[j - 1]) 
+                   var diff = (s1[i - 1] == s2[j - 1]) 
                         ? 0 
                         : TokenDistance.GetTokenDistance(s1[i - 1], s2[j - 1]);
 
@@ -40,11 +48,8 @@ namespace CodePlagiarismDetection.Methods
                             m[i, j - 1] + 1),
                         m[i - 1, j - 1] + diff);
                 }
-            
-            var normalizedDistance = 1 - (m[s1.Count, s2.Count] / 
-                                          Math.Max(originalFile.Literals.Count, comparedFile.Literals.Count));
-            
-            return new ComparisonResult(originalFile, comparedFile, normalizedDistance);
+
+            return m[s1.Count, s2.Count];
         }
     }
 }
