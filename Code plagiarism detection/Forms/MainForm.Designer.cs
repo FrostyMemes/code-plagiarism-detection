@@ -68,6 +68,7 @@
             this.вывестиДанныеВExcelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripProcessingStatus = new System.Windows.Forms.ToolStrip();
             this.toolStripLabelProcessingStatus = new System.Windows.Forms.ToolStripLabel();
+            this.lblMethodDescriptiom = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize) (this.dataGridComparisionResult)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.numUpDownTokenLenghtValue)).BeginInit();
@@ -118,7 +119,7 @@
             this.btnFilterForm.Location = new System.Drawing.Point(23, 250);
             this.btnFilterForm.Margin = new System.Windows.Forms.Padding(4);
             this.btnFilterForm.Name = "btnFilterForm";
-            this.btnFilterForm.Size = new System.Drawing.Size(219, 28);
+            this.btnFilterForm.Size = new System.Drawing.Size(214, 28);
             this.btnFilterForm.TabIndex = 4;
             this.btnFilterForm.Text = "Фильтр файлов";
             this.btnFilterForm.UseVisualStyleBackColor = true;
@@ -127,7 +128,7 @@
             // progressProcessingBar
             // 
             this.progressProcessingBar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.progressProcessingBar.Location = new System.Drawing.Point(0, 805);
+            this.progressProcessingBar.Location = new System.Drawing.Point(0, 854);
             this.progressProcessingBar.Margin = new System.Windows.Forms.Padding(4);
             this.progressProcessingBar.Name = "progressProcessingBar";
             this.progressProcessingBar.Size = new System.Drawing.Size(1159, 28);
@@ -190,7 +191,7 @@
             this.dataGridComparisionResult.Name = "dataGridComparisionResult";
             this.dataGridComparisionResult.RowHeadersVisible = false;
             this.dataGridComparisionResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridComparisionResult.Size = new System.Drawing.Size(1128, 417);
+            this.dataGridComparisionResult.Size = new System.Drawing.Size(1128, 466);
             this.dataGridComparisionResult.TabIndex = 12;
             this.dataGridComparisionResult.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridComparisionResult_CellFormatting);
             this.dataGridComparisionResult.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridComparisionResult_CellMouseDown);
@@ -262,7 +263,7 @@
             this.numUpDownTokenLenghtValue.ReadOnly = true;
             this.numUpDownTokenLenghtValue.Size = new System.Drawing.Size(214, 22);
             this.numUpDownTokenLenghtValue.TabIndex = 13;
-            this.numUpDownTokenLenghtValue.Value = new decimal(new int[] {3, 0, 0, 0});
+            this.numUpDownTokenLenghtValue.Value = new decimal(new int[] {5, 0, 0, 0});
             // 
             // cbOptionFillTable
             // 
@@ -281,7 +282,7 @@
             this.lblSimilarityBorder.Location = new System.Drawing.Point(245, 186);
             this.lblSimilarityBorder.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSimilarityBorder.Name = "lblSimilarityBorder";
-            this.lblSimilarityBorder.Size = new System.Drawing.Size(212, 21);
+            this.lblSimilarityBorder.Size = new System.Drawing.Size(265, 21);
             this.lblSimilarityBorder.TabIndex = 16;
             this.lblSimilarityBorder.Text = "Процентный порог схожести";
             // 
@@ -290,7 +291,7 @@
             this.lblTokenDividing.Location = new System.Drawing.Point(245, 220);
             this.lblTokenDividing.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTokenDividing.Name = "lblTokenDividing";
-            this.lblTokenDividing.Size = new System.Drawing.Size(277, 21);
+            this.lblTokenDividing.Size = new System.Drawing.Size(305, 21);
             this.lblTokenDividing.TabIndex = 17;
             this.lblTokenDividing.Text = "Уровень разбиения на токены";
             // 
@@ -418,7 +419,7 @@
             // 
             this.toolStripProcessingStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.toolStripProcessingStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.toolStripLabelProcessingStatus});
-            this.toolStripProcessingStatus.Location = new System.Drawing.Point(0, 780);
+            this.toolStripProcessingStatus.Location = new System.Drawing.Point(0, 829);
             this.toolStripProcessingStatus.Name = "toolStripProcessingStatus";
             this.toolStripProcessingStatus.Size = new System.Drawing.Size(1159, 25);
             this.toolStripProcessingStatus.TabIndex = 21;
@@ -430,12 +431,23 @@
             this.toolStripLabelProcessingStatus.Name = "toolStripLabelProcessingStatus";
             this.toolStripLabelProcessingStatus.Size = new System.Drawing.Size(0, 22);
             // 
+            // lblMethodDescriptiom
+            // 
+            this.lblMethodDescriptiom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblMethodDescriptiom.Location = new System.Drawing.Point(492, 87);
+            this.lblMethodDescriptiom.Name = "lblMethodDescriptiom";
+            this.lblMethodDescriptiom.Size = new System.Drawing.Size(292, 286);
+            this.lblMethodDescriptiom.TabIndex = 22;
+            this.lblMethodDescriptiom.Text = "Внимание.\r\nНаиболее оптимальный уровень разбиения на токены для данного метода яв" + "ляется 4-5 уровень разбиения.\r\n";
+            this.lblMethodDescriptiom.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(1159, 833);
+            this.ClientSize = new System.Drawing.Size(1159, 882);
+            this.Controls.Add(this.lblMethodDescriptiom);
             this.Controls.Add(this.toolStripProcessingStatus);
             this.Controls.Add(this.gbSimilarityMethods);
             this.Controls.Add(this.numUpDownCriticalBorderValue);
@@ -470,6 +482,8 @@
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.Label lblMethodDescriptiom;
 
         private System.Windows.Forms.ToolStripLabel toolStripLabelProcessingStatus;
 

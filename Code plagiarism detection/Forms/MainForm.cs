@@ -53,6 +53,7 @@ namespace CodePlagiarismDetection.Forms
         {
             InitializeComponent();
             InitializeComponentCustomStyles();
+            InitializeRadioButtonMethodCheckedChangeEvents();
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -93,12 +94,12 @@ namespace CodePlagiarismDetection.Forms
         
         private async void btnStartProcessing_Click(object sender, EventArgs e)
         {
-            
             if (_isProcessing)
             {
                 _cancellationTokenSource.Cancel();
                 _isProcessing = false;
                 btnStartProcessing.Text = "Начать обработку";
+                toolStripLabelProcessingStatus.Text = "Прервано";
                 return;
             }
             
@@ -119,16 +120,18 @@ namespace CodePlagiarismDetection.Forms
             progressProcessingBar.Value = 0;
             progressProcessingBar.Maximum = GetFilePairCount(files);
             btnStartProcessing.Text = "Прервать";
+            toolStripLabelProcessingStatus.Text = "Идёт обработка...";
 
             var comparisons = await Task.Run(() => 
                 method.CompareFilePairwise(files, _filePairOption, _progressBarValueUpProgress, _cancellationTokenSource.Token));
-            _comparisionDataTable = ComparisonDataTableWorker
-                .FillComparisionDataTable(_comparisionDataTable, comparisons, selectedMethod.Value.Text, 
-                    (int)numUpDownCriticalBorderValue.Value, _tableFillOption);
+            _comparisionDataTable = ComparisonDataTableWorker.FillComparisionDataTable(_comparisionDataTable, comparisons, 
+                selectedMethod.Value.Text, (int)numUpDownCriticalBorderValue.Value, _tableFillOption);
             
+            toolStripLabelProcessingStatus.Text = _cancellationTokenSource.IsCancellationRequested
+                ? "Прервано"
+                : "Обработка завершена";
             _cancellationTokenSource.Dispose();
             _isProcessing = false;
-            progressProcessingBar.Value = 0;
             btnStartProcessing.Text = "Начать обработку";
         }
 
@@ -206,6 +209,68 @@ namespace CodePlagiarismDetection.Forms
             foreach (Control control in this.Controls)
                 control.Font = new Font(_privateFontCollection.Families[(int)Fonts.MontserattThin], 10, FontStyle.Regular);
         }
+
+        private void InitializeRadioButtonMethodCheckedChangeEvents()
+        {
+            rbLevensteinModifyMethod.CheckedChanged += HideWarning;
+            rbJaccardMethod.CheckedChanged += ShowApproximatelyWarning;
+            rbSorensenDiceMethod.CheckedChanged += ShowApproximatelyWarning;
+            rbCosineMethod.CheckedChanged += ShowEqualTextLenghtWarning;
+            rbNGrammDistanceMethod.CheckedChanged += ShowSequenceWarning;
+            rbLongestCommonSubsequenceMethod.CheckedChanged += ShowSequenceWarning;
+            rbShingleCoefficientMethod.CheckedChanged += ShowNDivideWarning;
+        }
+
+        private void ShowEqualTextLenghtWarning(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
+                lblMethodDescriptiom.Text = "Внимание." +
+                                            "\nМетод выдает корректные результаты, если два сравниваемых исходных кода приблизительно близки по количеству символов." +
+                                            "\nНаиболее оптимальный уровень разбиения на токены для данного метода является 4-5 уровень разбиения.";
+                lblMethodDescriptiom.Visible = true;
+            }
+        }
+        
+        private void ShowSequenceWarning(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
+                lblMethodDescriptiom.Text = "Внимание." +
+                                            "\nДля данного метода имеет значение, в каком порядке идут символы и блоки кода в сравнимаемых исходных кодах. " +
+                                            "Одинаковые части кода могут быть не распознаны, " +
+                                            "если в сравниваемых исходных кодах они находится в разных местах." +
+                                            "\nДля N-расстояния наиболее оптимальный уровень разбиения на токены для данного метода является 6-7 уровень разбиения.";
+                lblMethodDescriptiom.Visible = true;
+            }
+        }
+        
+        private void ShowApproximatelyWarning(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
+                lblMethodDescriptiom.Text = "Внимание." +
+                                            "\nМетод выдает приблизительный результат схожести." +
+                                            "\nНаиболее оптимальный уровень разбиения на токены для данного метода является 4-5 уровень разбиения.";
+                lblMethodDescriptiom.Visible = true;
+            }
+        }
+
+        private void ShowNDivideWarning(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
+                lblMethodDescriptiom.Text = "Внимание." +
+                                            "\nНаиболее оптимальный уровень разбиения на токены для данного метода является 4-5 уровень разбиения.";
+                lblMethodDescriptiom.Visible = true;
+            }
+        }
+        
+        private void HideWarning(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+                lblMethodDescriptiom.Visible = false;
+        }
         
         private int GetFilePairCount(List<FileContent> fileList)
         {
@@ -219,6 +284,5 @@ namespace CodePlagiarismDetection.Forms
                 }
             return count;
         }
-        
     }
 }
