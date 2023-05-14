@@ -5,7 +5,7 @@ using CodePlagiarismDetection.Services;
 
 namespace CodePlagiarismDetection.Methods
 {
-    public class ShingleCoefficient: SimilairyMethod
+    public class ShingleCoefficient: SimilarityMethod
     {
         protected override ComparisonResult CompareFiles(FileContent originalFile, FileContent comparedFile)
         {

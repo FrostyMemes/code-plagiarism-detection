@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace CodePlagiarismDetection.Methods
 {
-    public abstract class SimilairyMethod
+    public abstract class SimilarityMethod
     {
         public List<ComparisonResult> CompareFilePairwise(IEnumerable<FileContent> files, FilePairOption option,
             IProgress<int> progress, CancellationToken cancellationToken)

@@ -37,8 +37,8 @@ namespace CodePlagiarismDetection.Forms
             ShingleCoefficient
         }
         
-        private static readonly Dictionary<MethodOption, SimilairyMethod> _methods 
-            = new Dictionary<MethodOption, SimilairyMethod>()
+        private static readonly Dictionary<MethodOption, SimilarityMethod> _methods 
+            = new Dictionary<MethodOption, SimilarityMethod>()
             {
                 {MethodOption.Cosine, new Cosine()},
                 {MethodOption.LevensteinModify, new LevenshteinModify()},

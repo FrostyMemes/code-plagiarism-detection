@@ -3,7 +3,7 @@ using CodePlagiarismDetection.Services;
 
 namespace CodePlagiarismDetection.Methods
 {
-    public class LongestCommonSubsequence: SimilairyMethod
+    public class LongestCommonSubsequence: SimilarityMethod
     {
         protected override ComparisonResult CompareFiles(FileContent originalFile, FileContent comparedFile)
         {

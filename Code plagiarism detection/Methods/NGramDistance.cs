@@ -4,7 +4,7 @@ using CodePlagiarismDetection.Services;
 
 namespace CodePlagiarismDetection.Methods
 {
-    public class NGramDistance: SimilairyMethod
+    public class NGramDistance: SimilarityMethod
     {
         protected override ComparisonResult CompareFiles(FileContent originalFile, FileContent comparedFile)
         {

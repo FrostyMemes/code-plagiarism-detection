@@ -98,7 +98,7 @@
             this.txtDirectoryPath.Name = "txtDirectoryPath";
             this.txtDirectoryPath.Size = new System.Drawing.Size(968, 22);
             this.txtDirectoryPath.TabIndex = 0;
-            this.txtDirectoryPath.Text = "D:\\Projects\\C Sharp Projects\\CodePlagiarismDetection\\ModuleTests\\CodeExamples\\CSh" + "arp";
+            this.txtDirectoryPath.Text = "D:\\Projects\\C Sharp Projects\\CodePlagiarismDetection\\Code plagiarism detection\\Co" + "deExamples\\Test";
             // 
             // groupBox1
             // 
@@ -128,7 +128,7 @@
             // progressProcessingBar
             // 
             this.progressProcessingBar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.progressProcessingBar.Location = new System.Drawing.Point(0, 854);
+            this.progressProcessingBar.Location = new System.Drawing.Point(0, 832);
             this.progressProcessingBar.Margin = new System.Windows.Forms.Padding(4);
             this.progressProcessingBar.Name = "progressProcessingBar";
             this.progressProcessingBar.Size = new System.Drawing.Size(1159, 28);
@@ -191,7 +191,7 @@
             this.dataGridComparisionResult.Name = "dataGridComparisionResult";
             this.dataGridComparisionResult.RowHeadersVisible = false;
             this.dataGridComparisionResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridComparisionResult.Size = new System.Drawing.Size(1128, 466);
+            this.dataGridComparisionResult.Size = new System.Drawing.Size(1128, 444);
             this.dataGridComparisionResult.TabIndex = 12;
             this.dataGridComparisionResult.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridComparisionResult_CellFormatting);
             this.dataGridComparisionResult.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridComparisionResult_CellMouseDown);
@@ -263,7 +263,7 @@
             this.numUpDownTokenLenghtValue.ReadOnly = true;
             this.numUpDownTokenLenghtValue.Size = new System.Drawing.Size(214, 22);
             this.numUpDownTokenLenghtValue.TabIndex = 13;
-            this.numUpDownTokenLenghtValue.Value = new decimal(new int[] {5, 0, 0, 0});
+            this.numUpDownTokenLenghtValue.Value = new decimal(new int[] {4, 0, 0, 0});
             // 
             // cbOptionFillTable
             // 
@@ -392,7 +392,7 @@
             this.rbLevensteinModifyMethod.Name = "rbLevensteinModifyMethod";
             this.rbLevensteinModifyMethod.Size = new System.Drawing.Size(287, 30);
             this.rbLevensteinModifyMethod.TabIndex = 1;
-            this.rbLevensteinModifyMethod.Text = "Метод Левинштейна+";
+            this.rbLevensteinModifyMethod.Text = "Метод Левенштейна+";
             this.rbLevensteinModifyMethod.UseVisualStyleBackColor = true;
             // 
             // contextMenuStripDataGridView
@@ -419,7 +419,7 @@
             // 
             this.toolStripProcessingStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.toolStripProcessingStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.toolStripLabelProcessingStatus});
-            this.toolStripProcessingStatus.Location = new System.Drawing.Point(0, 829);
+            this.toolStripProcessingStatus.Location = new System.Drawing.Point(0, 807);
             this.toolStripProcessingStatus.Name = "toolStripProcessingStatus";
             this.toolStripProcessingStatus.Size = new System.Drawing.Size(1159, 25);
             this.toolStripProcessingStatus.TabIndex = 21;
@@ -446,7 +446,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(1159, 882);
+            this.ClientSize = new System.Drawing.Size(1159, 860);
             this.Controls.Add(this.lblMethodDescriptiom);
             this.Controls.Add(this.toolStripProcessingStatus);
             this.Controls.Add(this.gbSimilarityMethods);

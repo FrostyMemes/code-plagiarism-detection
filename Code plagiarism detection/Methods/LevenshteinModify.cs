@@ -5,7 +5,7 @@ using CodePlagiarismDetection.Services;
 
 namespace CodePlagiarismDetection.Methods
 {
-    public class LevenshteinModify: SimilairyMethod
+    public class LevenshteinModify: SimilarityMethod
     {
         protected override ComparisonResult CompareFiles(FileContent originalFile, FileContent comparedFile)
         {

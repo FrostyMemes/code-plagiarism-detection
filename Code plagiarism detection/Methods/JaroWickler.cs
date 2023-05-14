@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace CodePlagiarismDetection.Methods
 {
-    public class JaroWickler: SimilairyMethod
+    public class JaroWickler: SimilarityMethod
     {
         private const double THRESHOLD = 0.7;
         private const double JW_COEF = 0.1;

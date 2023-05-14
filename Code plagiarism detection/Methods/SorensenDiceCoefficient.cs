@@ -4,7 +4,7 @@ using CodePlagiarismDetection.Services;
 
 namespace CodePlagiarismDetection.Methods
 {
-    public class SorensenDiceCoefficient: SimilairyMethod
+    public class SorensenDiceCoefficient: SimilarityMethod
     {
         protected override ComparisonResult CompareFiles(FileContent originalFile, FileContent comparedFile)
         {

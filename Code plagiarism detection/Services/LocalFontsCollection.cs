@@ -26,6 +26,11 @@ namespace CodePlagiarismDetection.Services
         
         private LocalFontsCollection() { }
 
+        public static PrivateFontCollection GetPrivateFontCollectionInstance()
+        {
+            return _instance ?? (_instance = CreatePrivateFontCollectionInstance());
+        }
+        
         private static PrivateFontCollection CreatePrivateFontCollectionInstance()
         {
             var privateFontCollection = new PrivateFontCollection();
@@ -33,11 +38,6 @@ namespace CodePlagiarismDetection.Services
                 privateFontCollection.AddFontFile(font.Value);
             
             return privateFontCollection;
-        }
-        
-        public static PrivateFontCollection GetPrivateFontCollectionInstance()
-        {
-            return _instance ?? (_instance = CreatePrivateFontCollectionInstance());
         }
     }
 }
