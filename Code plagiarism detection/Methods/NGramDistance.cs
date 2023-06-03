@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using CodePlagiarismDetection.Services;
 
 namespace CodePlagiarismDetection.Methods
@@ -29,51 +28,6 @@ namespace CodePlagiarismDetection.Methods
             return new ComparisonResult(originalFile, comparedFile, similarity);
         }
         
-        
-        private double GetNGramDistanceRecursive(string originalString, string comparedString,
-            int originalPrefixStringLenght, int comparedPrefixStringLenght, int n)
-        {
-            if (originalPrefixStringLenght == n && comparedPrefixStringLenght == n)
-            {
-                for (int i = 0; i != n; i++)
-                {
-                    if (originalString[i] != comparedString[i])
-                        return 1;
-                }
-                return 0;
-            }
-
-            if ((originalPrefixStringLenght == n && comparedPrefixStringLenght > n)
-                || (originalPrefixStringLenght > n && comparedPrefixStringLenght == n))
-            {
-                return 1;
-            }
-
-            var cost = 0.0;
-            var shingleDistance = 0;
-            for (int i = 0; i != n; i++)
-            {
-                shingleDistance += (originalString[originalPrefixStringLenght - i - 1] ==
-                                    comparedString[comparedPrefixStringLenght - i - 1])
-                    ? 1
-                    : 0 ;
-            }
-
-            cost = (double) shingleDistance / n;
-
-            return Math.Min(
-                Math.Min(
-                    GetNGramDistanceRecursive(originalString, comparedString, originalPrefixStringLenght - 1,
-                        comparedPrefixStringLenght, n) + 1,
-                    GetNGramDistanceRecursive(originalString, comparedString, originalPrefixStringLenght,
-                        comparedPrefixStringLenght - 1, n) + 1
-                ),
-                GetNGramDistanceRecursive(originalString, comparedString, originalPrefixStringLenght - 1,
-                    comparedPrefixStringLenght - 1, n) + cost
-            );
-        }
-
-        
         private double GetNGramDistance(string originalString, string comparedString, int n)
         {
             const char specialPrefix = '\n';
@@ -97,16 +51,16 @@ namespace CodePlagiarismDetection.Methods
             }
 
             var originalStringChars = new char[originalStringLength + n - 1];
-            float[] costArray; // Cost array, horizontally
-            float[] previousCostArray; // 'previous' cost array, horizontally
-            float[] tempForCostArrays; // Placeholder to assist in swapping p and d
+            float[] costArray; 
+            float[] previousCostArray; 
+            float[] tempForCostArrays; 
 
-            // Construct sa with prefix
+         
             for (int i1 = 0; i1 < originalStringChars.Length; i1++)
             {
                 if (i1 < n - 1)
                 {
-                    originalStringChars[i1] = specialPrefix; // Add prefix
+                    originalStringChars[i1] = specialPrefix; 
                 }
                 else
                 {
@@ -116,11 +70,11 @@ namespace CodePlagiarismDetection.Methods
             previousCostArray = new float[originalStringLength + 1];
             costArray = new float[originalStringLength + 1];
 
-            // Indexes into strings s and t
-            int iOriginal; // Iterates through source
-            int jCompared; // Iterates through target
+           
+            int iOriginal; 
+            int jCompared; 
 
-            char[] comparedStringNgram = new char[n]; // jth n-gram of t
+            char[] comparedStringNgram = new char[n]; 
 
             for (iOriginal = 0; iOriginal <= originalStringLength; iOriginal++)
             {
@@ -129,12 +83,12 @@ namespace CodePlagiarismDetection.Methods
 
             for (jCompared = 1; jCompared <= comparedStringLength; jCompared++)
             {
-                // Construct t_j n-gram 
+               
                 if (jCompared < n)
                 {
                     for (int ti = 0; ti < n - jCompared; ti++)
                     {
-                        comparedStringNgram[ti] = specialPrefix; // Add prefix
+                        comparedStringNgram[ti] = specialPrefix;
                     }
                     for (int ti = n - jCompared; ti < n; ti++)
                     {
@@ -150,7 +104,6 @@ namespace CodePlagiarismDetection.Methods
                 {
                     cost = 0;
                     int tn = n;
-                    // Compare sa to t_j
                     for (int ni = 0; ni < n; ni++)
                     {
                         if (originalStringChars[iOriginal - 1 + ni] != comparedStringNgram[ni])
@@ -158,25 +111,19 @@ namespace CodePlagiarismDetection.Methods
                             cost++;
                         }
                         else if (originalStringChars[iOriginal - 1 + ni] == specialPrefix)
-                        { 
-                            // Discount matches on prefix
+                        {
                             tn--;
                         }
                     }
                     float ec = (float)cost / tn;
-                    // Minimum of cell to the left+1, to the top+1, diagonally left and up +cost
                     costArray[iOriginal] = Math.Min(
                         Math.Min(costArray[iOriginal - 1] + 1, previousCostArray[iOriginal] + 1), 
                         previousCostArray[iOriginal - 1] + ec);
                 }
-                // Copy current distance counts to 'previous row' distance counts
                 tempForCostArrays = previousCostArray;
                 previousCostArray = costArray;
                 costArray = tempForCostArrays;
             }
-
-            // Our last action in the above loop was to switch d and p, so p now
-            // actually has the most recent cost counts
             return previousCostArray[originalStringLength] / Math.Max(comparedStringLength, originalStringLength);
         }
     }
