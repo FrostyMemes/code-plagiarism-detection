@@ -27,8 +27,8 @@ namespace CodePlagiarismDetection.Methods
 
             var profile1 = ShingleProfiler.GetShingleProfile(s1);
             var profile2 = ShingleProfiler.GetShingleProfile(s2);
-            var intersection = profile1.Keys.Intersect(profile2.Keys);
-            var intersectionShingleCount = intersection.Sum(shingle => Math.Min(profile1[shingle], profile2[shingle]));
+            var intersectionShingles = profile1.Keys.Intersect(profile2.Keys);
+            var intersectionShingleCount = intersectionShingles.Sum(shingle => Math.Min(profile1[shingle], profile2[shingle]));
             var profile1ShingleCount = profile1.Sum(shingle => shingle.Value);
             var profile2ShingleCount = profile2.Sum(shingle => shingle.Value);
 
