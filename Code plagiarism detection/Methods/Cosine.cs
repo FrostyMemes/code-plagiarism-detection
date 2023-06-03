@@ -28,10 +28,7 @@ namespace CodePlagiarismDetection.Methods
 
             var profile1 = ShingleProfiler.GetShingleProfile(s1);
             var profile2 = ShingleProfiler.GetShingleProfile(s2);
-
-            var dot = DotProduct(profile1, profile2);
-            var norm1 = Norm(profile1);
-            var norm2 = Norm(profile2);
+            
             similarity = DotProduct(profile1, profile2) / (Norm(profile1) * Norm(profile2));
             return new ComparisonResult(originalFile, comparedFile, similarity);
         }
