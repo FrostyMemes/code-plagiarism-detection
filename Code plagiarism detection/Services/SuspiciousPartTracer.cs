@@ -122,10 +122,8 @@ namespace CodePlagiarismDetection.Services
                 {
                     WriteWithTag(writer, token.Token, token.Type);
                 }
-
-                writer.WriteLine();
+                writer.Write('\n');
             }
-
             writer.RenderEndTag();
         }
         
@@ -194,7 +192,7 @@ namespace CodePlagiarismDetection.Services
             <html>
             <head>
             <meta charset=""utf-8""/>
-            <title>Соходства</title>
+            <title>Подозрительные части</title>
             <style type=""text/css"">
             * {padding-top:0;margin-top:0;border-top:0;}
             .Common {background-color: #ff9999;}
