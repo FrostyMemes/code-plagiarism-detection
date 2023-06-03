@@ -33,7 +33,6 @@ namespace CodePlagiarismDetection.Forms
             JaccardCoefficient,
             NGramDistance,
             LongestCommonSubsequence,
-            JaroWickler,
             ShingleCoefficient
         }
         
@@ -103,7 +102,7 @@ namespace CodePlagiarismDetection.Forms
                 return;
             }
             
-            if (!ValidationChecker.CheckValidationOfCurrentDirectory(txtDirectoryPath.Text))
+            if (!ValidationChecker.CheckValidationOfCurrentDirectory(txtDirectoryPath.Text, MessageBoxShowMode.Show))
                 return;
 
             _isProcessing = true;
@@ -162,31 +161,16 @@ namespace CodePlagiarismDetection.Forms
             }
         }
         
-        private void найтиПодозрительныеЧастиToolStripMenuItem_Click(object sender, EventArgs e)
+        private void открытьФайлыToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dataGridComparisionResult.SelectedRows.Count == 0)
                 return;
             
             var selectedRow = dataGridComparisionResult.SelectedRows[0];
-            var originalFile = (string)selectedRow.Cells["PathToFirstFile"].Value;
+            var originalFilePath = (string)selectedRow.Cells["PathToFirstFile"].Value;
             var comparedFilePath = (string)selectedRow.Cells["PathToSecondFile"].Value;
-            var reportFileName =
-                $"{(string) selectedRow.Cells["FirstFile"].Value}_{(string) selectedRow.Cells["SecondFile"].Value}.html";
-            var report = Path.Combine(txtDirectoryPath.Text, reportFileName);
-            File.WriteAllText(report, SuspiciousPartTracer.GenerateHtmlReport(originalFile, comparedFilePath));
-            System.Diagnostics.Process.Start(report);
-        }
-        
-        private void вывестиДанныеВExcelToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ExcelReportGenerator.GenerateExcelReport(_comparisionDataTable);
-        }
-        
-        private void cbOptionSubdirectories_CheckedChanged(object sender, EventArgs e)
-        {
-            _searchOption = (cbOptionSubdirectories.Checked)
-                ? SearchOption.AllDirectories
-                : SearchOption.TopDirectoryOnly;
+            System.Diagnostics.Process.Start(originalFilePath);
+            System.Diagnostics.Process.Start(comparedFilePath);
         }
 
         private void cbOptionFileType_CheckedChanged(object sender, EventArgs e)
@@ -203,11 +187,44 @@ namespace CodePlagiarismDetection.Forms
                 : TableFillOption.ClearTable;
         }
 
+        private void найтиПодозрительныеЧастиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dataGridComparisionResult.SelectedRows.Count == 0)
+                return;
+            
+            var selectedRow = dataGridComparisionResult.SelectedRows[0];
+            var tempDirectoryPath = Path.GetTempPath();
+            var originalFilePath = (string)selectedRow.Cells["PathToFirstFile"].Value;
+            var comparedFilePath = (string)selectedRow.Cells["PathToSecondFile"].Value;
+            var reportFileName =
+                $"{(string) selectedRow.Cells["FirstFile"].Value}_{(string) selectedRow.Cells["SecondFile"].Value}.html";
+            var report = Path.Combine(tempDirectoryPath, reportFileName);
+            File.WriteAllText(report, SuspiciousPartTracer.GenerateHtmlReport(originalFilePath, comparedFilePath));
+            System.Diagnostics.Process.Start(report);
+        }
+        
+        private void вывестиДанныеВExcelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dataGridComparisionResult.SelectedRows.Count == 0)
+                return;
+            
+            ExcelReportGenerator.GenerateExcelReport(_comparisionDataTable);
+        }
+        
+        private void cbOptionSubdirectories_CheckedChanged(object sender, EventArgs e)
+        {
+            _searchOption = (cbOptionSubdirectories.Checked)
+                ? SearchOption.AllDirectories
+                : SearchOption.TopDirectoryOnly;
+        }
+
         private void InitializeComponentCustomStyles()
         {
             _privateFontCollection = LocalFontsCollection.GetPrivateFontCollectionInstance();
             foreach (Control control in this.Controls)
-                control.Font = new Font(_privateFontCollection.Families[(int)Fonts.MontserattThin], 10, FontStyle.Regular);
+                control.Font = new Font(_privateFontCollection.Families[(int)Fonts.MontserattThin], 11, FontStyle.Regular);
+            
+            dataGridComparisionResult.RowsDefaultCellStyle.SelectionBackColor = Color.FromArgb(0, 165, 223);
         }
 
         private void InitializeRadioButtonMethodCheckedChangeEvents()
@@ -225,7 +242,7 @@ namespace CodePlagiarismDetection.Forms
         {
             if (((RadioButton)sender).Checked)
             {
-                lblMethodDescriptiom.Text = "Внимание." +
+                lblMethodDescriptiom.Text = "Внимание!" +
                                             "\nМетод выдает корректные результаты, если два сравниваемых исходных кода приблизительно близки по количеству символов." +
                                             "\nНаиболее оптимальный уровень разбиения на токены для данного метода является 4-5 уровень разбиения.";
                 lblMethodDescriptiom.Visible = true;
@@ -236,11 +253,11 @@ namespace CodePlagiarismDetection.Forms
         {
             if (((RadioButton)sender).Checked)
             {
-                lblMethodDescriptiom.Text = "Внимание." +
+                lblMethodDescriptiom.Text = "Внимание!" +
                                             "\nДля данного метода имеет значение, в каком порядке идут символы и блоки кода в сравнимаемых исходных кодах. " +
                                             "Одинаковые части кода могут быть не распознаны, " +
                                             "если в сравниваемых исходных кодах они находится в разных местах." +
-                                            "\nДля N-расстояния наиболее оптимальный уровень разбиения на токены для данного метода является 6-7 уровень разбиения.";
+                                            "\nДля N-расстояния наиболее оптимальный уровень разбиения на токены является 6-7 уровень разбиения.";
                 lblMethodDescriptiom.Visible = true;
             }
         }
@@ -249,7 +266,7 @@ namespace CodePlagiarismDetection.Forms
         {
             if (((RadioButton)sender).Checked)
             {
-                lblMethodDescriptiom.Text = "Внимание." +
+                lblMethodDescriptiom.Text = "Внимание!" +
                                             "\nМетод выдает приблизительный результат схожести." +
                                             "\nНаиболее оптимальный уровень разбиения на токены для данного метода является 4-5 уровень разбиения.";
                 lblMethodDescriptiom.Visible = true;
@@ -260,7 +277,7 @@ namespace CodePlagiarismDetection.Forms
         {
             if (((RadioButton)sender).Checked)
             {
-                lblMethodDescriptiom.Text = "Внимание." +
+                lblMethodDescriptiom.Text = "Внимание!" +
                                             "\nНаиболее оптимальный уровень разбиения на токены для данного метода является 4-5 уровень разбиения.";
                 lblMethodDescriptiom.Visible = true;
             }
