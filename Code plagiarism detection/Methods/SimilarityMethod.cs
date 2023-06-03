@@ -8,6 +8,7 @@ namespace CodePlagiarismDetection.Methods
 {
     public abstract class SimilarityMethod
     {
+        //Метод для создания пар обрабатываемых файлов
         public List<ComparisonResult> CompareFilePairwise(IEnumerable<FileContent> files, FilePairOption option,
             IProgress<int> progress, CancellationToken cancellationToken)
         {
