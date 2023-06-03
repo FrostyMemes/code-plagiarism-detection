@@ -10,8 +10,7 @@ namespace ModuleTests.ServiceTests
 {
     public class FileLoaderTests
     {
-        private string codeExamplePath = @"D:\Projects\C Sharp Projects\CodePlagiarismDetection\ModuleTests\CodeExamples";
-        private string codeExamplePath1 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+        private string codeExamplePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 "..", 
                 "..", "CodeExamples");
         public static IEnumerable<object[]> FilterTestData => 
@@ -25,7 +24,7 @@ namespace ModuleTests.ServiceTests
         [Theory]
         [InlineData(SearchOption.AllDirectories)]
         [InlineData(SearchOption.TopDirectoryOnly)]
-        public void GetFilesFromDirectoryWithSearchOption(SearchOption option)
+        public void GetFiles_GetFilesFromDirectoryWithSearchOption_ReturnSameNumber(SearchOption option)
         {
             var directory = new DirectoryInfo(codeExamplePath);
             var testFileLoaderFileCount = FileLoader.LoadFiles(directory, option)
@@ -37,7 +36,7 @@ namespace ModuleTests.ServiceTests
         
         [Theory]
         [MemberData(nameof(FilterTestData))]
-        public void GetFilesFromDirectoryWithFilter(List<string> filter)
+        public void GetFiles_GetFilesFromDirectoryWithFileFilter_ReturnSameNumber(List<string> filter)
         {
             FileLoader.filter = filter;
             var directory = new DirectoryInfo(codeExamplePath);

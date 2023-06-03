@@ -51,12 +51,12 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="MethodsTest\MethodsTest.cs" />
         <Compile Include="ServiceTests\FileLoaderTests.cs" />
         <Compile Include="ServiceTests\NormalizerTests.cs" />
         <Compile Include="ServiceTests\ShingleProfilerTests.cs" />
         <Compile Include="ServiceTests\TokenDistanceTests.cs" />
         <Compile Include="ServiceTests\ValidationCheckerTest.cs" />
-        <Compile Include="Tests.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
@@ -75,21 +75,23 @@
       <ClCompile Include="CodeExamples\CSharp\2.c" />
       <ClCompile Include="CodeExamples\CSharp\3.c" />
       <ClCompile Include="CodeExamples\CSharp\4.c" />
-      <ClCompile Include="CodeExamples\CSharp\5.c" />
-      <ClCompile Include="CodeExamples\CSharp\6.c" />
-      <ClCompile Include="CodeExamples\CSharp\7.c" />
-      <ClCompile Include="CodeExamples\CSharp\8.c" />
       <ClCompile Include="CodeExamples\Kek\1.c" />
       <ClCompile Include="CodeExamples\Kek\2.c" />
       <ClCompile Include="CodeExamples\Kek\test1.c" />
       <ClCompile Include="CodeExamples\Kek\test2.c" />
       <ClCompile Include="CodeExamples\Test\1.c" />
       <ClCompile Include="CodeExamples\Test\2.c" />
+      <ClCompile Include="MethodsTest\TestFiles\DifferentFiles\DifferentFile1.c" />
+      <ClCompile Include="MethodsTest\TestFiles\DifferentFiles\DifferentFile2.c" />
       <ClCompile Include="MethodsTest\TestFiles\IdenticalFiles\IndeticalFile1.c" />
       <ClCompile Include="MethodsTest\TestFiles\IdenticalFiles\IndeticalFile2.c" />
       <ClCompile Include="ServiceTests\TestFiles\TestExtractLiteralsFromText.c" />
       <ClCompile Include="ServiceTests\TestFiles\TestProcessingToOneLineText.c" />
       <ClCompile Include="ServiceTests\TestFiles\TestRegexForDeletingCommentsAndStringLiterals.c" />
+    </ItemGroup>
+    <ItemGroup>
+      <Content Include="MethodsTest\TestFiles\CommonFiles\JAVA1.java" />
+      <Content Include="MethodsTest\TestFiles\CommonFiles\JAVA2.java" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

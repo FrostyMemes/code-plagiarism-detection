@@ -8,24 +8,14 @@ namespace ModuleTests.ServiceTests
     public class ValidationCheckerTest
     {
         [Fact]
-        public void IsExist_CheckingExistingDirectory_ReturnTrue()
+        public void CheckValidationOfCurrentDirectory_TestCheckingOfValidationOfCurrentDirectoryWithDifferentParameters_ReturnSuccess()
         {
             var existingDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
-            Assert.True(ValidationChecker.CheckValidationOfCurrentDirectory(existingDirectory));
-        }
-        
-        [Fact]
-        public void IsNotExist_CheckingNotExistingDirectory_ReturnFalse()
-        {
-            var notExistingDirectory = "h:\\";
-            Assert.False(ValidationChecker.CheckValidationOfCurrentDirectory(notExistingDirectory));
-        }
-        
-        [Fact]
-        public void IsNotEmpty_CheckingEmptyDirectoryPath_ReturnFalse()
-        {
+            var notExistingDirectory = "h:\\NotFoundFolder";
             var emptyPath = String.Empty;
-            Assert.False(ValidationChecker.CheckValidationOfCurrentDirectory(emptyPath));
+            Assert.True(ValidationChecker.CheckValidationOfCurrentDirectory(existingDirectory, MessageBoxShowMode.Hide));
+            Assert.False(ValidationChecker.CheckValidationOfCurrentDirectory(notExistingDirectory, MessageBoxShowMode.Hide));
+            Assert.False(ValidationChecker.CheckValidationOfCurrentDirectory(emptyPath, MessageBoxShowMode.Hide));
         }
     }
 }

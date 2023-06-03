@@ -11,7 +11,7 @@ namespace ModuleTests.ServiceTests
         [InlineData(2)]
         [InlineData(3)]
         [InlineData(4)]
-        public void IsEqual_GenerateCountShingleWithParametrNlenght_ReturnTrue(int shingleLenght)
+        public void GetShingleProfile_GenerateCountShingleWithParametrNlenght_IsEqual(int shingleLenght)
         {
             var profile = ShingleProfiler.GetShingleProfile(testStringForCountingShingles, shingleLenght);
             var profileShingleCount = profile.Count;
@@ -22,7 +22,7 @@ namespace ModuleTests.ServiceTests
         [InlineData(2)]
         [InlineData(3)]
         [InlineData(4)]
-        public void IsEqual_ShinglesCountWithPropertyNlenght_ReturnTrue(int shingleLenght)
+        public void GetShingleProfile_ShinglesCountWithPropertyNlenght_IsEqual(int shingleLenght)
         {
             ShingleProfiler.N = shingleLenght;
             var profile = ShingleProfiler.GetShingleProfile(testStringForCountingShingles);
@@ -34,7 +34,7 @@ namespace ModuleTests.ServiceTests
         [InlineData(2)]
         [InlineData(3)]
         [InlineData(4)]
-        public void IsEqualToOne_ShinglesCountForStringWithSameCharsEqualToOne_IsTrue(int shingleLenght)
+        public void GetShingleProfile_ShinglesCountForStringWithSameCharsEqualToOne_IsEqual(int shingleLenght)
         {
             var testString = "AAAAAAAAAAAAAAAAAAAAAAA";
             var profile = ShingleProfiler.GetShingleProfile(testString, shingleLenght);
