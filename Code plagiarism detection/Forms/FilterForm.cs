@@ -45,7 +45,7 @@ namespace CodePlagiarismDetection.Forms
             _privateFontCollection = LocalFontsCollection.GetPrivateFontCollectionInstance();
             
             foreach (Control control in this.Controls)
-                control.Font = new Font(_privateFontCollection.Families[(int)Fonts.MontserattThin], 10, FontStyle.Regular);
+                control.Font = new Font(_privateFontCollection.Families[(int)Fonts.MontserattThin], 11, FontStyle.Regular);
         }
     }
 }

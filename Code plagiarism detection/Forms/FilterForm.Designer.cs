@@ -42,21 +42,21 @@ namespace CodePlagiarismDetection.Forms
             // txtFilter
             // 
             this.txtFilter.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtFilter.Location = new System.Drawing.Point(8, 80);
+            this.txtFilter.Location = new System.Drawing.Point(9, 108);
             this.txtFilter.Margin = new System.Windows.Forms.Padding(4);
             this.txtFilter.Multiline = true;
             this.txtFilter.Name = "txtFilter";
-            this.txtFilter.Size = new System.Drawing.Size(427, 287);
+            this.txtFilter.Size = new System.Drawing.Size(480, 304);
             this.txtFilter.TabIndex = 0;
             this.txtFilter.Leave += new System.EventHandler(this.txtFilter_Leave);
             // 
             // lblDescription
             // 
             this.lblDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
-            this.lblDescription.Location = new System.Drawing.Point(5, 11);
+            this.lblDescription.Location = new System.Drawing.Point(6, 12);
             this.lblDescription.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDescription.Name = "lblDescription";
-            this.lblDescription.Size = new System.Drawing.Size(408, 65);
+            this.lblDescription.Size = new System.Drawing.Size(459, 92);
             this.lblDescription.TabIndex = 1;
             this.lblDescription.Text = "На разных строка разместите маски названий файлов, которые хотите обработать.\r\nЧт" + "обы обработать все файлы в выбранной папке - оставтье поле пустым.\r\n";
             // 
@@ -64,7 +64,7 @@ namespace CodePlagiarismDetection.Forms
             // 
             this.splitter1.Location = new System.Drawing.Point(0, 0);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(3, 376);
+            this.splitter1.Size = new System.Drawing.Size(3, 423);
             this.splitter1.TabIndex = 2;
             this.splitter1.TabStop = false;
             // 
@@ -72,9 +72,9 @@ namespace CodePlagiarismDetection.Forms
             // 
             this.pictureBoxQuestion.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxQuestion.Image = ((System.Drawing.Image) (resources.GetObject("pictureBoxQuestion.Image")));
-            this.pictureBoxQuestion.Location = new System.Drawing.Point(408, 11);
+            this.pictureBoxQuestion.Location = new System.Drawing.Point(459, 12);
             this.pictureBoxQuestion.Name = "pictureBoxQuestion";
-            this.pictureBoxQuestion.Size = new System.Drawing.Size(24, 24);
+            this.pictureBoxQuestion.Size = new System.Drawing.Size(27, 27);
             this.pictureBoxQuestion.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxQuestion.TabIndex = 3;
             this.pictureBoxQuestion.TabStop = false;
@@ -82,14 +82,14 @@ namespace CodePlagiarismDetection.Forms
             // 
             // FilterForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(443, 376);
+            this.ClientSize = new System.Drawing.Size(498, 423);
             this.Controls.Add(this.pictureBoxQuestion);
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this.lblDescription);
             this.Controls.Add(this.txtFilter);
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FilterForm";

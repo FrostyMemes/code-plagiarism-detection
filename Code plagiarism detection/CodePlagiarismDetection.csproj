@@ -125,6 +125,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CodeExamples\Test\Python\Python3.py" />
     <Content Include="Fonts\Dinpro.otf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -142,31 +143,16 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CodeExamples\Java\" />
-    <Folder Include="CodeExamples\Python\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="CodeExamples\C\1.c" />
-    <ClCompile Include="CodeExamples\C\2.c" />
-    <ClCompile Include="CodeExamples\C\3.c" />
-    <ClCompile Include="CodeExamples\C\4.c" />
-    <ClCompile Include="CodeExamples\C\5.c" />
-    <ClCompile Include="CodeExamples\C\6.c" />
-    <ClCompile Include="CodeExamples\C\7.c" />
-    <ClCompile Include="CodeExamples\C\8.c" />
-    <ClCompile Include="CodeExamples\C\C1\C1_1.c" />
-    <ClCompile Include="CodeExamples\C\C1\C1_2.c" />
-    <ClCompile Include="CodeExamples\C\C2\C2_1.c" />
-    <ClCompile Include="CodeExamples\C\C2\C2_2.c" />
     <ClCompile Include="CodeExamples\Test\1.c" />
     <ClCompile Include="CodeExamples\Test\2.c" />
     <ClCompile Include="CodeExamples\Test\3.c" />
     <ClCompile Include="CodeExamples\Test\4.c" />
     <ClCompile Include="CodeExamples\Test\5.c" />
-    <ClCompile Include="CodeExamples\Test\C1\C1_1.c" />
-    <ClCompile Include="CodeExamples\Test\C1\C1_2.c" />
-    <ClCompile Include="CodeExamples\Test\C2\C2_1.c" />
-    <ClCompile Include="CodeExamples\Test\C2\C2_2.c" />
+    <Content Include="CodeExamples\Test\Java\JAVA3.java" />
+    <Content Include="CodeExamples\Test\Python\Python1.py" />
+    <Content Include="CodeExamples\Test\Python\Python2.py" />
+    <Content Include="CodeExamples\Test\Java\JAVA1.java" />
+    <Content Include="CodeExamples\Test\Java\JAVA2.java" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
