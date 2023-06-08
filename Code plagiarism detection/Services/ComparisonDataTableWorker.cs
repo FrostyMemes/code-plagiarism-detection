@@ -12,6 +12,7 @@ namespace CodePlagiarismDetection.Services
         public static DataTable CreateFileCoprasionDataTable()
         {
             var table = new DataTable("FileComrassionResult");
+            table.Columns.Add(AddColumn("Id", "System.Int32", "Id", true));
             table.Columns.Add(AddColumn("FirstFile", "System.String", "Файл 1", true));
             table.Columns.Add(AddColumn("FirstDirectory", "System.String",  "Папка 1", true));
             table.Columns.Add(AddColumn("SecondFile", "System.String",  "Файл 2", true));
@@ -25,34 +26,56 @@ namespace CodePlagiarismDetection.Services
             return table;
         }
 
-        public static DataTable FillComparisionDataTable(DataTable table, IEnumerable<ComparisonResult> comparisons,
-            string methodName, int criticalBorderValue, TableFillOption option)
+        public static DataTable FillComparisionDataTable(DataTable comparisonDataTable, 
+            IEnumerable<ComparisonResult> comparisons,
+            Stack<HashSet<int>> historyStore, 
+            string methodName, 
+            int criticalBorderValue, 
+            TableFillOption fillOption
+            )
         {
-            DataRow row;
-            var comprassionList = comparisons.ToList();
+            DataRow row = default;
             
-            if (option == TableFillOption.ClearTable)
-                table.Clear();
-            
-            foreach (var compressionResult in comprassionList)
+            var id = 0;
+            var idNewComparisons = new HashSet<int>(); 
+            var comparisonResults = comparisons.ToList();
+
+            if (fillOption == TableFillOption.ClearTable)
             {
-                row = table.NewRow();
-                row["FirstDirectory"] = compressionResult.OriginalFile.DirectoryName;
-                row["FirstFile"] = compressionResult.OriginalFile.FileName;
-                row["SecondDirectory"] = compressionResult.ComparedFile.DirectoryName;
-                row["SecondFile"] = compressionResult.ComparedFile.FileName;
-                row["SimilarityPercent"] = Math.Round((compressionResult.Similarity * 100), 2);
+                comparisonDataTable.Clear();
+                historyStore.Clear();
+            }
+
+            if (fillOption == TableFillOption.AddToTable && !comparisonDataTable.Rows.Count.Equals(0))
+                id = comparisonDataTable.AsEnumerable().Max(r => r.Field<int>("Id"));
+            
+            foreach (var comparison in comparisonResults)
+            {
+                row = comparisonDataTable.NewRow();
+                row["Id"] = ++id;
+                row["FirstDirectory"] = comparison.OriginalFile.DirectoryName;
+                row["FirstFile"] = comparison.OriginalFile.FileName;
+                row["SecondDirectory"] = comparison.ComparedFile.DirectoryName;
+                row["SecondFile"] = comparison.ComparedFile.FileName;
+                row["SimilarityPercent"] = Math.Round((comparison.Similarity * 100), 2);
                 row["CriticalBorderValue"] = criticalBorderValue;
                 row["Method"] = methodName;
-                row["PathToFirstFile"] = compressionResult.OriginalFile.FullPath;
-                row["PathToSecondFile"] = compressionResult.ComparedFile.FullPath;
-                
-                table.Rows.Add(row);
+                row["PathToFirstFile"] = comparison.OriginalFile.FullPath;
+                row["PathToSecondFile"] = comparison.ComparedFile.FullPath;
+
+                idNewComparisons.Add(id);
+                comparisonDataTable.Rows.Add(row);
             }
-            return table;
+            
+            historyStore.Push(idNewComparisons);
+            return comparisonDataTable;
         }
 
-        private static DataColumn AddColumn(string columnName, string type,  string caption, bool readonlyMode)
+        private static DataColumn AddColumn(string columnName, 
+            string type,  
+            string caption, 
+            bool readonlyMode
+            )
         {
             return new DataColumn(){
                 DataType = Types.GetType(type),
