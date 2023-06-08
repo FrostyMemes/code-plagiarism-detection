@@ -16,6 +16,7 @@ namespace CodePlagiarismDetection.Forms
     public partial class MainForm : Form
     {
         private static DataTable _comparisionDataTable = default;
+        private static Stack<HashSet<int>> _comparisionDataTableIdHistory = default;
         private static IProgress<int> _progressBarValueUpProgress = default;
         private static CancellationTokenSource _cancellationTokenSource = default;
         private static PrivateFontCollection _privateFontCollection = default;
@@ -58,6 +59,7 @@ namespace CodePlagiarismDetection.Forms
         private void Main_Load(object sender, EventArgs e)
         {
             ShingleProfiler.N = int.Parse(numUpDownTokenLenghtValue.Text);
+            _comparisionDataTableIdHistory = new Stack<HashSet<int>>();
             _progressBarValueUpProgress = new Progress<int>(_ => progressProcessingBar.Value++);
             _comparisionDataTable = ComparisonDataTableWorker.CreateFileCoprasionDataTable();
             dataGridComparisionResult.DataSource = _comparisionDataTable;
@@ -109,8 +111,8 @@ namespace CodePlagiarismDetection.Forms
             _cancellationTokenSource = new CancellationTokenSource();
             ShingleProfiler.N = int.Parse(numUpDownTokenLenghtValue.Text);
             
-            var directory = new DirectoryInfo(txtDirectoryPath.Text);
-            var files = FileLoader.LoadFiles(directory, _searchOption)
+            var directoryInfo = new DirectoryInfo(txtDirectoryPath.Text);
+            var files = FileLoader.LoadFiles(directoryInfo, _searchOption)
                 .Select(file => new FileContent(file))
                 .ToList();
             var selectedMethod = _radioButtonsMethodAccordance.First(pair => pair.Value.Checked);
@@ -121,10 +123,11 @@ namespace CodePlagiarismDetection.Forms
             btnStartProcessing.Text = "Прервать";
             toolStripLabelProcessingStatus.Text = "Идёт обработка...";
 
-            var comparisons = await Task.Run(() => 
+            var comparisonsResult = await Task.Run(() => 
                 method.CompareFilePairwise(files, _filePairOption, _progressBarValueUpProgress, _cancellationTokenSource.Token));
-            _comparisionDataTable = ComparisonDataTableWorker.FillComparisionDataTable(_comparisionDataTable, comparisons, 
-                selectedMethod.Value.Text, (int)numUpDownCriticalBorderValue.Value, _tableFillOption);
+            
+            _comparisionDataTable = ComparisonDataTableWorker.FillComparisionDataTable(_comparisionDataTable, comparisonsResult, 
+               _comparisionDataTableIdHistory, selectedMethod.Value.Text, (int)numUpDownCriticalBorderValue.Value, _tableFillOption);
             
             toolStripLabelProcessingStatus.Text = _cancellationTokenSource.IsCancellationRequested
                 ? "Прервано"
@@ -161,9 +164,28 @@ namespace CodePlagiarismDetection.Forms
             }
         }
         
+        private void pictureBoxDeleteLastComparisons_Click(object sender, EventArgs e)
+        {
+            if (_comparisionDataTableIdHistory.Count.Equals(0))
+                return;
+            
+            var lastComparisons = _comparisionDataTableIdHistory.Pop();
+            _comparisionDataTable.AsEnumerable()
+                .Where(row => lastComparisons.Contains(row.Field<int>("Id")))
+                .ToList()
+                .ForEach(row => row.Delete());
+            _comparisionDataTable.AcceptChanges();
+        }
+        
+        private void pictureBoxClearTable_Click(object sender, EventArgs e)
+        {
+            _comparisionDataTable.Clear();
+            _comparisionDataTableIdHistory.Clear();
+        }
+        
         private void открытьФайлыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (dataGridComparisionResult.SelectedRows.Count == 0)
+            if (dataGridComparisionResult.SelectedRows.Count.Equals(0))
                 return;
             
             var selectedRow = dataGridComparisionResult.SelectedRows[0];
@@ -221,15 +243,27 @@ namespace CodePlagiarismDetection.Forms
         private void InitializeComponentCustomStyles()
         {
             _privateFontCollection = LocalFontsCollection.GetPrivateFontCollectionInstance();
+            var mainFont = new Font(_privateFontCollection.Families[(int)Fonts.MontserattThin], 11, FontStyle.Regular);
+            
             foreach (Control control in this.Controls)
-                control.Font = new Font(_privateFontCollection.Families[(int)Fonts.MontserattThin], 11, FontStyle.Regular);
+                control.Font = mainFont;
+
+            /*var dataGridViewHeadersFontStyle = new Font(mainFont, FontStyle.Bold);
+            foreach (DataGridViewColumn col in dataGridComparisionResult.Columns)
+                col.HeaderCell.Style.Font = dataGridViewHeadersFontStyle;*/
             
             dataGridComparisionResult.RowsDefaultCellStyle.SelectionBackColor = Color.FromArgb(0, 165, 223);
+            //this.BackColor = Color.FromArgb(153, 214, 204);
+            
+            menuStripMainForm.BackColor = Color.FromArgb(65, 89, 151);
+            menuStripMainForm.ForeColor = Color.White;
+            menuStripMainForm.Font = new Font(_privateFontCollection.Families[(int)Fonts.MontserattThin], 12, FontStyle.Regular);
+           // menuStripMainForm.Font = new Font(mainFont, FontStyle.Bold);
         }
 
         private void InitializeRadioButtonMethodCheckedChangeEvents()
         {
-            rbLevensteinModifyMethod.CheckedChanged += HideWarning;
+            rbLevensteinModifyMethod.CheckedChanged += ShowLevensteinModifyWarning;
             rbJaccardMethod.CheckedChanged += ShowApproximatelyWarning;
             rbSorensenDiceMethod.CheckedChanged += ShowApproximatelyWarning;
             rbCosineMethod.CheckedChanged += ShowEqualTextLenghtWarning;
@@ -279,6 +313,17 @@ namespace CodePlagiarismDetection.Forms
             {
                 lblMethodDescriptiom.Text = "Внимание!" +
                                             "\nНаиболее оптимальный уровень разбиения на токены для данного метода является 4-5 уровень разбиения.";
+                lblMethodDescriptiom.Visible = true;
+            }
+        }
+        
+        private void ShowLevensteinModifyWarning(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
+                lblMethodDescriptiom.Text = "Внимание!" +
+                                            "\nДля данного метода нет необходимости в установке какого-либо значения уровня разбиения на токены" +
+                                            "\nОбработка с помощью данного метода может занять некоторое время";
                 lblMethodDescriptiom.Visible = true;
             }
         }

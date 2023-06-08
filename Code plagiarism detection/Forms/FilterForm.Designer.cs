@@ -34,9 +34,9 @@ namespace CodePlagiarismDetection.Forms
             this.txtFilter = new System.Windows.Forms.TextBox();
             this.lblDescription = new System.Windows.Forms.Label();
             this.splitter1 = new System.Windows.Forms.Splitter();
-            this.pictureBoxQuestion = new System.Windows.Forms.PictureBox();
+            this.pictureBoxDescription = new System.Windows.Forms.PictureBox();
             this.toolTipQuestion = new System.Windows.Forms.ToolTip(this.components);
-            ((System.ComponentModel.ISupportInitialize) (this.pictureBoxQuestion)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.pictureBoxDescription)).BeginInit();
             this.SuspendLayout();
             // 
             // txtFilter
@@ -68,24 +68,25 @@ namespace CodePlagiarismDetection.Forms
             this.splitter1.TabIndex = 2;
             this.splitter1.TabStop = false;
             // 
-            // pictureBoxQuestion
+            // pictureBoxDescription
             // 
-            this.pictureBoxQuestion.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBoxQuestion.Image = ((System.Drawing.Image) (resources.GetObject("pictureBoxQuestion.Image")));
-            this.pictureBoxQuestion.Location = new System.Drawing.Point(459, 12);
-            this.pictureBoxQuestion.Name = "pictureBoxQuestion";
-            this.pictureBoxQuestion.Size = new System.Drawing.Size(27, 27);
-            this.pictureBoxQuestion.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBoxQuestion.TabIndex = 3;
-            this.pictureBoxQuestion.TabStop = false;
-            this.toolTipQuestion.SetToolTip(this.pictureBoxQuestion, "Символ «?» в маске означает, что вместо него должен стоять любой символ.\r\nСимвол " + "«*» в маске означает, что вместо него может быть подставлено любое сочетание сим" + "волов. \r\n");
+            this.pictureBoxDescription.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBoxDescription.Image = ((System.Drawing.Image) (resources.GetObject("pictureBoxDescription.Image")));
+            this.pictureBoxDescription.Location = new System.Drawing.Point(459, 12);
+            this.pictureBoxDescription.Name = "pictureBoxDescription";
+            this.pictureBoxDescription.Size = new System.Drawing.Size(27, 27);
+            this.pictureBoxDescription.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxDescription.TabIndex = 3;
+            this.pictureBoxDescription.TabStop = false;
+            this.toolTipQuestion.SetToolTip(this.pictureBoxDescription, "Символ «?» в маске означает, что вместо него должен стоять любой символ.\r\nСимвол " + "«*» в маске означает, что вместо него может быть подставлено любое сочетание сим" + "волов. \r\n");
             // 
             // FilterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(498, 423);
-            this.Controls.Add(this.pictureBoxQuestion);
+            this.Controls.Add(this.pictureBoxDescription);
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this.lblDescription);
             this.Controls.Add(this.txtFilter);
@@ -97,14 +98,14 @@ namespace CodePlagiarismDetection.Forms
             this.Text = "Фильтр файлов";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FilterForm_FormClosing);
             this.Load += new System.EventHandler(this.Filter_Load);
-            ((System.ComponentModel.ISupportInitialize) (this.pictureBoxQuestion)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.pictureBoxDescription)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
 
         private System.Windows.Forms.ToolTip toolTipQuestion;
 
-        private System.Windows.Forms.PictureBox pictureBoxQuestion;
+        private System.Windows.Forms.PictureBox pictureBoxDescription;
 
         private System.Windows.Forms.Splitter splitter1;
 

@@ -34,7 +34,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.btnBrowse = new System.Windows.Forms.Button();
             this.txtDirectoryPath = new System.Windows.Forms.TextBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBoxDirectoryPath = new System.Windows.Forms.GroupBox();
             this.btnFilterForm = new System.Windows.Forms.Button();
             this.progressProcessingBar = new System.Windows.Forms.ProgressBar();
             this.cbOptionSubdirectories = new System.Windows.Forms.CheckBox();
@@ -43,6 +43,7 @@
             this.btnStartProcessing = new System.Windows.Forms.Button();
             this.dataGridComparisionResult = new System.Windows.Forms.DataGridView();
             this.FirstDirectory = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FirstFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SecondDirectory = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SecondFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -65,19 +66,30 @@
             this.rbSorensenDiceMethod = new System.Windows.Forms.RadioButton();
             this.rbLevensteinModifyMethod = new System.Windows.Forms.RadioButton();
             this.contextMenuStripDataGridView = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.открытьФайлыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.найтиПодозрительныеЧастиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.вывестиДанныеВExcelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripProcessingStatus = new System.Windows.Forms.ToolStrip();
             this.toolStripLabelProcessingStatus = new System.Windows.Forms.ToolStripLabel();
             this.lblMethodDescriptiom = new System.Windows.Forms.Label();
-            this.открытьФайлыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupBox1.SuspendLayout();
+            this.pictureBoxDeleteLastComparisons = new System.Windows.Forms.PictureBox();
+            this.pictureBoxClearTable = new System.Windows.Forms.PictureBox();
+            this.toolTipInfo = new System.Windows.Forms.ToolTip(this.components);
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.menuStripMainForm = new System.Windows.Forms.MenuStrip();
+            this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupBoxDirectoryPath.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize) (this.dataGridComparisionResult)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.numUpDownTokenLenghtValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.numUpDownCriticalBorderValue)).BeginInit();
             this.gbSimilarityMethods.SuspendLayout();
             this.contextMenuStripDataGridView.SuspendLayout();
             this.toolStripProcessingStatus.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize) (this.pictureBoxDeleteLastComparisons)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.pictureBoxClearTable)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.pictureBox1)).BeginInit();
+            this.menuStripMainForm.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnBrowse
@@ -102,19 +114,19 @@
             this.txtDirectoryPath.TabIndex = 0;
             this.txtDirectoryPath.Text = "D:\\Projects\\C Sharp Projects\\CodePlagiarismDetection\\Code plagiarism detection\\Co" + "deExamples\\Test";
             // 
-            // groupBox1
+            // groupBoxDirectoryPath
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.txtDirectoryPath);
-            this.groupBox1.Controls.Add(this.btnBrowse);
-            this.groupBox1.Location = new System.Drawing.Point(18, 17);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(1264, 73);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Путь до директории";
+            this.groupBoxDirectoryPath.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxDirectoryPath.Controls.Add(this.txtDirectoryPath);
+            this.groupBoxDirectoryPath.Controls.Add(this.btnBrowse);
+            this.groupBoxDirectoryPath.Location = new System.Drawing.Point(19, 35);
+            this.groupBoxDirectoryPath.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBoxDirectoryPath.Name = "groupBoxDirectoryPath";
+            this.groupBoxDirectoryPath.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBoxDirectoryPath.Size = new System.Drawing.Size(1264, 73);
+            this.groupBoxDirectoryPath.TabIndex = 2;
+            this.groupBoxDirectoryPath.TabStop = false;
+            this.groupBoxDirectoryPath.Text = "Путь до директории";
             // 
             // btnFilterForm
             // 
@@ -186,7 +198,7 @@
             this.dataGridComparisionResult.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridComparisionResult.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridComparisionResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridComparisionResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {this.FirstDirectory, this.FirstFile, this.SecondDirectory, this.SecondFile, this.Similarity, this.CriticalBorderValue, this.Method, this.PathToFirstFile, this.PathToSecondFile});
+            this.dataGridComparisionResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {this.FirstDirectory, this.Id, this.FirstFile, this.SecondDirectory, this.SecondFile, this.Similarity, this.CriticalBorderValue, this.Method, this.PathToFirstFile, this.PathToSecondFile});
             this.dataGridComparisionResult.Location = new System.Drawing.Point(14, 429);
             this.dataGridComparisionResult.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridComparisionResult.MultiSelect = false;
@@ -206,6 +218,13 @@
             this.FirstDirectory.HeaderText = "Папка 1";
             this.FirstDirectory.Name = "FirstDirectory";
             this.FirstDirectory.ReadOnly = true;
+            // 
+            // Id
+            // 
+            this.Id.DataPropertyName = "Id";
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.Visible = false;
             // 
             // FirstFile
             // 
@@ -286,16 +305,16 @@
             this.lblSimilarityBorder.Location = new System.Drawing.Point(276, 209);
             this.lblSimilarityBorder.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSimilarityBorder.Name = "lblSimilarityBorder";
-            this.lblSimilarityBorder.Size = new System.Drawing.Size(298, 24);
+            this.lblSimilarityBorder.Size = new System.Drawing.Size(271, 24);
             this.lblSimilarityBorder.TabIndex = 16;
             this.lblSimilarityBorder.Text = "Процентный порог схожести";
             // 
             // lblTokenDividing
             // 
-            this.lblTokenDividing.Location = new System.Drawing.Point(276, 248);
+            this.lblTokenDividing.Location = new System.Drawing.Point(275, 247);
             this.lblTokenDividing.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTokenDividing.Name = "lblTokenDividing";
-            this.lblTokenDividing.Size = new System.Drawing.Size(343, 24);
+            this.lblTokenDividing.Size = new System.Drawing.Size(255, 24);
             this.lblTokenDividing.TabIndex = 17;
             this.lblTokenDividing.Text = "Уровень разбиения на токены";
             // 
@@ -318,18 +337,18 @@
             this.gbSimilarityMethods.Controls.Add(this.rbJaccardMethod);
             this.gbSimilarityMethods.Controls.Add(this.rbSorensenDiceMethod);
             this.gbSimilarityMethods.Controls.Add(this.rbLevensteinModifyMethod);
-            this.gbSimilarityMethods.Location = new System.Drawing.Point(890, 98);
+            this.gbSimilarityMethods.Location = new System.Drawing.Point(890, 109);
             this.gbSimilarityMethods.Margin = new System.Windows.Forms.Padding(4);
             this.gbSimilarityMethods.Name = "gbSimilarityMethods";
             this.gbSimilarityMethods.Padding = new System.Windows.Forms.Padding(4);
-            this.gbSimilarityMethods.Size = new System.Drawing.Size(393, 281);
+            this.gbSimilarityMethods.Size = new System.Drawing.Size(393, 270);
             this.gbSimilarityMethods.TabIndex = 20;
             this.gbSimilarityMethods.TabStop = false;
             this.gbSimilarityMethods.Text = "Методы сравнения";
             // 
             // rbLongestCommonSubsequenceMethod
             // 
-            this.rbLongestCommonSubsequenceMethod.Location = new System.Drawing.Point(36, 235);
+            this.rbLongestCommonSubsequenceMethod.Location = new System.Drawing.Point(37, 228);
             this.rbLongestCommonSubsequenceMethod.Margin = new System.Windows.Forms.Padding(4);
             this.rbLongestCommonSubsequenceMethod.Name = "rbLongestCommonSubsequenceMethod";
             this.rbLongestCommonSubsequenceMethod.Size = new System.Drawing.Size(323, 34);
@@ -340,7 +359,7 @@
             // rbShingleCoefficientMethod
             // 
             this.rbShingleCoefficientMethod.Checked = true;
-            this.rbShingleCoefficientMethod.Location = new System.Drawing.Point(36, 26);
+            this.rbShingleCoefficientMethod.Location = new System.Drawing.Point(37, 19);
             this.rbShingleCoefficientMethod.Margin = new System.Windows.Forms.Padding(4);
             this.rbShingleCoefficientMethod.Name = "rbShingleCoefficientMethod";
             this.rbShingleCoefficientMethod.Size = new System.Drawing.Size(323, 34);
@@ -351,7 +370,7 @@
             // 
             // rbCosineMethod
             // 
-            this.rbCosineMethod.Location = new System.Drawing.Point(36, 96);
+            this.rbCosineMethod.Location = new System.Drawing.Point(37, 89);
             this.rbCosineMethod.Margin = new System.Windows.Forms.Padding(4);
             this.rbCosineMethod.Name = "rbCosineMethod";
             this.rbCosineMethod.Size = new System.Drawing.Size(323, 34);
@@ -361,7 +380,7 @@
             // 
             // rbNGrammDistanceMethod
             // 
-            this.rbNGrammDistanceMethod.Location = new System.Drawing.Point(36, 200);
+            this.rbNGrammDistanceMethod.Location = new System.Drawing.Point(37, 193);
             this.rbNGrammDistanceMethod.Margin = new System.Windows.Forms.Padding(4);
             this.rbNGrammDistanceMethod.Name = "rbNGrammDistanceMethod";
             this.rbNGrammDistanceMethod.Size = new System.Drawing.Size(323, 34);
@@ -371,7 +390,7 @@
             // 
             // rbJaccardMethod
             // 
-            this.rbJaccardMethod.Location = new System.Drawing.Point(36, 165);
+            this.rbJaccardMethod.Location = new System.Drawing.Point(37, 158);
             this.rbJaccardMethod.Margin = new System.Windows.Forms.Padding(4);
             this.rbJaccardMethod.Name = "rbJaccardMethod";
             this.rbJaccardMethod.Size = new System.Drawing.Size(323, 34);
@@ -381,7 +400,7 @@
             // 
             // rbSorensenDiceMethod
             // 
-            this.rbSorensenDiceMethod.Location = new System.Drawing.Point(36, 130);
+            this.rbSorensenDiceMethod.Location = new System.Drawing.Point(37, 123);
             this.rbSorensenDiceMethod.Margin = new System.Windows.Forms.Padding(4);
             this.rbSorensenDiceMethod.Name = "rbSorensenDiceMethod";
             this.rbSorensenDiceMethod.Size = new System.Drawing.Size(323, 34);
@@ -391,7 +410,7 @@
             // 
             // rbLevensteinModifyMethod
             // 
-            this.rbLevensteinModifyMethod.Location = new System.Drawing.Point(36, 61);
+            this.rbLevensteinModifyMethod.Location = new System.Drawing.Point(37, 54);
             this.rbLevensteinModifyMethod.Margin = new System.Windows.Forms.Padding(4);
             this.rbLevensteinModifyMethod.Name = "rbLevensteinModifyMethod";
             this.rbLevensteinModifyMethod.Size = new System.Drawing.Size(323, 34);
@@ -403,7 +422,14 @@
             // 
             this.contextMenuStripDataGridView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.открытьФайлыToolStripMenuItem, this.найтиПодозрительныеЧастиToolStripMenuItem, this.вывестиДанныеВExcelToolStripMenuItem});
             this.contextMenuStripDataGridView.Name = "contextMenuStripDataGridView";
-            this.contextMenuStripDataGridView.Size = new System.Drawing.Size(238, 92);
+            this.contextMenuStripDataGridView.Size = new System.Drawing.Size(238, 70);
+            // 
+            // открытьФайлыToolStripMenuItem
+            // 
+            this.открытьФайлыToolStripMenuItem.Name = "открытьФайлыToolStripMenuItem";
+            this.открытьФайлыToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
+            this.открытьФайлыToolStripMenuItem.Text = "Открыть файлы";
+            this.открытьФайлыToolStripMenuItem.Click += new System.EventHandler(this.открытьФайлыToolStripMenuItem_Click);
             // 
             // найтиПодозрительныеЧастиToolStripMenuItem
             // 
@@ -437,29 +463,91 @@
             // 
             // lblMethodDescriptiom
             // 
+            this.lblMethodDescriptiom.BackColor = System.Drawing.Color.White;
             this.lblMethodDescriptiom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblMethodDescriptiom.Location = new System.Drawing.Point(554, 98);
+            this.lblMethodDescriptiom.Location = new System.Drawing.Point(554, 114);
             this.lblMethodDescriptiom.Name = "lblMethodDescriptiom";
-            this.lblMethodDescriptiom.Size = new System.Drawing.Size(328, 322);
+            this.lblMethodDescriptiom.Size = new System.Drawing.Size(328, 306);
             this.lblMethodDescriptiom.TabIndex = 22;
             this.lblMethodDescriptiom.Text = "Внимание.\r\nНаиболее оптимальный уровень разбиения на токены для данного метода яв" + "ляется 4-5 уровень разбиения.\r\n";
             this.lblMethodDescriptiom.Visible = false;
             // 
-            // открытьФайлыToolStripMenuItem
+            // pictureBoxDeleteLastComparisons
             // 
-            this.открытьФайлыToolStripMenuItem.Name = "открытьФайлыToolStripMenuItem";
-            this.открытьФайлыToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
-            this.открытьФайлыToolStripMenuItem.Text = "Открыть файлы";
-            this.открытьФайлыToolStripMenuItem.Click += new System.EventHandler(this.открытьФайлыToolStripMenuItem_Click);
+            this.pictureBoxDeleteLastComparisons.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBoxDeleteLastComparisons.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBoxDeleteLastComparisons.Image = ((System.Drawing.Image) (resources.GetObject("pictureBoxDeleteLastComparisons.Image")));
+            this.pictureBoxDeleteLastComparisons.Location = new System.Drawing.Point(14, 399);
+            this.pictureBoxDeleteLastComparisons.Name = "pictureBoxDeleteLastComparisons";
+            this.pictureBoxDeleteLastComparisons.Size = new System.Drawing.Size(28, 29);
+            this.pictureBoxDeleteLastComparisons.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxDeleteLastComparisons.TabIndex = 23;
+            this.pictureBoxDeleteLastComparisons.TabStop = false;
+            this.toolTipInfo.SetToolTip(this.pictureBoxDeleteLastComparisons, "Удалить последнюю обработку файлов");
+            this.pictureBoxDeleteLastComparisons.Click += new System.EventHandler(this.pictureBoxDeleteLastComparisons_Click);
+            // 
+            // pictureBoxClearTable
+            // 
+            this.pictureBoxClearTable.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBoxClearTable.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBoxClearTable.Image = ((System.Drawing.Image) (resources.GetObject("pictureBoxClearTable.Image")));
+            this.pictureBoxClearTable.Location = new System.Drawing.Point(48, 399);
+            this.pictureBoxClearTable.Name = "pictureBoxClearTable";
+            this.pictureBoxClearTable.Size = new System.Drawing.Size(34, 29);
+            this.pictureBoxClearTable.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxClearTable.TabIndex = 24;
+            this.pictureBoxClearTable.TabStop = false;
+            this.toolTipInfo.SetToolTip(this.pictureBoxClearTable, "Очистить таблицу");
+            this.pictureBoxClearTable.Click += new System.EventHandler(this.pictureBoxClearTable_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox1.Image = ((System.Drawing.Image) (resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(1258, 2);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(27, 27);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 26;
+            this.pictureBox1.TabStop = false;
+            this.toolTipInfo.SetToolTip(this.pictureBox1, "Очистить таблицу");
+            // 
+            // menuStripMainForm
+            // 
+            this.menuStripMainForm.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.menuStripMainForm.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
+            this.menuStripMainForm.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.справкаToolStripMenuItem, this.оПрограммеToolStripMenuItem});
+            this.menuStripMainForm.Location = new System.Drawing.Point(0, 0);
+            this.menuStripMainForm.Name = "menuStripMainForm";
+            this.menuStripMainForm.Size = new System.Drawing.Size(1304, 29);
+            this.menuStripMainForm.TabIndex = 25;
+            this.menuStripMainForm.Text = "menuStripMainForm";
+            // 
+            // справкаToolStripMenuItem
+            // 
+            this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
+            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(82, 25);
+            this.справкаToolStripMenuItem.Text = "Справка";
+            // 
+            // оПрограммеToolStripMenuItem
+            // 
+            this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
+            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(118, 25);
+            this.оПрограммеToolStripMenuItem.Text = "О программе";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Window;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1304, 968);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.pictureBoxClearTable);
+            this.Controls.Add(this.pictureBoxDeleteLastComparisons);
             this.Controls.Add(this.lblMethodDescriptiom);
             this.Controls.Add(this.toolStripProcessingStatus);
+            this.Controls.Add(this.menuStripMainForm);
             this.Controls.Add(this.gbSimilarityMethods);
             this.Controls.Add(this.numUpDownCriticalBorderValue);
             this.Controls.Add(this.lblTokenDividing);
@@ -472,17 +560,18 @@
             this.Controls.Add(this.cbOptionSubdirectories);
             this.Controls.Add(this.progressProcessingBar);
             this.Controls.Add(this.btnFilterForm);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupBoxDirectoryPath);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(15, 15);
+            this.MainMenuStrip = this.menuStripMainForm;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Антиплагиат исходного кода";
             this.Load += new System.EventHandler(this.Main_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupBoxDirectoryPath.ResumeLayout(false);
+            this.groupBoxDirectoryPath.PerformLayout();
             ((System.ComponentModel.ISupportInitialize) (this.dataGridComparisionResult)).EndInit();
             ((System.ComponentModel.ISupportInitialize) (this.numUpDownTokenLenghtValue)).EndInit();
             ((System.ComponentModel.ISupportInitialize) (this.numUpDownCriticalBorderValue)).EndInit();
@@ -490,9 +579,29 @@
             this.contextMenuStripDataGridView.ResumeLayout(false);
             this.toolStripProcessingStatus.ResumeLayout(false);
             this.toolStripProcessingStatus.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize) (this.pictureBoxDeleteLastComparisons)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.pictureBoxClearTable)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.pictureBox1)).EndInit();
+            this.menuStripMainForm.ResumeLayout(false);
+            this.menuStripMainForm.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.PictureBox pictureBox1;
+
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+
+        private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
+
+        private System.Windows.Forms.MenuStrip menuStripMainForm;
+
+        private System.Windows.Forms.ToolTip toolTipInfo;
+
+        private System.Windows.Forms.PictureBox pictureBoxClearTable;
+
+        private System.Windows.Forms.PictureBox pictureBoxDeleteLastComparisons;
 
         private System.Windows.Forms.ToolStripMenuItem открытьФайлыToolStripMenuItem;
 
@@ -521,7 +630,7 @@
 
         private System.Windows.Forms.Button btnBrowse;
         private System.Windows.Forms.TextBox txtDirectoryPath;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBoxDirectoryPath;
         private System.Windows.Forms.Button btnFilterForm;
         private System.Windows.Forms.ProgressBar progressProcessingBar;
         private System.Windows.Forms.CheckBox cbOptionSubdirectories;
