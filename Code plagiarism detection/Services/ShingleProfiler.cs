@@ -55,5 +55,10 @@ namespace CodePlagiarismDetection.Services
             for (int i = 0; i < text.Length - n + 1; i++)
                 yield return text.Substring(i, n);
         }
+
+        public static void SetN(int n)
+        {
+            N = n;
+        }
     }
 }
