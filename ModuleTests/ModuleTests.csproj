@@ -52,6 +52,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="MethodsTest\MethodsTest.cs" />
+        <Compile Include="MethodsTest\MethodCommonFilesTest.cs" />
         <Compile Include="ServiceTests\FileLoaderTests.cs" />
         <Compile Include="ServiceTests\NormalizerTests.cs" />
         <Compile Include="ServiceTests\ShingleProfilerTests.cs" />
