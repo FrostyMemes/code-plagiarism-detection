@@ -7,6 +7,7 @@ namespace CodePlagiarismDetection
     static class Program
     {
         public static FilterForm filterForm;
+        public static AboutForm aboutForm;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
