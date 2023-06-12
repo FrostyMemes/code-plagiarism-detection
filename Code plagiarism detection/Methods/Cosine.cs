@@ -7,6 +7,7 @@ namespace CodePlagiarismDetection.Methods
 {
     public class Cosine: SimilarityMethod
     {
+        //Реализация нахождения схожести исхондых кодов методом косинуса
         protected override ComparisonResult CompareFiles(FileContent originalFile, FileContent comparedFile)
         {
             
@@ -33,6 +34,7 @@ namespace CodePlagiarismDetection.Methods
             return new ComparisonResult(originalFile, comparedFile, similarity);
         }
         
+        //Нахождение dot двух векторов
         private double DotProduct(Dictionary<string, int> profile1, Dictionary<string, int> profile2)
         {
             var dot = 0.0;
@@ -44,6 +46,7 @@ namespace CodePlagiarismDetection.Methods
             return dot;
         }
         
+        //Нахождение нормы двух векторов
         private double Norm(Dictionary<string, int> profile)
         {
             var agg = 0.0;

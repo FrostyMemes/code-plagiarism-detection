@@ -7,13 +7,12 @@ namespace CodePlagiarismDetection
 {
     public class FileContent
     {
-        public readonly string FileName;
-        public readonly string DirectoryName;
-        public readonly string FullPath;
-        public readonly string Extension;
-        public readonly string Text;
-        public readonly string NormalizedText;
-        public readonly List<string> Literals;
+        public readonly string FileName; //Имя файла
+        public readonly string DirectoryName; //Имя директории файла
+        public readonly string FullPath; //Полный путь к файлу
+        public readonly string Extension; //Расщирение файла
+        public readonly string Text; //Текст исходный код
+        public readonly string NormalizedText; //Нормализированный текст исходного кода
 
         public FileContent(string file)
         {
@@ -23,9 +22,6 @@ namespace CodePlagiarismDetection
             Extension = Path.GetExtension(file);
             Text = File.ReadAllText(file);
             NormalizedText = TextNormalizer.NormalizeText(Text);
-            Literals = LiteralTokenizer.Tokenize(Text)
-                .Where(token => token.All(c => !char.IsWhiteSpace(c)))
-                .ToList();
         }
     }
 }

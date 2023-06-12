@@ -48,7 +48,7 @@ namespace CodePlagiarismDetection.Forms
             this.txtFilter.Name = "txtFilter";
             this.txtFilter.Size = new System.Drawing.Size(480, 304);
             this.txtFilter.TabIndex = 0;
-            this.txtFilter.Leave += new System.EventHandler(this.txtFilter_Leave);
+            this.txtFilter.TextChanged += new System.EventHandler(this.txtFilter_TextChanged);
             // 
             // lblDescription
             // 

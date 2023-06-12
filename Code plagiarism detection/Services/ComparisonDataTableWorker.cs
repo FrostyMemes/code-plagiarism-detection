@@ -7,8 +7,10 @@ using Types = System.Type;
 
 namespace CodePlagiarismDetection.Services
 {
+    //Класс для работы с таблицей результатов
     public static class ComparisonDataTableWorker
     {
+        //Конструктор таблицы с результатами
         public static DataTable CreateFileCoprasionDataTable()
         {
             var table = new DataTable("FileComrassionResult");
@@ -26,6 +28,7 @@ namespace CodePlagiarismDetection.Services
             return table;
         }
 
+        //Метод заполнения таблицы с результатами
         public static DataTable FillComparisionDataTable(DataTable comparisonDataTable, 
             IEnumerable<ComparisonResult> comparisons,
             Stack<HashSet<int>> historyStore, 
@@ -71,6 +74,7 @@ namespace CodePlagiarismDetection.Services
             return comparisonDataTable;
         }
 
+        //Метод создания столбца таблицы
         private static DataColumn AddColumn(string columnName, 
             string type,  
             string caption, 

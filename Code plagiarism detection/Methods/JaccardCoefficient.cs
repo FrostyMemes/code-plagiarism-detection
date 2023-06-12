@@ -6,6 +6,7 @@ namespace CodePlagiarismDetection.Methods
 {
     public class JaccardCoefficient: SimilarityMethod
     {
+        //Реализация нахождения схожести по коэфициенту Жаккара
         protected override ComparisonResult CompareFiles(FileContent originalFile, FileContent comparedFile)
         {
             
@@ -25,16 +26,17 @@ namespace CodePlagiarismDetection.Methods
             if (s1.Length < ShingleProfiler.N || s2.Length < ShingleProfiler.N )
                 return new ComparisonResult(originalFile, comparedFile, 0.0);
             
+            
             var profile1 = ShingleProfiler.GetShingleProfile(s1);
             var profile2 = ShingleProfiler.GetShingleProfile(s2);
             var union = new HashSet<string>();
             union.UnionWith(profile1.Keys);
             union.UnionWith(profile2.Keys);
-        
-            var inter = profile1.Keys.Count + profile2.Keys.Count
-                        - union.Count;
+
+            var intersection = new HashSet<string>(profile1.Keys);
+            intersection.IntersectWith(profile2.Keys);
             
-            similarity = 1.0 * inter / union.Count;
+            similarity = (double) intersection.Count / union.Count;
             return new ComparisonResult(originalFile, comparedFile, similarity);
         }
         

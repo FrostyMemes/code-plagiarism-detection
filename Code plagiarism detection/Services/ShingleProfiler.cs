@@ -4,9 +4,12 @@ using System.Text.RegularExpressions;
 
 namespace CodePlagiarismDetection.Services
 {
+    //Класс для работы с шинглами
     public static class ShingleProfiler
     {
-        public static int N = 2;
+        public static int N = 4; //Уровень разбиения
+        
+        //Метод получения шинглового профиля
         public static Dictionary<string, int> GetShingleProfile(string text)
         {
             var shingle = String.Empty;
@@ -27,6 +30,7 @@ namespace CodePlagiarismDetection.Services
             return shingles;
         }
         
+        //Метод полуения шингловго профиля для тестирования
         public static Dictionary<string, int> GetShingleProfile(string text, int n)
         {
             var shingle = String.Empty;
@@ -47,6 +51,7 @@ namespace CodePlagiarismDetection.Services
             return shingles;
         }
 
+        //Метод получения списка шинглов
         public static IEnumerable<string> GetShingles(string text, int n)
         {
             if (text.Length < n)
@@ -54,11 +59,6 @@ namespace CodePlagiarismDetection.Services
             
             for (int i = 0; i < text.Length - n + 1; i++)
                 yield return text.Substring(i, n);
-        }
-
-        public static void SetN(int n)
-        {
-            N = n;
         }
     }
 }

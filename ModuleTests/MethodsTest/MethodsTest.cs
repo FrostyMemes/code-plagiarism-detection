@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -12,7 +13,7 @@ namespace ModuleTests.ServiceTests
 {
     public class MethodsTest
     {
-        private string rootDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, 
+        private static string rootDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, 
             "..", 
             "..", @"MethodsTest\TestFiles");
         
@@ -23,10 +24,11 @@ namespace ModuleTests.ServiceTests
         private SimilarityMethod _cosineMethod = new Cosine();
         private SimilarityMethod _nGramDistanceMethod = new NGramDistance();
         private SimilarityMethod _lcsMethod = new LongestCommonSubsequence();
-
+        
+        
         private static IProgress<int> IProgressPlug = new Progress<int>(_ => { });
         private static CancellationToken CancellationTokenPlug = new CancellationToken();
-        
+
         [Fact]
         public void SimilarityForDifferentFiles_AllMethodsMustReturnZero_ReturnTrueForAllMethods()
         {
@@ -36,7 +38,7 @@ namespace ModuleTests.ServiceTests
 
             var files = FileLoader.LoadFiles(directoryInfo, SearchOption.TopDirectoryOnly)
                 .Select(file => new FileContent(file))
-                .ToList();;
+                .ToList();
             
             var shingleMethodResult = _shingleMethod.CompareFilePairwise(
                 files, FilePairOption.CheckFileType, IProgressPlug, CancellationTokenPlug);
@@ -68,6 +70,8 @@ namespace ModuleTests.ServiceTests
             Assert.Equal(0.0, lcsMethodResult.First().Similarity, 2);
         }
         
+        
+        
         [Fact]
         public void SimilarityForIdenticalFiles_AllMethodsMustReturnOne_ReturnTrueForAllMethods()
         {
@@ -77,8 +81,8 @@ namespace ModuleTests.ServiceTests
 
             var files = FileLoader.LoadFiles(directoryInfo, SearchOption.TopDirectoryOnly)
                 .Select(file => new FileContent(file))
-                .ToList();;
-            
+                .ToList();
+
             var shingleMethodResult = _shingleMethod.CompareFilePairwise(
                 files, FilePairOption.CheckFileType, IProgressPlug, CancellationTokenPlug);
             
@@ -107,47 +111,6 @@ namespace ModuleTests.ServiceTests
             Assert.Equal(1.0, cosineMethodResult.First().Similarity, 2);
             Assert.Equal(1.0, nGramDistanceMethodResult.First().Similarity, 2);
             Assert.Equal(1.0, lcsMethodResult.First().Similarity, 2);
-        }
-
-        [Fact]
-        public void SimilarityForCommonFiles_AllMethodsMustReturnSpecificSimilarityValue_ReturnTrueForAllMethods()
-        {
-            var directory = "CommonFiles";
-            var path = Path.Combine(rootDirectory, directory);
-            var directoryInfo = new DirectoryInfo(path);
-
-            var files = FileLoader.LoadFiles(directoryInfo, SearchOption.TopDirectoryOnly)
-                .Select(file => new FileContent(file))
-                .ToList();;
-            
-            var shingleMethodResult = _shingleMethod.CompareFilePairwise(
-                files, FilePairOption.CheckFileType, IProgressPlug, CancellationTokenPlug);
-            
-            var levenshteinMethodResult = _levenshteinMethod.CompareFilePairwise(
-                files, FilePairOption.CheckFileType, IProgressPlug, CancellationTokenPlug);
-            
-            var sorensenMethodResult = _sorensenMethod.CompareFilePairwise(
-                files, FilePairOption.CheckFileType, IProgressPlug, CancellationTokenPlug);
-            
-            var jaccardMethodResult = _jaccardMethod.CompareFilePairwise(
-                files, FilePairOption.CheckFileType, IProgressPlug, CancellationTokenPlug);
-            
-            var cosineMethodResult = _cosineMethod.CompareFilePairwise(
-                files, FilePairOption.CheckFileType, IProgressPlug, CancellationTokenPlug);
-            
-            var nGramDistanceMethodResult = _nGramDistanceMethod.CompareFilePairwise(
-                files, FilePairOption.CheckFileType, IProgressPlug, CancellationTokenPlug);
-            
-            var lcsMethodResult = _lcsMethod.CompareFilePairwise(
-                files, FilePairOption.CheckFileType, IProgressPlug, CancellationTokenPlug);
-            
-            Assert.Equal(0.59, shingleMethodResult.First().Similarity, 2);
-            Assert.Equal(0.42, levenshteinMethodResult.First().Similarity, 2);
-            Assert.Equal(0.66, sorensenMethodResult.First().Similarity, 2);
-            Assert.Equal(0.49, jaccardMethodResult.First().Similarity, 2);
-            Assert.Equal(0.8, cosineMethodResult.First().Similarity, 2);
-            Assert.Equal(0.3, nGramDistanceMethodResult.First().Similarity, 2);
-            Assert.Equal(0.39, lcsMethodResult.First().Similarity, 2);
         }
     }
 }

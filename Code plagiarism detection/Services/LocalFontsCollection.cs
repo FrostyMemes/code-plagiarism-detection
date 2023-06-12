@@ -3,7 +3,7 @@ using System.Drawing.Text;
 
 namespace CodePlagiarismDetection.Services
 {
-    public enum Fonts
+    public enum Fonts //Перечисление для определения необходимого шрифта из коллекции загружаемых шрифтов
     {
         MontserattRegular = 0,
         MontserattMedium = 1,
@@ -11,11 +11,12 @@ namespace CodePlagiarismDetection.Services
         Dinpro = 3,
     }
     
+    //Класс подгрузки внешних шрифтов
     public class LocalFontsCollection
     {
-        private static PrivateFontCollection _instance = null;
+        private static PrivateFontCollection _instance = null; //Экземпляр объекта для хранения загружаемых шрифтов
 
-        private static readonly Dictionary<Fonts, string> _fonts
+        private static readonly Dictionary<Fonts, string> _fonts //Словарь определения
             = new Dictionary<Fonts, string>()
             {
                 {Fonts.MontserattRegular, @"Fonts\Montserrat-Regular.ttf"},

@@ -15,18 +15,19 @@ namespace CodePlagiarismDetection.Forms
 {
     public partial class MainForm : Form
     {
-        private static DataTable _comparisionDataTable = default;
-        private static Stack<HashSet<int>> _comparisionDataTableIdHistory = default;
-        private static IProgress<int> _progressBarValueUpProgress = default;
-        private static CancellationTokenSource _cancellationTokenSource = default;
-        private static PrivateFontCollection _privateFontCollection = default;
-        private static Dictionary<MethodOption, RadioButton> _radioButtonsMethodAccordance = default;
-        private static SearchOption _searchOption = SearchOption.TopDirectoryOnly;
-        private static FilePairOption _filePairOption = FilePairOption.CheckFileType;
-        private static TableFillOption _tableFillOption = TableFillOption.ClearTable;
-        private static bool _isProcessing = false;
+        private static DataTable _comparisionDataTable = default; //Таблица с результатами обработки файлов
+        private static Stack<HashSet<int>> _comparisionDataTableIdHistory = default; //Стек, содержащий множества последних добавленных в таблицу id записей результатов  обработки файлов
+        private static IProgress<int> _progressBarValueUpProgress = default; //Обработчик события обработки одной пары файлов 
+        private static CancellationTokenSource _cancellationTokenSource = default; //Токен, отвечающий за фиксирования запроса отмены обработки файлов 
+        private static PrivateFontCollection _privateFontCollection = default; //Коллекция для загрузки внешних стилей
+        private static Dictionary<MethodOption, RadioButton> _radioButtonsMethodAccordance = default; //Словарь соответствия выбранной радиокнопки и метода обработки файлов
+        private static SearchOption _searchOption = SearchOption.TopDirectoryOnly; //Опция задания режима чтения файлов из директории
+        private static FilePairOption _filePairOption = FilePairOption.CheckFileType; //Опция учета типа файла при попарном сравнении файлов
+        private static TableFillOption _tableFillOption = TableFillOption.ClearTable; //Опция учета очистки таблицы при новой обработке
+        private static bool _isProcessing = false; //Флаг, идет ли в данный момент обработка файлов
         
-        private enum MethodOption
+        //Перечисление для определения опций-ключей методов обработки файлов
+        private enum MethodOption 
         {
             Cosine = 0,
             LevensteinModify,
@@ -37,7 +38,8 @@ namespace CodePlagiarismDetection.Forms
             ShingleCoefficient
         }
         
-        private static readonly Dictionary<MethodOption, SimilarityMethod> _methods 
+        //Словарь соответствия элементов опций перечисления методов обработки файлов к объектам-методам обработки файлов
+        private static readonly Dictionary<MethodOption, SimilarityMethod> _methods  
             = new Dictionary<MethodOption, SimilarityMethod>()
             {
                 {MethodOption.Cosine, new Cosine()},
@@ -52,7 +54,7 @@ namespace CodePlagiarismDetection.Forms
         public MainForm()
         {
             InitializeComponent();
-            InitializeComponentCustomStyles();
+            InitializeComponentCustomStyles(); 
             InitializeRadioButtonMethodCheckedChangeEvents();
         }
 
@@ -60,10 +62,10 @@ namespace CodePlagiarismDetection.Forms
         {
             ShingleProfiler.N = int.Parse(numUpDownTokenLenghtValue.Text);
             _comparisionDataTableIdHistory = new Stack<HashSet<int>>();
-            _progressBarValueUpProgress = new Progress<int>(_ => progressProcessingBar.Value++);
-            _comparisionDataTable = ComparisonDataTableWorker.CreateFileCoprasionDataTable();
-            dataGridComparisionResult.DataSource = _comparisionDataTable;
-            _radioButtonsMethodAccordance = new Dictionary<MethodOption, RadioButton>()
+            _progressBarValueUpProgress = new Progress<int>(_ => progressProcessingBar.Value++); //Задание поведения обработчика прогресса обработки файла
+            _comparisionDataTable = ComparisonDataTableWorker.CreateFileCoprasionDataTable(); //Создание таблица с результатами
+            dataGridComparisionResult.DataSource = _comparisionDataTable; //Определение источника данных для компонента-таблицы
+            _radioButtonsMethodAccordance = new Dictionary<MethodOption, RadioButton>() //Задание соответствия радио-кнопки к опции перечисления метода обработки файлов
             {
                 {MethodOption.Cosine, rbCosineMethod},
                 {MethodOption.LevensteinModify, rbLevensteinModifyMethod},
@@ -75,6 +77,7 @@ namespace CodePlagiarismDetection.Forms
             };
         }
 
+        //Обработчик нажатия на кнопку для открытия системного проводника при нажатии на кнопку обзора
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             var folderBrowserDialog = new FolderBrowserDialog();
@@ -82,6 +85,7 @@ namespace CodePlagiarismDetection.Forms
                 txtDirectoryPath.Text = folderBrowserDialog.SelectedPath;
         }
         
+        //Обработчик нажатия на кнопку для отображаение формы для задания фильтра файлов
         private void btnFilterForm_Click(object sender, EventArgs e)
         {
             if (Program.filterForm != null)
@@ -93,50 +97,56 @@ namespace CodePlagiarismDetection.Forms
             Program.filterForm.Show();
         }
         
+        //Обработчик нажатия на кнопку для начала обработки файлов
         private async void btnStartProcessing_Click(object sender, EventArgs e)
         {
-            if (_isProcessing)
+            if (_isProcessing)  //Отмена обработки файлов, если она начата
             {
-                _cancellationTokenSource.Cancel();
+                _cancellationTokenSource.Cancel(); //Отправка запроса на отмену обработки файлов
                 _isProcessing = false;
                 btnStartProcessing.Text = "Начать обработку";
                 toolStripLabelProcessingStatus.Text = "Прервано";
+                numUpDownTokenLenghtValue.Enabled = true;
                 return;
             }
             
+            //Проверка корректности введенного пути файла
             if (!ValidationChecker.CheckValidationOfCurrentDirectory(txtDirectoryPath.Text, MessageBoxShowMode.Show))
                 return;
 
             _isProcessing = true;
-            _cancellationTokenSource = new CancellationTokenSource();
+            _cancellationTokenSource = new CancellationTokenSource(); //Создание
             ShingleProfiler.N = int.Parse(numUpDownTokenLenghtValue.Text);
             
-            var directoryInfo = new DirectoryInfo(txtDirectoryPath.Text);
+            var directoryInfo = new DirectoryInfo(txtDirectoryPath.Text); //Получение объекта с информацией о выбранной директории
             var files = FileLoader.LoadFiles(directoryInfo, _searchOption)
                 .Select(file => new FileContent(file))
-                .ToList();
-            var selectedMethod = _radioButtonsMethodAccordance.First(pair => pair.Value.Checked);
-            var method = _methods[selectedMethod.Key];
+                .ToList(); //Получение списка файлов 
+            var selectedMethod = _radioButtonsMethodAccordance.First(pair => pair.Value.Checked); //Получение идентификатора обработчика по радио-кнопке
+            var method = _methods[selectedMethod.Key]; //
             
             progressProcessingBar.Value = 0;
-            progressProcessingBar.Maximum = GetFilePairCount(files);
+            progressProcessingBar.Maximum = GetFilePairCount(files); //Задание длины для полосы прогресса
             btnStartProcessing.Text = "Прервать";
             toolStripLabelProcessingStatus.Text = "Идёт обработка...";
+            numUpDownTokenLenghtValue.Enabled = false;
 
             var comparisonsResult = await Task.Run(() => 
-                method.CompareFilePairwise(files, _filePairOption, _progressBarValueUpProgress, _cancellationTokenSource.Token));
+                method.CompareFilePairwise(files, _filePairOption, _progressBarValueUpProgress, _cancellationTokenSource.Token)); //Асинхронный вызов меирда обработки файлов
             
             _comparisionDataTable = ComparisonDataTableWorker.FillComparisionDataTable(_comparisionDataTable, comparisonsResult, 
-               _comparisionDataTableIdHistory, selectedMethod.Value.Text, (int)numUpDownCriticalBorderValue.Value, _tableFillOption);
+               _comparisionDataTableIdHistory, selectedMethod.Value.Text, (int)numUpDownCriticalBorderValue.Value, _tableFillOption); //Заполнение таблицы с результатами
             
-            toolStripLabelProcessingStatus.Text = _cancellationTokenSource.IsCancellationRequested
+            toolStripLabelProcessingStatus.Text = _cancellationTokenSource.IsCancellationRequested //Задание инфомрации об обработке
                 ? "Прервано"
                 : "Обработка завершена";
-            _cancellationTokenSource.Dispose();
+            _cancellationTokenSource.Dispose(); //Очищение токена отмены обработки
             _isProcessing = false;
             btnStartProcessing.Text = "Начать обработку";
+            numUpDownTokenLenghtValue.Enabled = true;
         }
 
+        //Выделение строк с "Подозирительной" парой файлов
         private void dataGridComparisionResult_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (dataGridComparisionResult.Columns[e.ColumnIndex].DataPropertyName.Equals("SimilarityPercent") &&
@@ -148,6 +158,7 @@ namespace CodePlagiarismDetection.Forms
             }
         }
         
+        //Обработчик нажатия мыши на строку таблицы вызова контекстного меню
         private void dataGridComparisionResult_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.RowIndex != -1 && e.ColumnIndex != -1)
@@ -164,6 +175,7 @@ namespace CodePlagiarismDetection.Forms
             }
         }
         
+        //Отбоаботчик нажатия на иконку стрелки
         private void pictureBoxDeleteLastComparisons_Click(object sender, EventArgs e)
         {
             if (_comparisionDataTableIdHistory.Count.Equals(0))
@@ -177,12 +189,14 @@ namespace CodePlagiarismDetection.Forms
             _comparisionDataTable.AcceptChanges();
         }
         
+        //Обработчик нажатия на иконку счетки
         private void pictureBoxClearTable_Click(object sender, EventArgs e)
         {
             _comparisionDataTable.Clear();
             _comparisionDataTableIdHistory.Clear();
         }
         
+        //Обработчик нажатия на пункт контекстного меню для открытия файлов
         private void открытьФайлыToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dataGridComparisionResult.SelectedRows.Count.Equals(0))
@@ -195,6 +209,7 @@ namespace CodePlagiarismDetection.Forms
             System.Diagnostics.Process.Start(comparedFilePath);
         }
 
+        //Обработчик нажатия на пункт контекстного меню для открытия файлов
         private void cbOptionFileType_CheckedChanged(object sender, EventArgs e)
         {
             _filePairOption = (cbOptionFileType.Checked)
@@ -202,6 +217,7 @@ namespace CodePlagiarismDetection.Forms
                 : FilePairOption.IgnoreFileType;
         }
 
+        //Обработчик нажатия на пункт контекстного меню для открытия файлов
         private void cbOptionFillTable_CheckedChanged(object sender, EventArgs e)
         {
             _tableFillOption = (cbOptionFillTable.Checked)
@@ -209,6 +225,7 @@ namespace CodePlagiarismDetection.Forms
                 : TableFillOption.ClearTable;
         }
 
+        //Обработчик нажатия на пункт контекстного меню для обнаружения исходы
         private void найтиПодозрительныеЧастиToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dataGridComparisionResult.SelectedRows.Count == 0)
@@ -225,6 +242,7 @@ namespace CodePlagiarismDetection.Forms
             System.Diagnostics.Process.Start(report);
         }
         
+        //Обработчик нажатия на пункт контекстного меню для вывода данных в Excel
         private void вывестиДанныеВExcelToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dataGridComparisionResult.SelectedRows.Count == 0)
@@ -233,6 +251,7 @@ namespace CodePlagiarismDetection.Forms
             ExcelReportGenerator.GenerateExcelReport(_comparisionDataTable);
         }
         
+        //Обработчик нажатия флага на смену режима чтения файлов с выбранной директории
         private void cbOptionSubdirectories_CheckedChanged(object sender, EventArgs e)
         {
             _searchOption = (cbOptionSubdirectories.Checked)
@@ -240,6 +259,7 @@ namespace CodePlagiarismDetection.Forms
                 : SearchOption.TopDirectoryOnly;
         }
 
+        //Настройка стилей компонетов формы
         private void InitializeComponentCustomStyles()
         {
             _privateFontCollection = LocalFontsCollection.GetPrivateFontCollectionInstance();
@@ -247,20 +267,15 @@ namespace CodePlagiarismDetection.Forms
             
             foreach (Control control in this.Controls)
                 control.Font = mainFont;
-
-            /*var dataGridViewHeadersFontStyle = new Font(mainFont, FontStyle.Bold);
-            foreach (DataGridViewColumn col in dataGridComparisionResult.Columns)
-                col.HeaderCell.Style.Font = dataGridViewHeadersFontStyle;*/
             
             dataGridComparisionResult.RowsDefaultCellStyle.SelectionBackColor = Color.FromArgb(0, 165, 223);
-            //this.BackColor = Color.FromArgb(153, 214, 204);
-            
+
             menuStripMainForm.BackColor = Color.FromArgb(65, 89, 151);
             menuStripMainForm.ForeColor = Color.White;
             menuStripMainForm.Font = new Font(_privateFontCollection.Families[(int)Fonts.MontserattThin], 12, FontStyle.Regular);
-           // menuStripMainForm.Font = new Font(mainFont, FontStyle.Bold);
         }
 
+        //Настройка обработчиков нажатия на радио-кнопку
         private void InitializeRadioButtonMethodCheckedChangeEvents()
         {
             rbLevensteinModifyMethod.CheckedChanged += ShowLevensteinModifyWarning;
@@ -272,6 +287,7 @@ namespace CodePlagiarismDetection.Forms
             rbShingleCoefficientMethod.CheckedChanged += ShowNDivideWarning;
         }
 
+        //Обработчик для вывода сообщения 1
         private void ShowEqualTextLenghtWarning(object sender, EventArgs e)
         {
             if (((RadioButton)sender).Checked)
@@ -283,6 +299,7 @@ namespace CodePlagiarismDetection.Forms
             }
         }
         
+        //Обработчик для вывода сообщения 1
         private void ShowSequenceWarning(object sender, EventArgs e)
         {
             if (((RadioButton)sender).Checked)
@@ -296,6 +313,7 @@ namespace CodePlagiarismDetection.Forms
             }
         }
         
+        //Обработчик для вывода сообщения 2
         private void ShowApproximatelyWarning(object sender, EventArgs e)
         {
             if (((RadioButton)sender).Checked)
@@ -307,6 +325,7 @@ namespace CodePlagiarismDetection.Forms
             }
         }
 
+        //Обработчик для вывода сообщения 3
         private void ShowNDivideWarning(object sender, EventArgs e)
         {
             if (((RadioButton)sender).Checked)
@@ -317,6 +336,7 @@ namespace CodePlagiarismDetection.Forms
             }
         }
         
+        //Обработчик для вывода сообщения 4
         private void ShowLevensteinModifyWarning(object sender, EventArgs e)
         {
             if (((RadioButton)sender).Checked)
@@ -328,12 +348,7 @@ namespace CodePlagiarismDetection.Forms
             }
         }
         
-        private void HideWarning(object sender, EventArgs e)
-        {
-            if (((RadioButton)sender).Checked)
-                lblMethodDescriptiom.Visible = false;
-        }
-        
+        //Метод подсчета количества обрабатываемых файлов
         private int GetFilePairCount(List<FileContent> fileList)
         {
             var count = 0;
@@ -345,6 +360,25 @@ namespace CodePlagiarismDetection.Forms
                     count++;
                 }
             return count;
+        }
+
+        //Обработка нажатия на вкладку О Программе
+        private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Program.aboutForm != null)
+            {
+                Program.aboutForm.Activate();
+                return;
+            }
+            Program.aboutForm = new AboutForm();    
+            Program.aboutForm.Show();
+        }
+        
+        //Обработка нажатия на вкладку Справка
+        private void справкаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var desc = new DescriptionForm();
+            desc.Show();
         }
     }
 }

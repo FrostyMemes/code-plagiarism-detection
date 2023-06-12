@@ -6,6 +6,7 @@ namespace CodePlagiarismDetection.Methods
 {
     public class SorensenDiceCoefficient: SimilarityMethod
     {
+        //Реализация нахождения схожести по коэфициенту Сёренсена
         protected override ComparisonResult CompareFiles(FileContent originalFile, FileContent comparedFile)
         {
             if (originalFile.NormalizedText == null) 
@@ -31,14 +32,9 @@ namespace CodePlagiarismDetection.Methods
             union.UnionWith(profile1.Keys);
             union.UnionWith(profile2.Keys);
             
-            var inter = 0;
-
-            foreach (var key in union)
-            {
-                if (profile1.ContainsKey(key) && profile2.ContainsKey(key))
-                    inter++;
-            }
-
+            var inter = profile1.Keys.Count + profile2.Keys.Count
+                        - union.Count;
+            
             similarity = 2.0 * inter / (profile1.Count + profile2.Count);
             
             return new ComparisonResult(originalFile, comparedFile, similarity);

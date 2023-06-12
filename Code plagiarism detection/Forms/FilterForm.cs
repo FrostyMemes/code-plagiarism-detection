@@ -13,25 +13,20 @@ namespace CodePlagiarismDetection.Forms
         public FilterForm()
         {
             InitializeComponent();
-            InitializeComponentStyles();
+            InitializeComponentStyles(); //Инициализация внешних стилей компонентов формы
         }
 
         private void Filter_Load(object sender, EventArgs e)
         {
             txtFilter.Text = string.Join(Environment.NewLine, FileLoader.filter);
         }
-
-        private void txtFilter_Leave(object sender, EventArgs e)
-        {
-            SaveTextToFilterList();
-        }
-
+        
         private void FilterForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            SaveTextToFilterList();
             Program.filterForm = null;
         }
 
+        //Добавление масок имен файлов в фильтр обработчика
         private void SaveTextToFilterList()
         {
             FileLoader.filter = txtFilter.Lines.OfType<string>()
@@ -42,10 +37,16 @@ namespace CodePlagiarismDetection.Forms
         
         private void InitializeComponentStyles()
         {
-            _privateFontCollection = LocalFontsCollection.GetPrivateFontCollectionInstance();
+            _privateFontCollection = LocalFontsCollection.GetPrivateFontCollectionInstance(); //Получение коллекции внешних добавленных шрифтов
             
             foreach (Control control in this.Controls)
                 control.Font = new Font(_privateFontCollection.Families[(int)Fonts.MontserattThin], 11, FontStyle.Regular);
+        }
+
+        //Добавление масок имен файлов в фильтр обработчика
+        private void txtFilter_TextChanged(object sender, EventArgs e) 
+        {
+            SaveTextToFilterList();
         }
     }
 }

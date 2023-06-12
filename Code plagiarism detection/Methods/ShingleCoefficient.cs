@@ -7,6 +7,7 @@ namespace CodePlagiarismDetection.Methods
 {
     public class ShingleCoefficient: SimilarityMethod
     {
+        //Реализация нахождения схожести исхондых кодов методом общих шинглов
         protected override ComparisonResult CompareFiles(FileContent originalFile, FileContent comparedFile)
         {
             if (originalFile.NormalizedText == null) 

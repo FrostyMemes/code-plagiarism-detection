@@ -5,10 +5,12 @@ using System.Linq;
 
 namespace CodePlagiarismDetection.Services
 {
+    //Класс для загрузки файлов
     public class FileLoader
     {
-        public static List<string> filter = new List<string>(); 
+        public static List<string> filter = new List<string>(); //Список фильтров обрабатываемых файлов
         
+        //Метод для загрузки файлов из директории
         public static IEnumerable<string> LoadFiles(DirectoryInfo folder, SearchOption option)
         {
             if (filter.Count == 0)

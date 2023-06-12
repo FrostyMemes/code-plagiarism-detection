@@ -5,11 +5,15 @@ using System.Windows.Forms;
 namespace CodePlagiarismDetection.Services
 {
     public enum MessageBoxShowMode{
-        Show,
-        Hide
+        Show, //Показать сообение об ошибке
+        Hide //Не показывать сообщение об ошибке
     }
+    
+    //Класс для валидации данных
     public static class ValidationChecker
     {
+        
+        //Класс для валидации введенного пользователем пути к директории с файлами
         public static bool CheckValidationOfCurrentDirectory(string path, MessageBoxShowMode showMode)
         {
             if (String.IsNullOrWhiteSpace(path)) 

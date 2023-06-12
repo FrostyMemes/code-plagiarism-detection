@@ -5,6 +5,7 @@ namespace CodePlagiarismDetection.Methods
 {
     public class LongestCommonSubsequence: SimilarityMethod
     {
+        //Реализация нахождения схожести исхондых кодов методом НОП
         protected override ComparisonResult CompareFiles(FileContent originalFile, FileContent comparedFile)
         {
             if (originalFile.NormalizedText == null) 
@@ -25,6 +26,7 @@ namespace CodePlagiarismDetection.Methods
             return new ComparisonResult(originalFile, comparedFile, normalizedDistance);
         }
 
+        //Нахождение длины НОП
         private int GetLCSLength(string s1, string s2)
         {
             var m = s1.Length;

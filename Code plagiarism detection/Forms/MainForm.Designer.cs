@@ -112,7 +112,7 @@
             this.txtDirectoryPath.Name = "txtDirectoryPath";
             this.txtDirectoryPath.Size = new System.Drawing.Size(1088, 24);
             this.txtDirectoryPath.TabIndex = 0;
-            this.txtDirectoryPath.Text = "D:\\Projects\\C Sharp Projects\\CodePlagiarismDetection\\Code plagiarism detection\\Co" + "deExamples\\Test";
+            this.txtDirectoryPath.Text = "D:\\Projects\\C Sharp Projects\\CodePlagiarismDetection\\Code plagiarism detection\\Co" + "deExamples\\Test\\Aprobation";
             // 
             // groupBoxDirectoryPath
             // 
@@ -182,6 +182,7 @@
             // 
             // btnStartProcessing
             // 
+            this.btnStartProcessing.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnStartProcessing.Location = new System.Drawing.Point(890, 388);
             this.btnStartProcessing.Margin = new System.Windows.Forms.Padding(4);
             this.btnStartProcessing.Name = "btnStartProcessing";
@@ -207,7 +208,7 @@
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int) (((byte) (255)))), ((int) (((byte) (192)))), ((int) (((byte) (128)))));
             this.dataGridComparisionResult.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridComparisionResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridComparisionResult.Size = new System.Drawing.Size(1269, 500);
+            this.dataGridComparisionResult.Size = new System.Drawing.Size(1269, 478);
             this.dataGridComparisionResult.TabIndex = 12;
             this.dataGridComparisionResult.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridComparisionResult_CellFormatting);
             this.dataGridComparisionResult.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridComparisionResult_CellMouseDown);
@@ -281,6 +282,7 @@
             // 
             this.numUpDownTokenLenghtValue.Location = new System.Drawing.Point(26, 245);
             this.numUpDownTokenLenghtValue.Margin = new System.Windows.Forms.Padding(4);
+            this.numUpDownTokenLenghtValue.Maximum = new decimal(new int[] {10, 0, 0, 0});
             this.numUpDownTokenLenghtValue.Minimum = new decimal(new int[] {1, 0, 0, 0});
             this.numUpDownTokenLenghtValue.Name = "numUpDownTokenLenghtValue";
             this.numUpDownTokenLenghtValue.ReadOnly = true;
@@ -330,6 +332,7 @@
             // 
             // gbSimilarityMethods
             // 
+            this.gbSimilarityMethods.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.gbSimilarityMethods.Controls.Add(this.rbLongestCommonSubsequenceMethod);
             this.gbSimilarityMethods.Controls.Add(this.rbShingleCoefficientMethod);
             this.gbSimilarityMethods.Controls.Add(this.rbCosineMethod);
@@ -463,6 +466,7 @@
             // 
             // lblMethodDescriptiom
             // 
+            this.lblMethodDescriptiom.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.lblMethodDescriptiom.BackColor = System.Drawing.Color.White;
             this.lblMethodDescriptiom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblMethodDescriptiom.Location = new System.Drawing.Point(554, 114);
@@ -474,7 +478,6 @@
             // 
             // pictureBoxDeleteLastComparisons
             // 
-            this.pictureBoxDeleteLastComparisons.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxDeleteLastComparisons.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBoxDeleteLastComparisons.Image = ((System.Drawing.Image) (resources.GetObject("pictureBoxDeleteLastComparisons.Image")));
             this.pictureBoxDeleteLastComparisons.Location = new System.Drawing.Point(14, 399);
@@ -488,7 +491,6 @@
             // 
             // pictureBoxClearTable
             // 
-            this.pictureBoxClearTable.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxClearTable.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBoxClearTable.Image = ((System.Drawing.Image) (resources.GetObject("pictureBoxClearTable.Image")));
             this.pictureBoxClearTable.Location = new System.Drawing.Point(48, 399);
@@ -529,12 +531,14 @@
             this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
             this.справкаToolStripMenuItem.Size = new System.Drawing.Size(82, 25);
             this.справкаToolStripMenuItem.Text = "Справка";
+            this.справкаToolStripMenuItem.Click += new System.EventHandler(this.справкаToolStripMenuItem_Click);
             // 
             // оПрограммеToolStripMenuItem
             // 
             this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
             this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(118, 25);
             this.оПрограммеToolStripMenuItem.Text = "О программе";
+            this.оПрограммеToolStripMenuItem.Click += new System.EventHandler(this.оПрограммеToolStripMenuItem_Click);
             // 
             // MainForm
             // 

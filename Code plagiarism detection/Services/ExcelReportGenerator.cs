@@ -7,13 +7,16 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace CodePlagiarismDetection.Services
 {
+    //Класс для создания Excel-документа
     public static class ExcelReportGenerator
     {
-        private static List<string> ExceptionColumns = new List<string>()
+        private static List<string> ExceptionColumns = new List<string>() //Список игнорируемых столбцов таблицы
         {
             "PathToFirstFile",
             "PathToSecondFile"
         };
+        
+        //Метод создания Excel-документа
         public static void GenerateExcelReport(DataTable comparisionDataTable)
         {
             const int START_ROW = 2;

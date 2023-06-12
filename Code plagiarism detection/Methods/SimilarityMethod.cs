@@ -42,6 +42,7 @@ namespace CodePlagiarismDetection.Methods
             }
         }
         
+        //Метод для переопределения алгоритма сравнения пар исходных кодов
         protected abstract ComparisonResult CompareFiles(FileContent originalFile, FileContent comparedFile);
     }
 }
