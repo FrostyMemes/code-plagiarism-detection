@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Linq;
 using CodePlagiarismDetection.Services;
 
 namespace CodePlagiarismDetection.Methods
 {
     public class NGramDistance: SimilarityMethod
     {
+        //Реализация нахождения схожести исхондых кодов методом N-расстояния
         protected override ComparisonResult CompareFiles(FileContent originalFile, FileContent comparedFile)
         {
             if (originalFile.NormalizedText == null) 
@@ -23,108 +25,46 @@ namespace CodePlagiarismDetection.Methods
             if (s1.Length < ShingleProfiler.N || s2.Length < ShingleProfiler.N )
                 return new ComparisonResult(originalFile, comparedFile, 0.0);
 
-            var nDistance = GetNGramDistance(s1, s2, ShingleProfiler.N);
-            similarity = 1 - nDistance;
+            similarity = 1 - GetNGramDistance(s1, s2);
             return new ComparisonResult(originalFile, comparedFile, similarity);
         }
         
-        private double GetNGramDistance(string originalString, string comparedString, int n)
+        //Нахождение N-расстояния двух строк
+        private double GetNGramDistance(string originalString, string comparedString)
         {
-            const char specialPrefix = '\n';
-            var originalStringLength = originalString.Length;
-            var comparedStringLength = comparedString.Length;
+            var shinglesOriginalFiles = ShingleProfiler.GetShingles(originalString, ShingleProfiler.N).ToList();
+            var shinglesComparedFiles = ShingleProfiler.GetShingles(comparedString, ShingleProfiler.N).ToList();
+
+            var D = new double[shinglesOriginalFiles.Count + 1, shinglesComparedFiles.Count + 1];
             
-            if (originalStringLength == 0 || comparedStringLength == 0)
-                return 1;
+            for (int i = 0; i <= shinglesOriginalFiles.Count; i++) { D[i, 0] = i; }
+            for (int j = 0; j <= shinglesComparedFiles.Count; j++) { D[0, j] = j; }
 
-            var cost = 0;
-            if (originalStringLength < n || comparedStringLength < n)
+            for (int i = 1; i <= shinglesOriginalFiles.Count; i++)
+                for (int j = 1; j <= shinglesComparedFiles.Count; j++)
+                {
+                    var distance = GetShingleDistance(shinglesOriginalFiles[i-1], shinglesComparedFiles[j-1]);
+                        
+                    D[i, j] = Math.Min(Math.Min(D[i - 1, j] + 1,
+                            D[i, j - 1] + 1),
+                        D[i - 1, j - 1] + distance);
+                }
+
+            return D[shinglesOriginalFiles.Count, shinglesComparedFiles.Count]
+                   /Math.Max(shinglesOriginalFiles.Count, shinglesComparedFiles.Count);;
+        }
+
+        
+        //Нахождение степени схоести двух шинглов
+        private double GetShingleDistance(string shingle1, string shingle2)
+        {
+            var distance = 0;
+            for (int i = 0; i < ShingleProfiler.N; i++)
             {
-                for (int i1 = 0, min = Math.Min(originalStringLength, comparedStringLength); i1 < min; i1++)
-                {
-                    if (originalString[i1] == comparedString[i1])
-                    {
-                        cost++;
-                    }
-                }
-                return (float)cost / Math.Max(originalStringLength, comparedStringLength);
+                if (shingle1[i].Equals(shingle2[i]))
+                    distance++;
             }
-
-            var originalStringChars = new char[originalStringLength + n - 1];
-            float[] costArray; 
-            float[] previousCostArray; 
-            float[] tempForCostArrays; 
-
-         
-            for (int i1 = 0; i1 < originalStringChars.Length; i1++)
-            {
-                if (i1 < n - 1)
-                {
-                    originalStringChars[i1] = specialPrefix; 
-                }
-                else
-                {
-                    originalStringChars[i1] = originalString[i1 - n + 1];
-                }
-            }
-            previousCostArray = new float[originalStringLength + 1];
-            costArray = new float[originalStringLength + 1];
-
-           
-            int iOriginal; 
-            int jCompared; 
-
-            char[] comparedStringNgram = new char[n]; 
-
-            for (iOriginal = 0; iOriginal <= originalStringLength; iOriginal++)
-            {
-                previousCostArray[iOriginal] = iOriginal;
-            }
-
-            for (jCompared = 1; jCompared <= comparedStringLength; jCompared++)
-            {
-               
-                if (jCompared < n)
-                {
-                    for (int ti = 0; ti < n - jCompared; ti++)
-                    {
-                        comparedStringNgram[ti] = specialPrefix;
-                    }
-                    for (int ti = n - jCompared; ti < n; ti++)
-                    {
-                        comparedStringNgram[ti] = comparedString[ti - (n - jCompared)];
-                    }
-                }
-                else
-                {
-                    comparedStringNgram = comparedString.Substring(jCompared - n, n).ToCharArray();
-                }
-                costArray[0] = jCompared;
-                for (iOriginal = 1; iOriginal <= originalStringLength; iOriginal++)
-                {
-                    cost = 0;
-                    int tn = n;
-                    for (int ni = 0; ni < n; ni++)
-                    {
-                        if (originalStringChars[iOriginal - 1 + ni] != comparedStringNgram[ni])
-                        {
-                            cost++;
-                        }
-                        else if (originalStringChars[iOriginal - 1 + ni] == specialPrefix)
-                        {
-                            tn--;
-                        }
-                    }
-                    float ec = (float)cost / tn;
-                    costArray[iOriginal] = Math.Min(
-                        Math.Min(costArray[iOriginal - 1] + 1, previousCostArray[iOriginal] + 1), 
-                        previousCostArray[iOriginal - 1] + ec);
-                }
-                tempForCostArrays = previousCostArray;
-                previousCostArray = costArray;
-                costArray = tempForCostArrays;
-            }
-            return previousCostArray[originalStringLength] / Math.Max(comparedStringLength, originalStringLength);
+            return (double)distance/ShingleProfiler.N;
         }
     }
 }
