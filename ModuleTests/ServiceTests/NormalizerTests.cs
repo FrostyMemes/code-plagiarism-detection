@@ -38,8 +38,7 @@ namespace ModuleTests.ServiceTests
             var path = Path.Combine(direcotryToFileForNormalizing, "TestExtractLiteralsFromText.c");
             var fileText = File.ReadAllText(path);
             var normalizedText = TextNormalizer.NormalizeText(fileText);
-            var literalCount = LiteralTokenizer.Tokenize(normalizedText)
-                .Count(token => token.All(c => !char.IsWhiteSpace(c)));
+            var literalCount = LiteralTokenizer.GetTokens(normalizedText).Count();
             Assert.Equal(50, literalCount);
         }
     }
