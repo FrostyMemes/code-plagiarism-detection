@@ -32,6 +32,7 @@ namespace CodePlagiarismDetection.Services
             return _instance ?? (_instance = CreatePrivateFontCollectionInstance());
         }
         
+        //Создания списка внешних шрифтов
         private static PrivateFontCollection CreatePrivateFontCollectionInstance()
         {
             var privateFontCollection = new PrivateFontCollection();
