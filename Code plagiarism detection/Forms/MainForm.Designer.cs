@@ -42,6 +42,16 @@
             this.ProcessingStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.btnStartProcessing = new System.Windows.Forms.Button();
             this.dataGridComparisionResult = new System.Windows.Forms.DataGridView();
+            this.FirstDirectory = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FirstFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SecondDirectory = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SecondFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Similarity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CriticalBorderValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Method = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PathToFirstFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PathToSecondFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.numUpDownTokenLenghtValue = new System.Windows.Forms.NumericUpDown();
             this.cbOptionFillTable = new System.Windows.Forms.CheckBox();
             this.lblSimilarityBorder = new System.Windows.Forms.Label();
@@ -69,16 +79,6 @@
             this.menuStripMainForm = new System.Windows.Forms.MenuStrip();
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.FirstDirectory = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FirstFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SecondDirectory = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SecondFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Similarity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CriticalBorderValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Method = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PathToFirstFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PathToSecondFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBoxDirectoryPath.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize) (this.dataGridComparisionResult)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.numUpDownTokenLenghtValue)).BeginInit();
@@ -112,7 +112,7 @@
             this.txtDirectoryPath.Name = "txtDirectoryPath";
             this.txtDirectoryPath.Size = new System.Drawing.Size(1088, 24);
             this.txtDirectoryPath.TabIndex = 0;
-            this.txtDirectoryPath.Text = "D:\\Projects\\C Sharp Projects\\CodePlagiarismDetection\\Code plagiarism detection\\Co" + "deExamples\\Test";
+            this.txtDirectoryPath.Text = "C:\\Users\\anato\\Desktop\\МГТУ\\4 курс\\ДИПЛОМ\\Docs\\Test";
             // 
             // groupBoxDirectoryPath
             // 
@@ -212,6 +212,71 @@
             this.dataGridComparisionResult.TabIndex = 12;
             this.dataGridComparisionResult.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridComparisionResult_CellFormatting);
             this.dataGridComparisionResult.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridComparisionResult_CellMouseDown);
+            // 
+            // FirstDirectory
+            // 
+            this.FirstDirectory.DataPropertyName = "FirstDirectory";
+            this.FirstDirectory.HeaderText = "Папка 1";
+            this.FirstDirectory.Name = "FirstDirectory";
+            this.FirstDirectory.ReadOnly = true;
+            // 
+            // FirstFile
+            // 
+            this.FirstFile.DataPropertyName = "FirstFile";
+            this.FirstFile.HeaderText = "Файл 1";
+            this.FirstFile.Name = "FirstFile";
+            // 
+            // SecondDirectory
+            // 
+            this.SecondDirectory.DataPropertyName = "SecondDirectory";
+            this.SecondDirectory.HeaderText = "Папка 2";
+            this.SecondDirectory.Name = "SecondDirectory";
+            this.SecondDirectory.ReadOnly = true;
+            // 
+            // SecondFile
+            // 
+            this.SecondFile.DataPropertyName = "SecondFile";
+            this.SecondFile.HeaderText = "Файл 2";
+            this.SecondFile.Name = "SecondFile";
+            // 
+            // Similarity
+            // 
+            this.Similarity.DataPropertyName = "SimilarityPercent";
+            this.Similarity.HeaderText = "Схожесть %";
+            this.Similarity.Name = "Similarity";
+            // 
+            // CriticalBorderValue
+            // 
+            this.CriticalBorderValue.DataPropertyName = "CriticalBorderValue";
+            this.CriticalBorderValue.HeaderText = "Порог схожести";
+            this.CriticalBorderValue.Name = "CriticalBorderValue";
+            // 
+            // Method
+            // 
+            this.Method.DataPropertyName = "Method";
+            this.Method.HeaderText = "Метод";
+            this.Method.Name = "Method";
+            // 
+            // Id
+            // 
+            this.Id.DataPropertyName = "Id";
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.Visible = false;
+            // 
+            // PathToFirstFile
+            // 
+            this.PathToFirstFile.DataPropertyName = "PathToFirstFile";
+            this.PathToFirstFile.HeaderText = "PathToFirstFile";
+            this.PathToFirstFile.Name = "PathToFirstFile";
+            this.PathToFirstFile.Visible = false;
+            // 
+            // PathToSecondFile
+            // 
+            this.PathToSecondFile.DataPropertyName = "PathToSecondFile";
+            this.PathToSecondFile.HeaderText = "PathToSecondFile";
+            this.PathToSecondFile.Name = "PathToSecondFile";
+            this.PathToSecondFile.Visible = false;
             // 
             // numUpDownTokenLenghtValue
             // 
@@ -473,71 +538,6 @@
             this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(118, 25);
             this.оПрограммеToolStripMenuItem.Text = "О программе";
             this.оПрограммеToolStripMenuItem.Click += new System.EventHandler(this.оПрограммеToolStripMenuItem_Click);
-            // 
-            // FirstDirectory
-            // 
-            this.FirstDirectory.DataPropertyName = "FirstDirectory";
-            this.FirstDirectory.HeaderText = "Папка 1";
-            this.FirstDirectory.Name = "FirstDirectory";
-            this.FirstDirectory.ReadOnly = true;
-            // 
-            // FirstFile
-            // 
-            this.FirstFile.DataPropertyName = "FirstFile";
-            this.FirstFile.HeaderText = "Файл 1";
-            this.FirstFile.Name = "FirstFile";
-            // 
-            // SecondDirectory
-            // 
-            this.SecondDirectory.DataPropertyName = "SecondDirectory";
-            this.SecondDirectory.HeaderText = "Папка 2";
-            this.SecondDirectory.Name = "SecondDirectory";
-            this.SecondDirectory.ReadOnly = true;
-            // 
-            // SecondFile
-            // 
-            this.SecondFile.DataPropertyName = "SecondFile";
-            this.SecondFile.HeaderText = "Файл 2";
-            this.SecondFile.Name = "SecondFile";
-            // 
-            // Similarity
-            // 
-            this.Similarity.DataPropertyName = "SimilarityPercent";
-            this.Similarity.HeaderText = "Схожесть %";
-            this.Similarity.Name = "Similarity";
-            // 
-            // CriticalBorderValue
-            // 
-            this.CriticalBorderValue.DataPropertyName = "CriticalBorderValue";
-            this.CriticalBorderValue.HeaderText = "Порог схожести";
-            this.CriticalBorderValue.Name = "CriticalBorderValue";
-            // 
-            // Method
-            // 
-            this.Method.DataPropertyName = "Method";
-            this.Method.HeaderText = "Метод";
-            this.Method.Name = "Method";
-            // 
-            // Id
-            // 
-            this.Id.DataPropertyName = "Id";
-            this.Id.HeaderText = "Id";
-            this.Id.Name = "Id";
-            this.Id.Visible = false;
-            // 
-            // PathToFirstFile
-            // 
-            this.PathToFirstFile.DataPropertyName = "PathToFirstFile";
-            this.PathToFirstFile.HeaderText = "PathToFirstFile";
-            this.PathToFirstFile.Name = "PathToFirstFile";
-            this.PathToFirstFile.Visible = false;
-            // 
-            // PathToSecondFile
-            // 
-            this.PathToSecondFile.DataPropertyName = "PathToSecondFile";
-            this.PathToSecondFile.HeaderText = "PathToSecondFile";
-            this.PathToSecondFile.Name = "PathToSecondFile";
-            this.PathToSecondFile.Visible = false;
             // 
             // MainForm
             // 
