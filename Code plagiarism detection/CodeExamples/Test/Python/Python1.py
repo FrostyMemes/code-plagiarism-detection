@@ -1,81 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
+﻿from selenium import webdriver
+import requests as rq
+import os
+from bs4 import BeautifulSoup
+import time
 
-namespace Digger
-{
-    public class GameState
-    {
-        public const int ElementSize = 32;
-        public List<CreatureAnimation> Animations = new List<CreatureAnimation>();
 
-        private static ICreature SelectWinnerCandidatePerLocation(List<ICreature>[,] creatures, int x, int y)
-        {
-            var candidates = creatures[x, y];
-            var aliveCandidates = candidates.ToList();
-            foreach (var candidate in candidates)
-            foreach (var rival in candidates)
-                if (rival != candidate && candidate.DeadInConflict(rival))
-                    aliveCandidates.Remove(candidate);
-            if (aliveCandidates.Count > 1)
-                throw new Exception(
-                    $"Creatures {aliveCandidates[0].GetType().Name} and {aliveCandidates[1].GetType().Name} claimed the same map cell");
+path = input("Enter Path : ")
 
-            return aliveCandidates.FirstOrDefault();
-        }
+url = input("Enter URL : ")
 
-        private List<ICreature>[,] GetCandidatesPerLocation()
-        {
-            var creatures = new List<ICreature>[Game.MapWidth, Game.MapHeight];
-            for (var x = 0; x < Game.MapWidth; x++)
-            for (var y = 0; y < Game.MapHeight; y++)
-                creatures[x, y] = new List<ICreature>();
-            foreach (var e in Animations)
-            {
-                var x = e.TargetLogicalLocation.X;
-                var y = e.TargetLogicalLocation.Y;
-                var nextCreature = e.Command.TransformTo ?? e.Creature;
-                creatures[x, y].Add(nextCreature);
-            }
+output = "output"
 
-            return creatures;
-        }
-        
-        public void BeginAct()
-        {
-            Animations.Clear();
-            for (var x = 0; x < Game.MapWidth; x++)
-            for (var y = 0; y < Game.MapHeight; y++)
-            {
-                var creature = Game.Map[x, y];
-                if (creature == null) continue;
-                var command = creature.Act(x, y);
+def get_url(path, url):
+    driver = webdriver.Chrome(executable_path=r"{}".format(path))
+    driver.get(url)
+    print("loading.....")
+    res = driver.execute_script("return document.documentElement.outerHTML")
 
-                if (x + command.DeltaX < 0 || x + command.DeltaX >= Game.MapWidth || y + command.DeltaY < 0 ||
-                    y + command.DeltaY >= Game.MapHeight)
-                    throw new Exception($"The object {creature.GetType()} falls out of the game field");
+    return res
 
-                Animations.Add(
-                    new CreatureAnimation
-                    {
-                        Command = command,
-                        Creature = creature,
-                        Location = new Point(x * ElementSize, y * ElementSize),
-                        TargetLogicalLocation = new Point(x + command.DeltaX, y + command.DeltaY)
-                    });
-            }
+def get_img_links(res):
+    soup = BeautifulSoup(res, "lxml")
+    imglinks = soup.find_all("img", src=True)
+    return imglinks
 
-            Animations = Animations.OrderByDescending(z => z.Creature.GetDrawingPriority()).ToList();
-        }
+def download_img(img_link, index):
+    try:
+        extensions = [".jpeg", ".jpg", ".png", ".gif"]
+        extension = ".jpg"
+        for exe in extensions:
+            if img_link.find(exe) > 0:
+                extension = exe
+                break
 
-        public void EndAct()
-        {
-            var creaturesPerLocation = GetCandidatesPerLocation();
-            for (var x = 0; x < Game.MapWidth; x++)
-            for (var y = 0; y < Game.MapHeight; y++)
-                Game.Map[x, y] = SelectWinnerCandidatePerLocation(creaturesPerLocation, x, y);
-        }
+        img_data = rq.get(img_link).content
+        with open(output + "\\" + str(index + 1) + extension, "wb+") as f:
+            f.write(img_data)
 
-    }
-}
+        f.close()
+    except Exception:
+        pass
+
+result = get_url(path, url)
+time.sleep(60)
+img_links = get_img_links(result)
+if not os.path.isdir(output):
+    os.mkdir(output)
+
+for index, img_link in enumerate(img_links):
+    img_link = img_link["src"]
+    print("Downloading...")
+    if img_link:
+        download_img(img_link, index)
+print("Download Complete!!")

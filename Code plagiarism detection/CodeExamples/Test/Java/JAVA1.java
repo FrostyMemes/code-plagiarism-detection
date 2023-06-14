@@ -1,81 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿import java.util.*;
 
-namespace Digger
-{
-    public static class CreatureMapCreator
-    {
-        private static readonly Dictionary<string, Func<ICreature>> factory = new Dictionary<string, Func<ICreature>>();
+public class Task1 {
+    public static void main(String[] args) {
+        Arrays.stream(taskDistinct(new double[]{2,5,7,2,9,4,6,23,7,8,9,2,1,6,4,2,6,7}))
+                .forEach(System.out::println);
+    }
 
-        public static ICreature[,] CreateMap(string map, string separator = "\r\n")
-        {
-            var rows = map.Split(new[] {separator}, StringSplitOptions.RemoveEmptyEntries);
-            if (rows.Select(z => z.Length).Distinct().Count() != 1)
-            {
-                throw new Exception($"Wrong test map '{map}'");
-            }
+    public static double[] task(double[] a) {
 
-            var result = new ICreature[rows[0].Length, rows.Length];
-            for (var x = 0; x < rows[0].Length; x++)
-            {
-                for (var y = 0; y < rows.Length; y++)
-                {
-                    result[x, y] = CreateCreatureBySymbol(rows[y][x]);
-                }
-            }
+        if (Arrays.stream(a).anyMatch(element -> element<0))
+            throw new NegativeNumberException("Имеется элемент меньше 0");
 
-            return result;
-        }
+        List<Double> aList = new ArrayList<>(Arrays.stream(a)
+                .boxed()
+                .toList());
+        Collections.reverse(aList);
 
-        private static ICreature CreateCreatureByTypeName(string name)
-        {
-            if (factory.ContainsKey(name)) 
-                return factory[name]();
-            var type = Assembly
-                .GetExecutingAssembly()
-                .GetTypes()
-                .FirstOrDefault(z => z.Name == name);
-            if (type == null)
-            {
-                throw new Exception($"Can't find type '{name}'");
-            }
+        LinkedHashSet<Double> aHashSet = new LinkedHashSet<>(aList);
+        aList = new ArrayList<>(aHashSet.stream().toList());
+        Collections.reverse(aList);
+        return aList.stream().mapToDouble(element -> element).toArray();
+    }
 
-            factory[name] = () => (ICreature) Activator.CreateInstance(type);
+    public static double[] taskDistinct(double[] a) {
 
-            return factory[name]();
-        }
+        if (Arrays.stream(a).anyMatch(element -> element<0))
+            throw new NegativeNumberException("Имеется элемент меньше 0");
 
+        List<Double> aList = new ArrayList<>(Arrays.stream(a)
+                .boxed()
+                .toList());
+        Collections.reverse(aList);
 
-        private static ICreature CreateCreatureBySymbol(char c)
-        {
-            if (c == 'P')
-            {
-                return CreateCreatureByTypeName("Player");
-            }
-            if (c == 'T')
-            {
-                return CreateCreatureByTypeName("Terrain");
-            }
-            if (c == 'G')
-            {
-                return CreateCreatureByTypeName("Gold");
-            }
-            if (c == 'S')
-            {
-                return CreateCreatureByTypeName("Sack");
-            }
-            if (c == 'M')
-            {
-                return CreateCreatureByTypeName("Monster");
-            }
-            if (c == ' ')
-            {
-                return null;
-            }
+        aList = new ArrayList<>(aList.stream().distinct().toList());
+        Collections.reverse(aList);
+        return aList.stream().mapToDouble(element -> element).toArray();
+    }
 
-            throw new Exception($"wrong character for ICreature {c}");
+    static class NegativeNumberException extends RuntimeException{
+        public NegativeNumberException(String message){
+            super(message);
         }
     }
+
 }

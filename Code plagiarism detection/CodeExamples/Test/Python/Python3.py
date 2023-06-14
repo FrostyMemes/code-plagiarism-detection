@@ -1,55 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
+﻿import json
+import os
+import sys
+import yaml
 
-namespace Digger
-{
-    public class GameState
-    {
-        public const int ElementSize = 32;
-        public List<CreatureAnimation> Animations = new List<CreatureAnimation>();
 
-        private static ICreature SelectWinnerCandidatePerLocation(List<ICreature>[,] creatures, int x, int y)
-        {
-            var candidates = creatures[x, y];
-            var aliveCandidates = candidates.ToList();
-            foreach (var candidate in candidates)
-            foreach (var rival in candidates)
-                if (rival != candidate && candidate.DeadInConflict(rival))
-                    aliveCandidates.Remove(candidate);
-            if (aliveCandidates.Count > 1)
-                throw new Exception(
-                    $"Creatures {aliveCandidates[0].GetType().Name} and {aliveCandidates[1].GetType().Name} claimed the same map cell");
+if len(sys.argv) > 1:
 
-            return aliveCandidates.FirstOrDefault();
-        }
+    if os.path.exists(sys.argv[1]):
+        source_file = open(sys.argv[1], "r")
+        source_content = yaml.safe_load(source_file)
+        source_file.close()
 
-        private List<ICreature>[,] GetCandidatesPerLocation()
-        {
-            var creatures = new List<ICreature>[Game.MapWidth, Game.MapHeight];
-            for (var x = 0; x < Game.MapWidth; x++)
-            for (var y = 0; y < Game.MapHeight; y++)
-                creatures[x, y] = new List<ICreature>();
-            foreach (var e in Animations)
-            {
-                var x = e.TargetLogicalLocation.X;
-                var y = e.TargetLogicalLocation.Y;
-                var nextCreature = e.Command.TransformTo ?? e.Creature;
-                creatures[x, y].Add(nextCreature);
-            }
+    else:
+        print("ERROR: " + sys.argv[1] + " not found")
+        exit(1)
 
-            return creatures;
-        }
-        
-      
-        public void EndAct()
-        {
-            var creaturesPerLocation = GetCandidatesPerLocation();
-            for (var x = 0; x < Game.MapWidth; x++)
-            for (var y = 0; y < Game.MapHeight; y++)
-                Game.Map[x, y] = SelectWinnerCandidatePerLocation(creaturesPerLocation, x, y);
-        }
+else:
+    print("Usage: yaml2json.py <source_file.yaml> [target_file.json]")
 
-    }
-}
+
+output = json.dumps(source_content)
+
+
+if len(sys.argv) < 3:
+    print(output)
+
+elif os.path.exists(sys.argv[2]):
+    print("ERROR: " + sys.argv[2] + " already exists")
+    exit(1)
+
+else:
+    target_file = open(sys.argv[2], "w")
+    target_file.write(output)
+    target_file.close()

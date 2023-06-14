@@ -43,6 +43,8 @@ namespace Digger
         }
 
 
+		//32131232131231231232131232132132132132132132132
+		///у22у2у2
         private static ICreature CreateCreatureBySymbol(char c)
         {
             switch (c)

@@ -1,81 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-
-namespace Digger
-{
-    public static class CreatureMapCreator
-    {
-        private static readonly Dictionary<string, Func<ICreature>> factory = new Dictionary<string, Func<ICreature>>();
-
-        public static ICreature[,] CreateMap(string map, string separator = "\r\n")
-        {
-            var rows = map.Split(new[] {separator}, StringSplitOptions.RemoveEmptyEntries);
-            if (rows.Select(z => z.Length).Distinct().Count() != 1)
-            {
-                throw new Exception($"Wrong test map '{map}'");
-            }
-
-            var result = new ICreature[rows[0].Length, rows.Length];
-            for (var x = 0; x < rows[0].Length; x++)
-            {
-                for (var y = 0; y < rows.Length; y++)
-                {
-                    result[x, y] = CreateCreatureBySymbol(rows[y][x]);
-                }
-            }
-
-            return result;
-        }
-
-        private static ICreature CreateCreatureByTypeName(string name)
-        {
-            if (factory.ContainsKey(name)) 
-                return factory[name]();
-            var type = Assembly
-                .GetExecutingAssembly()
-                .GetTypes()
-                .FirstOrDefault(z => z.Name == name);
-            if (type == null)
-            {
-                throw new Exception($"Can't find type '{name}'");
-            }
-
-            factory[name] = () => (ICreature) Activator.CreateInstance(type);
-
-            return factory[name]();
-        }
+﻿import secrets
+import string
 
 
-        private static ICreature CreateCreatureBySymbol(char c)
-        {
-            if (c == 'P')
-            {
-                return CreateCreatureByTypeName("Player");
-            }
-            if (c == 'T')
-            {
-                return CreateCreatureByTypeName("Terrain");
-            }
-            if (c == 'G')
-            {
-                return CreateCreatureByTypeName("Gold");
-            }
-            if (c == 'S')
-            {
-                return CreateCreatureByTypeName("Sack");
-            }
-            if (c == 'M')
-            {
-                return CreateCreatureByTypeName("Monster");
-            }
-            if (c == ' ')
-            {
-                return null;
-            }
+def generate_password(length=16):
+   characters = string.ascii_letters + string.digits + string.punctuation
+   password = "".join(secrets.choice(characters) for i in range(length))
+   return password
 
-            throw new Exception($"wrong character for ICreature {c}");
-        }
-    }
-}
+
+def store_password(service, username, password):
+   hashed_password = hash_function(password)
+
+
+   with open("password_database.txt", "a") as f:
+       f.write(f"{service},{username},{hashed_password}\n")
+
+
+def get_password(service, username):
+
+   with open("password_database.txt") as f:
+       for line in f:
+           service_, username_, hashed_password_ = line.strip().split(",")
+           if service == service_ and username == username_:
+               if hash_function(password) == hashed_password_:
+                   return password
+       return None
