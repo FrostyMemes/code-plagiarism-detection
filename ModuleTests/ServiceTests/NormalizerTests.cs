@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -11,17 +12,20 @@ namespace ModuleTests.ServiceTests
     {
         private string direcotryToFileForNormalizing = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, 
             "..", 
-            "..", @"ServiceTests\TestFiles");
-
+            "..", @"ServiceTests\TestFiles"); //Пусть к файлам для тестирования
+        
+        //Тест проверки удаления комментариев и строковых литералов
         [Fact]
         public void DeletingCommentsAndStringsLiterals_RegexMustDeleteCommentsAndStringLiterals_ReturnNullOrWhiteSpaceString()
         {
             var path = Path.Combine(direcotryToFileForNormalizing, "TestRegexForDeletingCommentsAndStringLiterals.c");
             var fileText = File.ReadAllText(path);
-            fileText = Regex.Replace(fileText, TextNormalizer.commentAndStringLiterallsPattern, String.Empty);
+            fileText = TextNormalizer.NormalizeText(fileText);
             Assert.True(String.IsNullOrWhiteSpace(fileText));
         }
         
+        
+        //Тест проверки возвращения единой строки текста
         [Fact]
         public void NormalizeText_NormalizerMustReturnTextWithoutTextLineBreakers_ReturnOneLine()
         {
@@ -32,6 +36,8 @@ namespace ModuleTests.ServiceTests
             Assert.Equal(1, lineCount);
         }
         
+        
+        //Тест получения списка слов, разделенных пробелом
         [Fact]
         public void LiteralTokenize_LiteralTokenizerExtractLiteralFromNormalizedText_ReturnSameLiterals()
         {
