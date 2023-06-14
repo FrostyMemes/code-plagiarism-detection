@@ -3,6 +3,11 @@
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5b076cfe_002D2f8a_002D4a9b_002D91aa_002D0b1e4b0e73df/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetTokenDistance_TestTokenDistanceWithHalfSimilarTokens_ReturnHalf" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::38D56899-1B7A-46DF-A65B-7AD3EBBE34C0::.NETFramework,Version=v4.8::ModuleTests.ServiceTests.TokenDistanceTests.GetTokenDistance_TestTokenDistanceWithHalfSimilarTokens_ReturnHalf&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c0bb0e62_002Db395_002D4312_002D96bb_002D1e63dcce5bcd/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ValidationCheckerTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Project Location="D:\Projects\C Sharp Projects\CodePlagiarismDetection\ModuleTests" Presentation="&amp;lt;ModuleTests&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>

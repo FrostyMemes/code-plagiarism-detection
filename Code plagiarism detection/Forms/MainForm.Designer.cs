@@ -474,7 +474,6 @@
             this.lblMethodDescriptiom.Size = new System.Drawing.Size(328, 306);
             this.lblMethodDescriptiom.TabIndex = 22;
             this.lblMethodDescriptiom.Text = "Внимание.\r\nНаиболее оптимальный уровень разбиения на токены для данного метода яв" + "ляется 4-5 уровень разбиения.\r\n";
-            this.lblMethodDescriptiom.Visible = false;
             // 
             // pictureBoxDeleteLastComparisons
             // 

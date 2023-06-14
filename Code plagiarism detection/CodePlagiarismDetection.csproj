@@ -141,6 +141,8 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CodeExamples\Scum\1.txt" />
+    <Content Include="CodeExamples\Scum\2.txt" />
     <Content Include="CodeExamples\Test\Python\Python3.py" />
     <Content Include="Doc\Theory.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

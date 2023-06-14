@@ -65,6 +65,7 @@ namespace CodePlagiarismDetection.Forms
             _progressBarValueUpProgress = new Progress<int>(_ => progressProcessingBar.Value++); //Задание поведения обработчика прогресса обработки файла
             _comparisionDataTable = ComparisonDataTableWorker.CreateFileCoprasionDataTable(); //Создание таблица с результатами
             dataGridComparisionResult.DataSource = _comparisionDataTable; //Определение источника данных для компонента-таблицы
+            rbShingleCoefficientMethod.Checked = true;
             _radioButtonsMethodAccordance = new Dictionary<MethodOption, RadioButton>() //Задание соответствия радио-кнопки к опции перечисления метода обработки файлов
             {
                 {MethodOption.Cosine, rbCosineMethod},
@@ -111,7 +112,7 @@ namespace CodePlagiarismDetection.Forms
             }
             
             //Проверка корректности введенного пути файла
-            if (!ValidationChecker.CheckValidationOfCurrentDirectory(txtDirectoryPath.Text, MessageBoxShowMode.Show))
+            if (!ValidationChecker.CheckDirectoryExisting(txtDirectoryPath.Text, MessageBoxShowMode.Show))
                 return;
 
             _isProcessing = true;
@@ -225,16 +226,23 @@ namespace CodePlagiarismDetection.Forms
                 : TableFillOption.ClearTable;
         }
 
-        //Обработчик нажатия на пункт контекстного меню для обнаружения исходы
+        //Обработчик нажатия на пункт контекстного меню для обнаружения идентичных частей исходных кодов
         private void найтиПодозрительныеЧастиToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dataGridComparisionResult.SelectedRows.Count == 0)
                 return;
-            
             var selectedRow = dataGridComparisionResult.SelectedRows[0];
-            var tempDirectoryPath = Path.GetTempPath();
             var originalFilePath = (string)selectedRow.Cells["PathToFirstFile"].Value;
             var comparedFilePath = (string)selectedRow.Cells["PathToSecondFile"].Value;
+
+            if (!ValidationChecker.CheckFileExisting(originalFilePath, MessageBoxShowMode.Show))
+                return;
+            
+            if (!ValidationChecker.CheckFileExisting(comparedFilePath, MessageBoxShowMode.Show))
+                return;
+            
+            var tempDirectoryPath = Path.GetTempPath();
+
             var reportFileName =
                 $"{(string) selectedRow.Cells["FirstFile"].Value}_{(string) selectedRow.Cells["SecondFile"].Value}.html";
             var report = Path.Combine(tempDirectoryPath, reportFileName);
@@ -281,26 +289,26 @@ namespace CodePlagiarismDetection.Forms
             rbLevensteinModifyMethod.CheckedChanged += ShowLevensteinModifyWarning;
             rbJaccardMethod.CheckedChanged += ShowApproximatelyWarning;
             rbSorensenDiceMethod.CheckedChanged += ShowApproximatelyWarning;
-            rbCosineMethod.CheckedChanged += ShowEqualTextLenghtWarning;
-            rbNGrammDistanceMethod.CheckedChanged += ShowSequenceWarning;
-            rbLongestCommonSubsequenceMethod.CheckedChanged += ShowSequenceWarning;
-            rbShingleCoefficientMethod.CheckedChanged += ShowNDivideWarning;
+            rbCosineMethod.CheckedChanged += ShowCosinusWarning;
+            rbNGrammDistanceMethod.CheckedChanged += ShowNGramDistanceWarning;
+            rbLongestCommonSubsequenceMethod.CheckedChanged += ShowLCSWarning;
+            rbShingleCoefficientMethod.CheckedChanged += ShowShingleWarning;
         }
 
         //Обработчик для вывода сообщения 1
-        private void ShowEqualTextLenghtWarning(object sender, EventArgs e)
+        private void ShowCosinusWarning(object sender, EventArgs e)
         {
             if (((RadioButton)sender).Checked)
             {
                 lblMethodDescriptiom.Text = "Внимание!" +
-                                            "\nМетод выдает корректные результаты, если два сравниваемых исходных кода приблизительно близки по количеству символов." +
+                                            "\nКосинусное сходство хорошо отрабатывает случаи, когда порядок слов изменен или количество слов в строках отличается." +
                                             "\nНаиболее оптимальный уровень разбиения на токены для данного метода является 4-5 уровень разбиения.";
-                lblMethodDescriptiom.Visible = true;
+                numUpDownTokenLenghtValue.Enabled = true;
             }
         }
         
-        //Обработчик для вывода сообщения 1
-        private void ShowSequenceWarning(object sender, EventArgs e)
+        //Обработчик для вывода сообщения 2
+        private void ShowNGramDistanceWarning(object sender, EventArgs e)
         {
             if (((RadioButton)sender).Checked)
             {
@@ -308,12 +316,12 @@ namespace CodePlagiarismDetection.Forms
                                             "\nДля данного метода имеет значение, в каком порядке идут символы и блоки кода в сравнимаемых исходных кодах. " +
                                             "Одинаковые части кода могут быть не распознаны, " +
                                             "если в сравниваемых исходных кодах они находится в разных местах." +
-                                            "\nДля N-расстояния наиболее оптимальный уровень разбиения на токены является 6-7 уровень разбиения.";
-                lblMethodDescriptiom.Visible = true;
+                                            "Наиболее оптимальный уровень разбиение 6-7";
+                numUpDownTokenLenghtValue.Enabled = true;
             }
         }
         
-        //Обработчик для вывода сообщения 2
+        //Обработчик для вывода сообщения 3
         private void ShowApproximatelyWarning(object sender, EventArgs e)
         {
             if (((RadioButton)sender).Checked)
@@ -321,30 +329,42 @@ namespace CodePlagiarismDetection.Forms
                 lblMethodDescriptiom.Text = "Внимание!" +
                                             "\nМетод выдает приблизительный результат схожести." +
                                             "\nНаиболее оптимальный уровень разбиения на токены для данного метода является 4-5 уровень разбиения.";
-                lblMethodDescriptiom.Visible = true;
+                numUpDownTokenLenghtValue.Enabled = true;
             }
         }
 
-        //Обработчик для вывода сообщения 3
-        private void ShowNDivideWarning(object sender, EventArgs e)
+        //Обработчик для вывода сообщения 4
+        private void ShowShingleWarning(object sender, EventArgs e)
         {
             if (((RadioButton)sender).Checked)
             {
                 lblMethodDescriptiom.Text = "Внимание!" +
                                             "\nНаиболее оптимальный уровень разбиения на токены для данного метода является 4-5 уровень разбиения.";
-                lblMethodDescriptiom.Visible = true;
+                numUpDownTokenLenghtValue.Enabled = true;
             }
         }
         
-        //Обработчик для вывода сообщения 4
+        //Обработчик для вывода сообщения 5
         private void ShowLevensteinModifyWarning(object sender, EventArgs e)
         {
             if (((RadioButton)sender).Checked)
             {
                 lblMethodDescriptiom.Text = "Внимание!" +
-                                            "\nДля данного метода нет необходимости в установке какого-либо значения уровня разбиения на токены" +
                                             "\nОбработка с помощью данного метода может занять некоторое время";
-                lblMethodDescriptiom.Visible = true;
+                numUpDownTokenLenghtValue.Enabled = false;
+            }
+        }
+        
+        //Обработчик для вывода сообщения 3
+        private void ShowLCSWarning(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
+                lblMethodDescriptiom.Text = "Внимание!" +
+                                            "\nДля данного метода имеет значение, в каком порядке идут символы и блоки кода в сравнимаемых исходных кодах. " +
+                                            "Одинаковые части кода могут быть не распознаны, " +
+                                            "если в сравниваемых исходных кодах они находится в разных местах.";
+                numUpDownTokenLenghtValue.Enabled = false;
             }
         }
         
