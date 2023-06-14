@@ -13,7 +13,7 @@ namespace CodePlagiarismDetection.Forms
 
         private void DescriptionForm_Load(object sender, EventArgs e)
         {
-            var path = Path.Combine(Application.StartupPath, @"Doc\theory.html"); //Получение пути к справке программы
+            var path = Path.Combine(Application.StartupPath, @"Docs\theory.html"); //Получение пути к справке программы
             webBrowserDescription.Navigate(path); //Отображение справки на форме
         }
     }

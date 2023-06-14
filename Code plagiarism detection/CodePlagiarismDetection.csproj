@@ -142,34 +142,34 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CodeExamples\Test\Python\Python3.py" />
-    <Content Include="Doc\theory.docx">
+    <Content Include="Docs\theory.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Doc\theory.files\colorschememapping.xml">
+    <Content Include="Docs\theory.files\colorschememapping.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Doc\theory.files\filelist.xml">
+    <Content Include="Docs\theory.files\filelist.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Doc\theory.files\image001.png">
+    <Content Include="Docs\theory.files\image001.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Doc\theory.files\image002.png">
+    <Content Include="Docs\theory.files\image002.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Doc\theory.files\image003.png">
+    <Content Include="Docs\theory.files\image003.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Doc\theory.files\image004.png">
+    <Content Include="Docs\theory.files\image004.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Doc\theory.files\themedata.thmx">
+    <Content Include="Docs\theory.files\themedata.thmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Doc\theory.html">
+    <Content Include="Docs\theory.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Doc\~$theory.html">
+    <Content Include="Docs\~$theory.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fonts\Dinpro.otf">
