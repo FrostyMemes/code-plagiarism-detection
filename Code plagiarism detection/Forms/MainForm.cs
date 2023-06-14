@@ -207,6 +207,13 @@ namespace CodePlagiarismDetection.Forms
             var selectedRow = dataGridComparisionResult.SelectedRows[0];
             var originalFilePath = (string)selectedRow.Cells["PathToFirstFile"].Value;
             var comparedFilePath = (string)selectedRow.Cells["PathToSecondFile"].Value;
+            
+            if (!ValidationChecker.CheckFileExisting(originalFilePath, MessageBoxShowMode.Show))
+                return;
+            
+            if (!ValidationChecker.CheckFileExisting(comparedFilePath, MessageBoxShowMode.Show))
+                return;
+            
             System.Diagnostics.Process.Start(originalFilePath);
             System.Diagnostics.Process.Start(comparedFilePath);
         }
