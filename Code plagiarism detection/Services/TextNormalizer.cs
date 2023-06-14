@@ -9,21 +9,21 @@ namespace CodePlagiarismDetection.Services
     public static class TextNormalizer
     {
         //Регулярное выражение для удаления многострочных комментариев
-        private static readonly List<string> multiCommentsPatterns = new List<string>()
+        public static readonly List<string> multiCommentsPatterns = new List<string>()
         {
-            @"""""""(.|[\r\n])*?""""""",
-            @"/\*(.|[\r\n])*?\*/"
+            @"""""""(.|[\r\n]|[\r]|[\n])*?""""""",
+            @"/\*(.|[\r\n]|[\r]|[\n])*?\*/"
         };
 
         //Регулярное выражение для удаления однострочных комментариев
-        private static readonly List<string> lineCommentsPatterns = new List<string>()
+        public static readonly List<string> lineCommentsPatterns = new List<string>()
         {
-            @"\/\/.*?(?=\r\n|$)",
-            @"#.*?(?=\r\n|$)"
+            @"\/\/.*?(?=\r\n|$|\n|\r)",
+            @"#.*?(?=\r\n|$|\n|\r)"
         };
         
         //Регулярное выражение для удаления строковых литералов 
-        private static readonly List<string> stringLiteralsPatterns = new List<string>()
+        public static readonly List<string> stringLiteralsPatterns = new List<string>()
         {
             @"\'.*?\'",
             @"\"".*?\""",
@@ -37,6 +37,8 @@ namespace CodePlagiarismDetection.Services
             str = DeleteWithPatterns(str, lineCommentsPatterns);
             str = DeleteWithPatterns(str, stringLiteralsPatterns);
             str = str.Replace(Environment.NewLine, " ");
+            //str = str.Replace("\n", " ");
+            //str = str.Replace("\r", " ");
             str = DeleteWithPatterns(str, stringLiteralsPatterns);
             str = str.Replace('\t', ' ');
             str = Regex.Replace(str,@"\s+"," ");

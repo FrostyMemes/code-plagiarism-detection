@@ -68,7 +68,7 @@ namespace CodePlagiarismDetection.Services
             var copyIntersectionProfile = intersectionProfile.ToDictionary(
                 entry => entry.Key, entry => entry.Value); //Получение копии общих для двух текстов шинглов
             
-            var codeLines = file.Text.Split(new string[] {Environment.NewLine}, //Получение списка строк исходного кода
+            var codeLines = file.Text.Split(new string[] {Environment.NewLine, "\n", "\r"}, //Получение списка строк исходного кода
                 StringSplitOptions.RemoveEmptyEntries);
             
             foreach (var codeLine in codeLines)
