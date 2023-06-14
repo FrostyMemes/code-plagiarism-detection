@@ -12,8 +12,9 @@ namespace CodePlagiarismDetection.Services
     {
         private static List<string> ExceptionColumns = new List<string>() //Список игнорируемых столбцов таблицы
         {
+            "Id",
             "PathToFirstFile",
-            "PathToSecondFile"
+            "PathToSecondFile",
         };
         
         //Метод создания Excel-документа

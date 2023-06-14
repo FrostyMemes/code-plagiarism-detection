@@ -14,16 +14,16 @@ namespace CodePlagiarismDetection.Services
         public static DataTable CreateFileCoprasionDataTable()
         {
             var table = new DataTable("FileComrassionResult");
-            table.Columns.Add(AddColumn("Id", "System.Int32", "Id", true));
-            table.Columns.Add(AddColumn("FirstFile", "System.String", "Файл 1", true));
             table.Columns.Add(AddColumn("FirstDirectory", "System.String",  "Папка 1", true));
-            table.Columns.Add(AddColumn("SecondFile", "System.String",  "Файл 2", true));
+            table.Columns.Add(AddColumn("FirstFile", "System.String", "Файл 1", true));
             table.Columns.Add(AddColumn("SecondDirectory", "System.String", "Папка 2", true));
+            table.Columns.Add(AddColumn("SecondFile", "System.String",  "Файл 2", true));
             table.Columns.Add(AddColumn("SimilarityPercent", "System.Double",  "Схожесть %", true));
             table.Columns.Add(AddColumn("CriticalBorderValue", "System.Double",  "Порог схожести", true));
             table.Columns.Add(AddColumn("Method", "System.String", "Метод", true));
             table.Columns.Add(AddColumn("PathToFirstFile", "System.String",  "PathToFirstFile", true));
             table.Columns.Add(AddColumn("PathToSecondFile", "System.String",  "PathToSecondFile", true));
+            table.Columns.Add(AddColumn("Id", "System.Int32", "Id", true));
             
             return table;
         }
