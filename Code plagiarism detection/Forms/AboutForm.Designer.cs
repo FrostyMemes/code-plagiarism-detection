@@ -31,6 +31,7 @@ namespace CodePlagiarismDetection.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
             this.lblAbout = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -41,7 +42,7 @@ namespace CodePlagiarismDetection.Forms
             this.lblAbout.Name = "lblAbout";
             this.lblAbout.Size = new System.Drawing.Size(336, 220);
             this.lblAbout.TabIndex = 0;
-            this.lblAbout.Text = "Программа разработана студентом Мурманского арктического университета\r\nКавериным " + "А.И. ИВБ19о\r\n\r\nПрограмма предназначена для сопоставления исхондых кодов программ" + " на предмет поиска совпадений";
+            this.lblAbout.Text = resources.GetString("lblAbout.Text");
             this.lblAbout.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // AboutForm
