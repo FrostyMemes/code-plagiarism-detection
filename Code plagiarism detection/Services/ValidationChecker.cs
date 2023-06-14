@@ -14,7 +14,7 @@ namespace CodePlagiarismDetection.Services
     {
         
         //Класс для валидации введенного пользователем пути к директории с файлами
-        public static bool CheckValidationOfCurrentDirectory(string path, MessageBoxShowMode showMode)
+        public static bool CheckDirectoryExisting(string path, MessageBoxShowMode showMode)
         {
             if (String.IsNullOrWhiteSpace(path)) 
                 return false;
@@ -23,6 +23,23 @@ namespace CodePlagiarismDetection.Services
             {
                 if (showMode == MessageBoxShowMode.Show)
                     MessageBox.Show("Указанная папка не существует", "Внимание", 
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                return false;
+            }
+            return true;
+        }
+        
+        
+        public static bool CheckFileExisting(string path, MessageBoxShowMode showMode)
+        {
+            if (String.IsNullOrWhiteSpace(path)) 
+                return false;
+
+            if (!File.Exists(path))
+            {
+                if (showMode == MessageBoxShowMode.Show)
+                    MessageBox.Show($"Файла {Path.GetFileName(path)} не существует", "Внимание", 
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning);
                 return false;
