@@ -141,34 +141,35 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CodeExamples\Scum\1.txt" />
-    <Content Include="CodeExamples\Scum\2.txt" />
     <Content Include="CodeExamples\Test\Python\Python3.py" />
-    <Content Include="Doc\Theory.docx">
+    <Content Include="Doc\theory.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Doc\Theory.files\colorschememapping.xml">
+    <Content Include="Doc\theory.files\colorschememapping.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Doc\Theory.files\filelist.xml">
+    <Content Include="Doc\theory.files\filelist.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Doc\Theory.files\image001.png">
+    <Content Include="Doc\theory.files\image001.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Doc\Theory.files\image002.png">
+    <Content Include="Doc\theory.files\image002.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Doc\Theory.files\image003.png">
+    <Content Include="Doc\theory.files\image003.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Doc\Theory.files\image004.png">
+    <Content Include="Doc\theory.files\image004.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Doc\Theory.files\themedata.thmx">
+    <Content Include="Doc\theory.files\themedata.thmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Doc\Theory.html">
+    <Content Include="Doc\theory.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Doc\~$theory.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fonts\Dinpro.otf">

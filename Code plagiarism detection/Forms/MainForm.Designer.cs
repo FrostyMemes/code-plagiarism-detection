@@ -112,7 +112,7 @@
             this.txtDirectoryPath.Name = "txtDirectoryPath";
             this.txtDirectoryPath.Size = new System.Drawing.Size(1088, 24);
             this.txtDirectoryPath.TabIndex = 0;
-            this.txtDirectoryPath.Text = "D:\\Projects\\C Sharp Projects\\CodePlagiarismDetection\\Code plagiarism detection\\Co" + "deExamples\\Test\\Aprobation";
+            this.txtDirectoryPath.Text = "D:\\Projects\\C Sharp Projects\\CodePlagiarismDetection\\Code plagiarism detection\\Co" + "deExamples\\Test";
             // 
             // groupBoxDirectoryPath
             // 

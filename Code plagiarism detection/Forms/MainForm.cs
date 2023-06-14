@@ -120,6 +120,7 @@ namespace CodePlagiarismDetection.Forms
             ShingleProfiler.N = int.Parse(numUpDownTokenLenghtValue.Text);
             
             var directoryInfo = new DirectoryInfo(txtDirectoryPath.Text); //Получение объекта с информацией о выбранной директории
+            toolStripLabelProcessingStatus.Text = "Полчение информации о файлах";
             var files = FileLoader.LoadFiles(directoryInfo, _searchOption)
                 .Select(file => new FileContent(file))
                 .ToList(); //Получение списка файлов 
