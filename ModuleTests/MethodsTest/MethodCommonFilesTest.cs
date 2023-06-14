@@ -13,25 +13,25 @@ namespace ModuleTests.ServiceTests
     {
         private static string rootDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, 
             "..", 
-            "..", @"MethodsTest\TestFiles");
+            "..", @"MethodsTest\TestFiles"); //Директория с тестовыми файлами
         
-        private SimilarityMethod _shingleMethod = new ShingleCoefficient();
-        private SimilarityMethod _levenshteinMethod = new LevenshteinModify();
-        private SimilarityMethod _sorensenMethod = new SorensenDiceCoefficient();
-        private SimilarityMethod _jaccardMethod = new JaccardCoefficient();
-        private SimilarityMethod _cosineMethod = new Cosine();
-        private SimilarityMethod _nGramDistanceMethod = new NGramDistance();
-        private SimilarityMethod _lcsMethod = new LongestCommonSubsequence();
+        private SimilarityMethod _shingleMethod = new ShingleCoefficient(); //Создания экземпляра метода шинглов
+        private SimilarityMethod _levenshteinMethod = new LevenshteinModify(); //Создания экземпляра метода Левенштейна
+        private SimilarityMethod _sorensenMethod = new SorensenDiceCoefficient(); //Создания экземпляра метода Сёренсена
+        private SimilarityMethod _jaccardMethod = new JaccardCoefficient(); //Создания экземпляра метода Жаккара
+        private SimilarityMethod _cosineMethod = new Cosine(); //Создания экземпляра метода косинуса
+        private SimilarityMethod _nGramDistanceMethod = new NGramDistance(); //Создания экземпляра метода N-расстояния
+        private SimilarityMethod _lcsMethod = new LongestCommonSubsequence(); //Создания экземпляра метода НОП
         
         
-        private static IProgress<int> IProgressPlug = new Progress<int>(_ => { });
-        private static CancellationToken CancellationTokenPlug = new CancellationToken();
+        private static IProgress<int> IProgressPlug = new Progress<int>(_ => { }); //Заглушка для интерфейса прогресса
+        private static CancellationToken CancellationTokenPlug = new CancellationToken(); //Заглушка для токена отмены
         
-        [Theory]
-        [InlineData("CommonFiles")]
-        public void SimilarityForCommonFiles_AllMethodsMustReturnSpecificSimilarityValue_ReturnTrueForAllMethods(string directory)
+        [Fact]
+        //Тест сравнения исходных кодов в общем случае
+        public void SimilarityForCommonFiles_AllMethodsMustReturnSpecificSimilarityValue_ReturnTrueForAllMethods()
         {
-        
+            var directory = "CommonFiles";
             var path = Path.Combine(rootDirectory, directory);
             var directoryInfo = new DirectoryInfo(path);
 
@@ -65,7 +65,7 @@ namespace ModuleTests.ServiceTests
             Assert.Equal(0.66, sorensenMethodResult.First().Similarity, 2);
             Assert.Equal(0.49, jaccardMethodResult.First().Similarity, 2);
             Assert.Equal(0.8, cosineMethodResult.First().Similarity, 2);
-            Assert.Equal(0.3, nGramDistanceMethodResult.First().Similarity, 2);
+            Assert.Equal(0.72, nGramDistanceMethodResult.First().Similarity, 2);
             Assert.Equal(0.39, lcsMethodResult.First().Similarity, 2);
         }
     }

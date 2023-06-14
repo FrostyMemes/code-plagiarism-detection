@@ -12,7 +12,10 @@ namespace ModuleTests.ServiceTests
     {
         private string codeExamplePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 "..", 
-                "..", "CodeExamples");
+                "..", "CodeExamples"); //Путь к файлам для тестирования
+        
+        
+        //Список фильтров для тестирования фильтра
         public static IEnumerable<object[]> FilterTestData => 
             new List<object[]>
             {
@@ -21,6 +24,8 @@ namespace ModuleTests.ServiceTests
                 new object[] {new List<string>() {"*.c", "*.py"}},
             };
         
+        
+        //Тестирование режима чтения файлов
         [Theory]
         [InlineData(SearchOption.AllDirectories)]
         [InlineData(SearchOption.TopDirectoryOnly)]
@@ -34,6 +39,7 @@ namespace ModuleTests.ServiceTests
             Assert.Equal(factFilesCount, testFileLoaderFileCount);
         }
         
+        //Тестирование фильтра файлов
         [Theory]
         [MemberData(nameof(FilterTestData))]
         public void GetFiles_GetFilesFromDirectoryWithFileFilter_ReturnSameNumber(List<string> filter)
