@@ -7,11 +7,12 @@
     <ProjectGuid>{8D7B4E02-F959-4776-9312-A48A68E744A8}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>CodePlagiarismDetection</RootNamespace>
-    <AssemblyName>CodePlagiarismDetection</AssemblyName>
+    <AssemblyName>Антиплагиат исходного кода</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <ApplicationIcon>codingbrowser_102152.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -116,6 +117,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="codingbrowser_102152.ico" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
